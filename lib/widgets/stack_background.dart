@@ -4,7 +4,7 @@ class StackBackground extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 375,
+      height: 410,
       width: double.infinity,
       decoration: BoxDecoration(
         gradient: LinearGradient(

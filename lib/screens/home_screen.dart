@@ -13,7 +13,12 @@ class HomeScreen extends StatelessWidget {
         backgroundColor: Colors.transparent,
         elevation: 0,
         actions: [
-          IconButton(icon: Icon(Icons.edit), onPressed: () {}),
+          TextButton.icon(
+            label: Text('Edit',
+                style: TextStyle(color: Colors.white, fontSize: 16)),
+            icon: Icon(Icons.monetization_on, color: Colors.white),
+            onPressed: () {},
+          ),
         ],
       ),
       resizeToAvoidBottomInset: false,
