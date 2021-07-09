@@ -16,6 +16,8 @@ class AmountInputField extends StatelessWidget {
         ),
         child: TextFormField(
           keyboardType: TextInputType.number,
+          readOnly: true,
+          showCursor: true,
           onTap: () {},
           decoration: InputDecoration(
             border: InputBorder.none,
