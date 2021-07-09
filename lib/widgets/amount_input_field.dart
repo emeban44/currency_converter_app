@@ -10,6 +10,11 @@ class AmountInputField extends StatelessWidget {
         margin: const EdgeInsets.only(left: 20, right: 20),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
+          border: Border.all(color: Colors.black, width: 1),
+          boxShadow: [
+            BoxShadow(
+                color: Colors.black, blurRadius: 1.0, offset: Offset(2.0, 2.0)),
+          ],
           gradient: LinearGradient(
             colors: [Colors.blue.shade50, Colors.blue.shade100],
           ),
@@ -19,6 +24,8 @@ class AmountInputField extends StatelessWidget {
           readOnly: true,
           showCursor: true,
           onTap: () {},
+          initialValue: '0.00',
+          style: TextStyle(fontSize: 23),
           decoration: InputDecoration(
             border: InputBorder.none,
           ),
