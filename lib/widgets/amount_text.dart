@@ -9,7 +9,7 @@ class AmountText extends StatelessWidget {
       height: 30,
       child: Text(
         'Amount',
-        style: TextStyle(color: Colors.white, fontSize: 20),
+        style: TextStyle(color: Colors.white, fontSize: 18),
       ),
     ));
   }

@@ -10,8 +10,6 @@ class ConversionStack extends StatelessWidget {
       children: [
         StackBackground(),
         Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          //mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             AmountText(),
