@@ -1,12 +1,13 @@
 import 'package:currency_converter_app/widgets/conversion/conversion_stack.dart';
 import 'package:currency_converter_app/widgets/drawer.dart';
+import 'package:currency_converter_app/widgets/home_body.dart';
 import 'package:flutter/material.dart';
 
 class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: ConversionStack(),
+      body: HomeBody(),
       extendBodyBehindAppBar: true,
       drawer: MyDrawer(),
       appBar: AppBar(
@@ -22,11 +23,11 @@ class HomeScreen extends StatelessWidget {
         ],
       ),
       resizeToAvoidBottomInset: false,
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {},
-        child: Icon(Icons.add),
-        backgroundColor: Colors.indigo,
-      ),
+      // floatingActionButton: FloatingActionButton(
+      //   onPressed: () {},
+      //   child: Icon(Icons.add),
+      //   backgroundColor: Colors.indigo,
+      // ),
     );
   }
 }
