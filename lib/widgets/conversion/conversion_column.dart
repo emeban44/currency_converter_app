@@ -33,7 +33,7 @@ class ConversionColumn extends StatelessWidget {
                       )))),
           Flexible(
             child: Container(
-              margin: const EdgeInsets.only(top: 1),
+              margin: const EdgeInsets.only(top: 5),
               child: Text('1 EUR = 1.95 BAM',
                   style: TextStyle(color: Colors.white)),
             ),

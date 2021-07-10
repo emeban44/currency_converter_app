@@ -3,6 +3,8 @@ import 'package:currency_converter_app/widgets/calculator/done_button.dart';
 import 'package:flutter/material.dart';
 
 class CustomCalculator extends StatelessWidget {
+  final Function(bool toggle) _toggleCalc;
+  CustomCalculator(this._toggleCalc);
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -22,7 +24,7 @@ class CustomCalculator extends StatelessWidget {
           CalculatorRow('4', '5', '6', 'x'),
           CalculatorRow('1', '2', '3', '-'),
           CalculatorRow('.', '0', 'C', '+'),
-          DoneButton(),
+          DoneButton(_toggleCalc),
         ],
       ),
     );
