@@ -1,7 +1,7 @@
-import 'package:currency_converter_app/widgets/amount_input_field.dart';
-import 'package:currency_converter_app/widgets/amount_text.dart';
-import 'package:currency_converter_app/widgets/conversion_output_box.dart';
-import 'package:currency_converter_app/widgets/conversion_row.dart';
+import 'package:currency_converter_app/widgets/amount/amount_input_field.dart';
+import 'package:currency_converter_app/widgets/amount/amount_text.dart';
+import 'package:currency_converter_app/widgets/conversion/conversion_output_box.dart';
+import 'package:currency_converter_app/widgets/conversion/conversion_row.dart';
 import 'package:currency_converter_app/widgets/stack_background.dart';
 import 'package:flutter/material.dart';
 

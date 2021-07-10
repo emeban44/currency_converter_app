@@ -1,4 +1,4 @@
-import 'package:currency_converter_app/widgets/conversion_column.dart';
+import 'package:currency_converter_app/widgets/conversion/conversion_column.dart';
 import 'package:flutter/material.dart';
 
 class ConversionRow extends StatelessWidget {

@@ -1,4 +1,4 @@
-import 'package:currency_converter_app/widgets/calculator_box.dart';
+import 'package:currency_converter_app/widgets/calculator/calculator_box.dart';
 import 'package:flutter/material.dart';
 
 class CalculatorRow extends StatelessWidget {

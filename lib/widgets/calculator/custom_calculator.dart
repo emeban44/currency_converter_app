@@ -1,5 +1,5 @@
-import 'package:currency_converter_app/widgets/calculator_row.dart';
-import 'package:currency_converter_app/widgets/done_button.dart';
+import 'package:currency_converter_app/widgets/calculator/calculator_row.dart';
+import 'package:currency_converter_app/widgets/calculator/done_button.dart';
 import 'package:flutter/material.dart';
 
 class CustomCalculator extends StatelessWidget {

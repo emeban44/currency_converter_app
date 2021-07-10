@@ -1,4 +1,4 @@
-import 'package:currency_converter_app/widgets/custom_calculator.dart';
+import 'package:currency_converter_app/widgets/calculator/custom_calculator.dart';
 import 'package:flutter/material.dart';
 
 class AmountInputField extends StatelessWidget {
