@@ -1,8 +1,10 @@
+import 'package:currency_converter_app/widgets/custom_calculator.dart';
 import 'package:flutter/material.dart';
 
 class AmountInputField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    FocusNode _node;
     return Flexible(
       child: Container(
         height: 50,
@@ -13,17 +15,29 @@ class AmountInputField extends StatelessWidget {
           border: Border.all(color: Colors.black, width: 1),
           boxShadow: [
             BoxShadow(
-                color: Colors.black, blurRadius: 1.0, offset: Offset(2.0, 2.0)),
+              color: Colors.black,
+              blurRadius: 1.0,
+              offset: Offset(2.0, 2.0),
+            ),
           ],
           gradient: LinearGradient(
             colors: [Colors.blue.shade50, Colors.blue.shade100],
           ),
         ),
         child: TextFormField(
-          keyboardType: TextInputType.number,
           readOnly: true,
           showCursor: true,
-          onTap: () {},
+          focusNode: _node,
+          onTap: () {
+            showModalBottomSheet(
+                elevation: 0,
+                barrierColor: Colors.transparent,
+                context: context,
+                isDismissible: false,
+                builder: (ctx) {
+                  return CustomCalculator();
+                });
+          },
           initialValue: '0.00',
           style: TextStyle(fontSize: 23),
           decoration: InputDecoration(

@@ -1,4 +1,3 @@
-import 'package:currency_converter_app/widgets/conversion_output_box.dart';
 import 'package:flutter/material.dart';
 
 class ConversionColumn extends StatelessWidget {
@@ -22,7 +21,13 @@ class ConversionColumn extends StatelessWidget {
                   width: 140,
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(10),
-                      border: Border.all(color: Colors.black, width: 2),
+                      border: Border.all(color: Colors.black, width: 1),
+                      boxShadow: [
+                        BoxShadow(
+                            color: Colors.black,
+                            blurRadius: 1.0,
+                            offset: Offset(0.5, 0.5)),
+                      ],
                       gradient: LinearGradient(
                         colors: [Colors.blue.shade50, Colors.blue.shade100],
                       )))),
