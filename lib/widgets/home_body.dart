@@ -9,10 +9,26 @@ class HomeBody extends StatefulWidget {
 
 class _HomeBodyState extends State<HomeBody> {
   bool _displayCalculator = false;
-  void _toggleCalculator(bool current) {
-    setState(() {
-      _displayCalculator = current;
-    });
+  var _textEditingController = TextEditingController();
+  bool _alreadyToggled = false;
+  void _toggleCalculator(bool current, [TextEditingController controller]) {
+    if (current && _displayCalculator) {
+      _alreadyToggled = true;
+      print(controller.text);
+    } else if (current && !_displayCalculator)
+      setState(() {
+        _displayCalculator = current;
+        _textEditingController = controller;
+        _alreadyToggled = true;
+      });
+    else if (!current && _displayCalculator) {
+      setState(() {
+        _displayCalculator = current;
+        _textEditingController = controller;
+        _alreadyToggled = false;
+      });
+    }
+    // print(_alreadyToggled);
   }
 
   @override
@@ -23,7 +39,9 @@ class _HomeBodyState extends State<HomeBody> {
         Flexible(child: ConversionStack(_toggleCalculator), fit: FlexFit.loose),
         if (_displayCalculator)
           Flexible(
-              child: CustomCalculator(_toggleCalculator), fit: FlexFit.loose)
+              child:
+                  CustomCalculator(_toggleCalculator, _textEditingController),
+              fit: FlexFit.loose),
       ],
     );
   }

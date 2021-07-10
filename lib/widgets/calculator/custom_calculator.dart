@@ -4,7 +4,8 @@ import 'package:flutter/material.dart';
 
 class CustomCalculator extends StatelessWidget {
   final Function(bool toggle) _toggleCalc;
-  CustomCalculator(this._toggleCalc);
+  final TextEditingController _controller;
+  CustomCalculator(this._toggleCalc, this._controller);
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -20,11 +21,11 @@ class CustomCalculator extends StatelessWidget {
       )),
       child: Column(
         children: [
-          CalculatorRow('7', '8', '9', '/'),
-          CalculatorRow('4', '5', '6', 'x'),
-          CalculatorRow('1', '2', '3', '-'),
-          CalculatorRow('.', '0', 'C', '+'),
-          DoneButton(_toggleCalc),
+          CalculatorRow('7', '8', '9', '/', _controller),
+          CalculatorRow('4', '5', '6', 'x', _controller),
+          CalculatorRow('1', '2', '3', '-', _controller),
+          CalculatorRow('.', '0', 'C', '+', _controller),
+          DoneButton(_toggleCalc, _controller),
         ],
       ),
     );

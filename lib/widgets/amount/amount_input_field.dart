@@ -1,9 +1,18 @@
-import 'package:currency_converter_app/widgets/calculator/custom_calculator.dart';
 import 'package:flutter/material.dart';
 
-class AmountInputField extends StatelessWidget {
-  final Function(bool toggle) _toggleCalc;
+class AmountInputField extends StatefulWidget {
+  final Function(bool toggle, [TextEditingController contr]) _toggleCalc;
+
   AmountInputField(this._toggleCalc);
+
+  @override
+  _AmountInputFieldState createState() => _AmountInputFieldState();
+}
+
+class _AmountInputFieldState extends State<AmountInputField> {
+  final _controller = TextEditingController();
+  bool _alreadyToggled = false;
+
   @override
   Widget build(BuildContext context) {
     FocusNode _node;
@@ -28,9 +37,22 @@ class AmountInputField extends StatelessWidget {
       child: TextFormField(
         readOnly: true,
         showCursor: true,
+        controller: _controller,
         focusNode: _node,
-        onTap: () => _toggleCalc(true),
-        initialValue: '0.00',
+        onTap: () {
+          //if (_alreadyToggled) return;
+          //print(_alreadyToggled);
+          // _alreadyToggled = true;
+          //_controller.text = '222';
+          String tmp = _controller.text;
+          print(tmp);
+          widget._toggleCalc(true, _controller);
+          // _controller.text += 'x ';
+          _controller.text = tmp;
+          print(tmp);
+          _controller.selection = TextSelection.fromPosition(
+              TextPosition(offset: _controller.text.length));
+        },
         style: TextStyle(fontSize: 23),
         decoration: InputDecoration(
           border: InputBorder.none,

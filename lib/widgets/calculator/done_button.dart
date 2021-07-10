@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 
 class DoneButton extends StatelessWidget {
   final Function(bool toggle) _toggleCalc;
-  DoneButton(this._toggleCalc);
+  final TextEditingController _controller;
+  DoneButton(this._toggleCalc, this._controller);
   @override
   Widget build(BuildContext context) {
     return Flexible(

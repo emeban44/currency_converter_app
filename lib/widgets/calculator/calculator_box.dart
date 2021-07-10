@@ -3,12 +3,17 @@ import 'package:flutter/material.dart';
 class CalculatorBox extends StatelessWidget {
   final String _text;
   final bool _isDarker;
-  CalculatorBox(this._text, this._isDarker);
+  final TextEditingController _controller;
+  CalculatorBox(this._text, this._isDarker, this._controller);
   @override
   Widget build(BuildContext context) {
     return Flexible(
       child: InkWell(
-        onTap: () {},
+        onTap: () {
+          _controller.text += ' x ';
+          _controller.selection = TextSelection.fromPosition(
+              TextPosition(offset: _controller.text.length));
+        },
         child: Container(
           width: double.infinity,
           height: 85,
