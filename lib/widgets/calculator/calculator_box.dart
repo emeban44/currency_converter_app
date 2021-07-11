@@ -10,9 +10,22 @@ class CalculatorBox extends StatelessWidget {
     return Flexible(
       child: InkWell(
         onTap: () {
-          _controller.text += ' x ';
+          if (_text == 'C' && _controller.text.isNotEmpty) {
+            _controller.text =
+                _controller.text.substring(0, _controller.text.length - 1);
+          } else if (_text != 'C') {
+            _controller.text += _text;
+          } else if (_text == 'x') {
+            String string = _controller.text;
+            double broj = double.parse(string);
+            // broj = broj * 5;
+            // _controller.text = broj.toString();
+          }
           _controller.selection = TextSelection.fromPosition(
-              TextPosition(offset: _controller.text.length));
+            TextPosition(
+              offset: _controller.text.length,
+            ),
+          );
         },
         child: Container(
           width: double.infinity,
@@ -22,9 +35,9 @@ class CalculatorBox extends StatelessWidget {
                   ? LinearGradient(
                       colors: [
                         Colors.indigo.shade300,
-                        Colors.indigo.shade300,
-                        Colors.indigo.shade300,
-                        Colors.indigo.shade300,
+                        //   Colors.indigo.shade300,
+                        //  Colors.indigo.shade300,
+                        //      Colors.indigo.shade300,
                         Colors.blueGrey.shade600,
                       ],
                       begin: Alignment.centerLeft,
@@ -32,7 +45,11 @@ class CalculatorBox extends StatelessWidget {
                     )
                   : null,
               color: !_isDarker ? Colors.indigo.shade200 : null),
-          child: Center(child: Text(_text, style: TextStyle(fontSize: 35))),
+          child: Center(
+              child: Text(_text,
+                  style: TextStyle(
+                      fontSize: 35,
+                      color: _isDarker ? Colors.white : Colors.black))),
         ),
       ),
     );

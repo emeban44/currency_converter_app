@@ -14,7 +14,7 @@ class _HomeBodyState extends State<HomeBody> {
   void _toggleCalculator(bool current, [TextEditingController controller]) {
     if (current && _displayCalculator) {
       _alreadyToggled = true;
-      print(controller.text);
+      //  print(controller.text);
     } else if (current && !_displayCalculator)
       setState(() {
         _displayCalculator = current;
@@ -39,9 +39,17 @@ class _HomeBodyState extends State<HomeBody> {
         Flexible(child: ConversionStack(_toggleCalculator), fit: FlexFit.loose),
         if (_displayCalculator)
           Flexible(
-              child:
-                  CustomCalculator(_toggleCalculator, _textEditingController),
-              fit: FlexFit.loose),
+            child: CustomCalculator(_toggleCalculator, _textEditingController),
+            fit: FlexFit.loose,
+          ),
+        if (!_displayCalculator)
+          Flexible(
+            child: Container(
+              child: Center(
+                child: Text('AMRA OGI RUBY'),
+              ),
+            ),
+          ),
       ],
     );
   }

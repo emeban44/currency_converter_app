@@ -45,11 +45,11 @@ class _AmountInputFieldState extends State<AmountInputField> {
           // _alreadyToggled = true;
           //_controller.text = '222';
           String tmp = _controller.text;
-          print(tmp);
+          //     print(tmp);
           widget._toggleCalc(true, _controller);
           // _controller.text += 'x ';
           _controller.text = tmp;
-          print(tmp);
+          //     print(tmp);
           _controller.selection = TextSelection.fromPosition(
               TextPosition(offset: _controller.text.length));
         },
