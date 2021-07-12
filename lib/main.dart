@@ -1,5 +1,7 @@
+import 'package:currency_converter_app/providers/currencies.dart';
 import 'package:currency_converter_app/screens/home_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 void main() {
   runApp(MyApp());
@@ -13,13 +15,20 @@ class MyApp extends StatelessWidget {
       onTap: () {
         FocusManager.instance.primaryFocus.unfocus();
       },
-      child: MaterialApp(
-        title: 'Currency Converter',
-        debugShowCheckedModeBanner: false,
-        theme: ThemeData(
-          primarySwatch: Colors.blueGrey,
+      child: MultiProvider(
+        providers: [
+          ChangeNotifierProvider(
+            create: (ctx) => Currencies(),
+          ),
+        ],
+        child: MaterialApp(
+          title: 'Currency Converter',
+          debugShowCheckedModeBanner: false,
+          theme: ThemeData(
+            primarySwatch: Colors.blueGrey,
+          ),
+          home: HomeScreen(),
         ),
-        home: HomeScreen(),
       ),
     );
   }

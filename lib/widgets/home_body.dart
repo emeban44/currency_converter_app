@@ -1,6 +1,8 @@
+import 'package:currency_converter_app/providers/currencies.dart';
 import 'package:currency_converter_app/widgets/calculator/custom_calculator.dart';
 import 'package:currency_converter_app/widgets/conversion/conversion_stack.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class HomeBody extends StatefulWidget {
   @override
@@ -46,7 +48,13 @@ class _HomeBodyState extends State<HomeBody> {
           Flexible(
             child: Container(
               child: Center(
-                child: Text('AMRA OGI RUBY'),
+                child: TextButton(
+                  child: Text('AMRA OGI RUBY'),
+                  onPressed: () {
+                    Provider.of<Currencies>(context, listen: false)
+                        .fetchAndSetCurrencies();
+                  },
+                ),
               ),
             ),
           ),
