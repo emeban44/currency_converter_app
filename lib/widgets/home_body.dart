@@ -1,6 +1,7 @@
 import 'package:currency_converter_app/providers/currencies.dart';
 import 'package:currency_converter_app/widgets/calculator/custom_calculator.dart';
 import 'package:currency_converter_app/widgets/conversion/conversion_stack.dart';
+import 'package:currency_converter_app/widgets/currency_list_view.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -13,6 +14,7 @@ class _HomeBodyState extends State<HomeBody> {
   bool _displayCalculator = false;
   var _textEditingController = TextEditingController();
   bool _alreadyToggled = false;
+
   void _toggleCalculator(bool current, [TextEditingController controller]) {
     if (current && _displayCalculator) {
       _alreadyToggled = true;
@@ -46,17 +48,8 @@ class _HomeBodyState extends State<HomeBody> {
           ),
         if (!_displayCalculator)
           Flexible(
-            child: Container(
-              child: Center(
-                child: TextButton(
-                  child: Text('AMRA OGI RUBY'),
-                  onPressed: () {
-                    Provider.of<Currencies>(context, listen: false)
-                        .fetchAndSetCurrencies();
-                  },
-                ),
-              ),
-            ),
+            child: CurrencyListView(),
+            fit: FlexFit.loose,
           ),
       ],
     );

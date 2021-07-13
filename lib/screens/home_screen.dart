@@ -1,7 +1,9 @@
+import 'package:currency_converter_app/providers/currencies.dart';
 import 'package:currency_converter_app/widgets/conversion/conversion_stack.dart';
 import 'package:currency_converter_app/widgets/drawer.dart';
 import 'package:currency_converter_app/widgets/home_body.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class HomeScreen extends StatelessWidget {
   @override
@@ -18,7 +20,10 @@ class HomeScreen extends StatelessWidget {
             label: Text('Edit',
                 style: TextStyle(color: Colors.white, fontSize: 16)),
             icon: Icon(Icons.monetization_on, color: Colors.white),
-            onPressed: () {},
+            onPressed: () {
+              Provider.of<Currencies>(context, listen: false)
+                  .fetchAndSetCurrencies();
+            },
           ),
         ],
       ),
