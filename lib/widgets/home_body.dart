@@ -12,24 +12,38 @@ class HomeBody extends StatefulWidget {
 
 class _HomeBodyState extends State<HomeBody> {
   bool _displayCalculator = false;
+  bool _isLoading = false;
   var _textEditingController = TextEditingController();
-  bool _alreadyToggled = false;
+  // bool _alreadyToggled = false;
+
+  @override
+  void didChangeDependencies() async {
+    setState(() {
+      _isLoading = true;
+    });
+    await Provider.of<Currencies>(context, listen: false)
+        .fetchAndSetCurrencies();
+    setState(() {
+      _isLoading = false;
+    });
+    super.didChangeDependencies();
+  }
 
   void _toggleCalculator(bool current, [TextEditingController controller]) {
     if (current && _displayCalculator) {
-      _alreadyToggled = true;
+      //  _alreadyToggled = true;
       //  print(controller.text);
     } else if (current && !_displayCalculator)
       setState(() {
         _displayCalculator = current;
         _textEditingController = controller;
-        _alreadyToggled = true;
+        //  _alreadyToggled = true;
       });
     else if (!current && _displayCalculator) {
       setState(() {
         _displayCalculator = current;
         _textEditingController = controller;
-        _alreadyToggled = false;
+        //   _alreadyToggled = false;
       });
     }
     // print(_alreadyToggled);
@@ -46,10 +60,29 @@ class _HomeBodyState extends State<HomeBody> {
             child: CustomCalculator(_toggleCalculator, _textEditingController),
             fit: FlexFit.loose,
           ),
-        if (!_displayCalculator)
+        if (_isLoading)
+          Container(
+            padding: const EdgeInsets.all(25),
+            child: Center(
+              child: CircularProgressIndicator(),
+            ),
+          ),
+        if (!_displayCalculator && !_isLoading)
           Flexible(
-            child: CurrencyListView(),
             fit: FlexFit.loose,
+            child: Stack(
+              children: [
+                CurrencyListView(),
+                Positioned(
+                  bottom: 30,
+                  right: 15,
+                  child: FloatingActionButton(
+                      onPressed: () {},
+                      child: Icon(Icons.add),
+                      backgroundColor: Colors.indigo),
+                )
+              ],
+            ),
           ),
       ],
     );
