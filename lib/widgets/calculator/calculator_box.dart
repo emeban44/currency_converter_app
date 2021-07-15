@@ -1,4 +1,6 @@
+import 'package:currency_converter_app/providers/currencies.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class CalculatorBox extends StatelessWidget {
   final String _text;
@@ -13,8 +15,12 @@ class CalculatorBox extends StatelessWidget {
           if (_text == 'C' && _controller.text.isNotEmpty) {
             _controller.text =
                 _controller.text.substring(0, _controller.text.length - 1);
+            Provider.of<Currencies>(context, listen: false)
+                .setAmount(double.parse(_controller.text));
           } else if (_text != 'C') {
             _controller.text += _text;
+            Provider.of<Currencies>(context, listen: false)
+                .setAmount(double.parse(_controller.text));
           } else if (_text == 'x') {
             // String string = _controller.text;
             // double broj = double.parse(string);

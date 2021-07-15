@@ -4,9 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 class Currencies with ChangeNotifier {
-  List<Currency> _currencies;
-  Map<String, String> _symbols;
-  String api_key = '4946fc8acfd60b0b2040cbbcd6288b36';
+  List<Currency> _currencies = [];
+  Map<String, String> _symbols = {};
+  String apiKey = '4946fc8acfd60b0b2040cbbcd6288b36';
+  Currency _fromCurrency;
+  Currency _toCurrency;
+  double _amount;
 
   List<Currency> get getCurrencies {
     return [..._currencies];
@@ -16,16 +19,46 @@ class Currencies with ChangeNotifier {
     return _symbols;
   }
 
+  double get getAmount {
+    if (this._amount == null) return 0;
+    return this._amount;
+  }
+
+  void setAmount(double amountToSet) {
+    this._amount = amountToSet;
+    notifyListeners();
+  }
+
+  void setFromCurrency(Currency currencyToSet) {
+    this._fromCurrency = currencyToSet;
+    notifyListeners();
+  }
+
+  Currency get getFromCurrency {
+    if (this._fromCurrency == null) return Currency(base: 'EUR');
+    return this._fromCurrency;
+  }
+
+  void setToCurrency(Currency currencyToSet) {
+    this._toCurrency = currencyToSet;
+    notifyListeners();
+  }
+
+  Currency get getToCurrency {
+    if (this._toCurrency == null) return Currency(base: 'USD');
+    return this._toCurrency;
+  }
+
   Future<void> fetchAndSetCurrencies() async {
     final List<String> bases = Symbols.abbreviations;
-    final symbolsURL = 'http://data.fixer.io/api/symbols?access_key=$api_key';
+    final symbolsURL = 'http://data.fixer.io/api/symbols?access_key=$apiKey';
     final List urls = [];
     try {
       List<Currency> listToReturn = [];
       for (int i = 0; i < bases.length; i++) {
         String base = bases[i];
         urls.add(Uri.parse(
-            'http://data.fixer.io/api/latest?access_key=$api_key&base=$base'));
+            'http://data.fixer.io/api/latest?access_key=$apiKey&base=$base'));
       }
       // print(bases.length);
       // print(urls.length);

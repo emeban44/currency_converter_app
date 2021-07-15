@@ -1,4 +1,3 @@
-import 'package:currency_converter_app/models/symbols.dart';
 import 'package:currency_converter_app/providers/currencies.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -19,24 +18,46 @@ class CurrencyListView extends StatelessWidget {
               itemBuilder: (ctx, i) {
                 final imagePathVariable =
                     currentCurrencies[i].base.toLowerCase();
-                return Container(
-                  height: 55,
-                  child: Center(
-                    child: ListTile(
-                      leading: Container(
-                        decoration: BoxDecoration(
-                            border: Border.all(width: 1, color: Colors.indigo),
-                            borderRadius: BorderRadius.circular(20)),
-                        child: CircleAvatar(
-                          radius: 20,
-                          backgroundImage: AssetImage(
-                              'assets/images/$imagePathVariable.png'),
+                return InkWell(
+                  splashColor: Colors.indigo.shade200,
+                  onTap: () {
+                    Provider.of<Currencies>(context, listen: false)
+                        .setFromCurrency(currentCurrencies[i]);
+                  },
+                  child: Container(
+                    height: 60,
+                    padding: const EdgeInsets.only(bottom: 10),
+                    decoration: BoxDecoration(
+                        border: Border(
+                            bottom: BorderSide(
+                                width: 0.5, color: Colors.blueGrey))),
+                    child: Center(
+                      child: ListTile(
+                        //   contentPadding: EdgeInsets.only(bottom: 5),
+                        dense: true,
+                        visualDensity: VisualDensity(vertical: -1.5),
+                        leading: Container(
+                          decoration: BoxDecoration(
+                              border:
+                                  Border.all(width: 1, color: Colors.indigo),
+                              borderRadius: BorderRadius.circular(21)),
+                          child: CircleAvatar(
+                            radius: 20,
+                            backgroundImage: AssetImage(
+                                'assets/images/$imagePathVariable.png'),
+                          ),
                         ),
+                        title: Text(
+                          currentCurrencies[i].base,
+                          style: TextStyle(fontSize: 19),
+                        ),
+                        subtitle: Text(
+                          symbols[currentCurrencies[i].base],
+                          style: TextStyle(fontSize: 14),
+                        ),
+                        trailing:
+                            Text(currentCurrencies[i].rates['BAM'].toString()),
                       ),
-                      title: Text(currentCurrencies[i].base),
-                      subtitle: Text(symbols[currentCurrencies[i].base]),
-                      trailing:
-                          Text(currentCurrencies[i].rates['BAM'].toString()),
                     ),
                   ),
                 );
