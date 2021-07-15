@@ -83,11 +83,31 @@ class ConversionColumn extends StatelessWidget {
             ),
           ),
           Flexible(
-            child: Container(
-              margin: const EdgeInsets.only(top: 5),
-              child: Text('1 EUR = 1.95 BAM',
-                  style: TextStyle(color: Colors.white)),
-            ),
+            child: Consumer<Currencies>(builder: (ctx, currencies, _) {
+              return Container(
+                  margin: const EdgeInsets.only(top: 5),
+                  child: title == 'From'
+                      ? Text(
+                          '1 ' +
+                              currencies.getFromCurrency.base +
+                              ' = ' +
+                              currencies.getFromCurrency
+                                  .rates[currencies.getToCurrency.base]
+                                  .toStringAsFixed(2) +
+                              ' ' +
+                              currencies.getToCurrency.base,
+                          style: TextStyle(color: Colors.white))
+                      : Text(
+                          '1 ' +
+                              currencies.getToCurrency.base +
+                              ' = ' +
+                              currencies.getToCurrency
+                                  .rates[currencies.getFromCurrency.base]
+                                  .toStringAsFixed(2) +
+                              ' ' +
+                              currencies.getFromCurrency.base,
+                          style: TextStyle(color: Colors.white)));
+            }),
           ),
         ],
       ),

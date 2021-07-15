@@ -25,38 +25,60 @@ class CurrencyListView extends StatelessWidget {
                         .setFromCurrency(currentCurrencies[i]);
                   },
                   child: Container(
-                    height: 60,
+                    height: 66,
                     padding: const EdgeInsets.only(bottom: 10),
                     decoration: BoxDecoration(
                         border: Border(
                             bottom: BorderSide(
                                 width: 0.5, color: Colors.blueGrey))),
-                    child: Center(
-                      child: ListTile(
-                        //   contentPadding: EdgeInsets.only(bottom: 5),
-                        dense: true,
-                        visualDensity: VisualDensity(vertical: -1.5),
-                        leading: Container(
-                          decoration: BoxDecoration(
-                              border:
-                                  Border.all(width: 1, color: Colors.indigo),
-                              borderRadius: BorderRadius.circular(21)),
-                          child: CircleAvatar(
-                            radius: 20,
-                            backgroundImage: AssetImage(
-                                'assets/images/$imagePathVariable.png'),
+                    child: ListTile(
+                      //   contentPadding: EdgeInsets.only(bottom: 5),
+                      dense: true,
+                      visualDensity: VisualDensity(vertical: -0.25),
+                      leading: Container(
+                        decoration: BoxDecoration(
+                            border: Border.all(width: 1, color: Colors.indigo),
+                            borderRadius: BorderRadius.circular(21)),
+                        child: CircleAvatar(
+                          radius: 20,
+                          backgroundImage: AssetImage(
+                              'assets/images/$imagePathVariable.png'),
+                        ),
+                      ),
+                      title: Text(
+                        currentCurrencies[i].base,
+                        style: TextStyle(fontSize: 19),
+                      ),
+                      subtitle: Text(
+                        symbols[currentCurrencies[i].base],
+                        style: TextStyle(fontSize: 14),
+                      ),
+                      trailing: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Text(
+                            (currentCurrencies[i].rates[
+                                            currencies.getFromCurrency.base] *
+                                        currencies.getAmount)
+                                    .toStringAsFixed(2) +
+                                ' ' +
+                                currentCurrencies[i].base,
+                            style: TextStyle(fontSize: 20),
                           ),
-                        ),
-                        title: Text(
-                          currentCurrencies[i].base,
-                          style: TextStyle(fontSize: 19),
-                        ),
-                        subtitle: Text(
-                          symbols[currentCurrencies[i].base],
-                          style: TextStyle(fontSize: 14),
-                        ),
-                        trailing:
-                            Text(currentCurrencies[i].rates['BAM'].toString()),
+                          Text(
+                            '1 ' +
+                                currentCurrencies[i].base +
+                                ' = ' +
+                                currentCurrencies[i]
+                                    .rates[currencies.getFromCurrency.base]
+                                    .toStringAsFixed(2) +
+                                ' ' +
+                                currencies.getFromCurrency.base,
+                            style:
+                                TextStyle(fontSize: 11, color: Colors.black54),
+                          ),
+                        ],
                       ),
                     ),
                   ),

@@ -7,34 +7,48 @@ class ConversionOutputBox extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer<Currencies>(builder: (ctx, currencies, _) {
       return Container(
-        height: 100,
+        height: 106, //MediaQuery.of(context).size.height * 0.12,
         width: double.infinity,
         margin: const EdgeInsets.only(top: 15, left: 20, right: 20),
         decoration: BoxDecoration(
-          color: Colors.black54,
+          color: Colors.black38,
           borderRadius: BorderRadius.circular(5),
         ),
         child: Center(
             child: Column(
-          mainAxisSize: MainAxisSize.min,
+          // mainAxisSize: MainAxisSize.max,
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Expanded(
+            Flexible(
               child: Text(
-                currencies.getAmount.toStringAsFixed(0) +
+                currencies.getAmount.toString() +
                     ' ' +
-                    currencies.getFromCurrency.base,
-                style: TextStyle(fontSize: 40, color: Colors.white),
+                    currencies.getFromCurrency.base +
+                    ' =',
+                style: TextStyle(fontSize: 35, color: Colors.white),
               ),
             ),
-            Expanded(
-              child: Text(
-                '= ' +
-                    (currencies.getAmount *
-                            currencies.getFromCurrency.rates['USD'])
-                        .toStringAsFixed(2) +
-                    ' ' +
-                    currencies.getToCurrency.base,
-                style: TextStyle(fontSize: 40, color: Colors.white),
+            Flexible(
+              child: Container(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text(
+                      (currencies.getAmount *
+                                  currencies.getFromCurrency.rates['USD'])
+                              .toStringAsFixed(2) +
+                          ' ',
+                      style: TextStyle(fontSize: 45, color: Colors.white),
+                    ),
+                    Text(
+                      (currencies.getToCurrency.base),
+                      style: TextStyle(fontSize: 35, color: Colors.white),
+                    ),
+                  ],
+                ),
               ),
             ),
           ],
