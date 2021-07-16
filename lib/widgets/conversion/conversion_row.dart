@@ -1,5 +1,7 @@
+import 'package:currency_converter_app/providers/currencies.dart';
 import 'package:currency_converter_app/widgets/conversion/conversion_column.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class ConversionRow extends StatelessWidget {
   @override
@@ -21,7 +23,10 @@ class ConversionRow extends StatelessWidget {
                     size: 50,
                     color: Colors.indigo.shade100,
                   ),
-                  onPressed: () {},
+                  onPressed: () {
+                    Provider.of<Currencies>(context, listen: false)
+                        .toggleFromTo();
+                  },
                 )),
           ),
           ConversionColumn('To'),

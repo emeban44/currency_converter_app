@@ -36,7 +36,7 @@ class Currencies with ChangeNotifier {
 
   Currency get getFromCurrency {
     if (this._fromCurrency == null)
-      return Currency(base: 'EUR', rates: defaultEuroRates);
+      this._fromCurrency = Currency(base: 'EUR', rates: defaultEuroRates);
     return this._fromCurrency;
   }
 
@@ -47,8 +47,16 @@ class Currencies with ChangeNotifier {
 
   Currency get getToCurrency {
     if (this._toCurrency == null)
-      return Currency(base: 'USD', rates: defaultUSDrates);
+      this._toCurrency = Currency(base: 'USD', rates: defaultUSDrates);
     return this._toCurrency;
+  }
+
+  void toggleFromTo() {
+    Currency tmp1 = this._fromCurrency;
+    Currency tmp2 = this._toCurrency;
+    this._toCurrency = tmp1;
+    this._fromCurrency = tmp2;
+    notifyListeners();
   }
 
   Future<void> fetchAndSetCurrencies() async {
@@ -62,11 +70,9 @@ class Currencies with ChangeNotifier {
         urls.add(Uri.parse(
             'http://data.fixer.io/api/latest?access_key=$_apiKey&base=$base'));
       }
-      // print(bases.length);
-      // print(urls.length);
       List responses =
           await Future.wait([for (int i = 0; i < 70; i++) http.get(urls[i])]);
-      // print(responses);
+
       List responses2ndHalf = await Future.wait(
         [
           for (int i = 70; i < bases.length; i++) http.get(urls[i]),
@@ -82,8 +88,6 @@ class Currencies with ChangeNotifier {
       }
 
       final listOfSymbols = symbolsFromJson(responses2ndHalf.last.body);
-
-      print(listToReturn.length);
       _currencies = listToReturn;
       _symbols = listOfSymbols.symbols;
       notifyListeners();
