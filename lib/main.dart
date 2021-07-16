@@ -31,6 +31,7 @@ class MyApp extends StatelessWidget {
           home: HomeScreen(),
           routes: {
             EditCurrenciesScreen.routeName: (ctx) => EditCurrenciesScreen(),
+            // SliverAnimatedListTest.routeName: (ctx) => SliverAnimatedListTest(),
           },
         ),
       ),

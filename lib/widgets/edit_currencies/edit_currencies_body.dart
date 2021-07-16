@@ -13,12 +13,27 @@ class EditCurrenciesBody extends StatefulWidget {
 }
 
 class _EditCurrenciesBodyState extends State<EditCurrenciesBody> {
-  void rebuildState(Currency currencyToSelect) {
-    setState(() {
-      Provider.of<Currencies>(context, listen: false)
-          .selectCurrency(currencyToSelect);
-    });
+  final GlobalKey<SliverAnimatedListState> _selectedListKey =
+      GlobalKey<SliverAnimatedListState>();
+
+  void selectItem(Currency currencyToSelect) {
+    // final newIndex =
+    //     Provider.of<Currencies>(context, listen: false).getSelected.length - 1;
+    final newIndex = 0;
+    // print(_selectedListKey.currentState);
+    print(newIndex);
+    Provider.of<Currencies>(context, listen: false)
+        .selectCurrency(currencyToSelect);
+    _selectedListKey.currentState.insertItem(newIndex);
+    //Provider.of<Currencies>(context,listen: false).
   }
+
+  // void selectItem(Currency currencyToSelect) {
+  //   setState(() {
+  //     Provider.of<Currencies>(context, listen: false)
+  //         .selectCurrency(currencyToSelect);
+  //   });
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -35,13 +50,13 @@ class _EditCurrenciesBodyState extends State<EditCurrenciesBody> {
             flex: 10,
             child: CustomScrollView(
               slivers: [
-                SelectedCurrenciesSliverList(rebuildState),
+                SelectedCurrenciesSliverList(selectItem, _selectedListKey),
                 SliverToBoxAdapter(
                   child: Divider(
                     thickness: 2,
                   ),
                 ),
-                UnselectedCurrenciesSliverList(rebuildState),
+                UnselectedCurrenciesSliverList(selectItem),
               ],
             ),
           ),

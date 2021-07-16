@@ -79,6 +79,8 @@ class _HomeBodyState extends State<HomeBody> {
                   right: 15,
                   child: FloatingActionButton(
                       onPressed: () {
+                        // Navigator.of(context)
+                        //     .pushNamed(EditCurrenciesScreen.routeName);
                         Navigator.of(context)
                             .pushNamed(EditCurrenciesScreen.routeName);
                       },

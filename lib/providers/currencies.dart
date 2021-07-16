@@ -5,7 +5,7 @@ import 'package:http/http.dart' as http;
 
 class Currencies with ChangeNotifier {
   List<Currency> _currencies = [];
-  List<Currency> _selectedCurrencies = [];
+  List<Currency> _selectedCurrencies = []; //[Currency(base: 'USD')];
   List<Currency> _unselectedCurrencies = [];
   Map<String, String> _symbols = {};
   String _apiKey = '4946fc8acfd60b0b2040cbbcd6288b36';
@@ -35,7 +35,9 @@ class Currencies with ChangeNotifier {
   }
 
   void selectCurrency(Currency toSelect) {
-    _selectedCurrencies.add(toSelect);
+    _selectedCurrencies.insert(0, toSelect);
+    // print(_selectedCurrencies.toString() + 'toString metoda');
+    // print(_selectedCurrencies.length.toString() + 'duzina selekted liste');
     _currencies.remove(toSelect);
     notifyListeners();
   }
