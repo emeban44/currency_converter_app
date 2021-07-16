@@ -1,4 +1,5 @@
 import 'package:currency_converter_app/providers/currencies.dart';
+import 'package:currency_converter_app/screens/edit_currencies_screen.dart';
 import 'package:currency_converter_app/screens/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -28,6 +29,9 @@ class MyApp extends StatelessWidget {
             primarySwatch: Colors.blueGrey,
           ),
           home: HomeScreen(),
+          routes: {
+            EditCurrenciesScreen.routeName: (ctx) => EditCurrenciesScreen(),
+          },
         ),
       ),
     );

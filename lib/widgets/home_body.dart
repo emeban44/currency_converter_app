@@ -1,4 +1,5 @@
 import 'package:currency_converter_app/providers/currencies.dart';
+import 'package:currency_converter_app/screens/edit_currencies_screen.dart';
 import 'package:currency_converter_app/widgets/calculator/custom_calculator.dart';
 import 'package:currency_converter_app/widgets/conversion/conversion_stack.dart';
 import 'package:currency_converter_app/widgets/currency_list_view.dart';
@@ -77,7 +78,10 @@ class _HomeBodyState extends State<HomeBody> {
                   bottom: 30,
                   right: 15,
                   child: FloatingActionButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.of(context)
+                            .pushNamed(EditCurrenciesScreen.routeName);
+                      },
                       child: Icon(Icons.add),
                       backgroundColor: Colors.indigo),
                 )

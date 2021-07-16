@@ -15,7 +15,7 @@ class ConversionRow extends StatelessWidget {
           ConversionColumn('From'),
           Expanded(
             child: Container(
-                padding: const EdgeInsets.only(bottom: 20),
+                padding: const EdgeInsets.only(bottom: 20, right: 2.5),
                 width: 50,
                 child: IconButton(
                   icon: Icon(

@@ -27,11 +27,6 @@ class HomeScreen extends StatelessWidget {
         ],
       ),
       resizeToAvoidBottomInset: false,
-      // floatingActionButton: FloatingActionButton(
-      //   onPressed: () {},
-      //   child: Icon(Icons.add),
-      //   backgroundColor: Colors.indigo,
-      // ),
     );
   }
 }

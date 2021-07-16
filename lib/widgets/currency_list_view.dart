@@ -47,11 +47,12 @@ class CurrencyListView extends StatelessWidget {
                       ),
                       title: Text(
                         currentCurrencies[i].base,
-                        style: TextStyle(fontSize: 19),
+                        style: TextStyle(
+                            fontSize: 19, fontWeight: FontWeight.bold),
                       ),
                       subtitle: Text(
                         symbols[currentCurrencies[i].base],
-                        style: TextStyle(fontSize: 14),
+                        style: TextStyle(fontSize: 13),
                       ),
                       trailing: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
