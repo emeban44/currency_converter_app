@@ -6,6 +6,9 @@ class EditCurrenciesBody extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       child: Column(
+        // mainAxisAlignment: MainAxisAlignment.center,
+        // crossAxisAlignment: CrossAxisAlignment.center,
+        //mainAxisSize: MainAxisSize.min,
         children: [
           SearchBox(),
         ],

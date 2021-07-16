@@ -14,7 +14,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        FocusManager.instance.primaryFocus.unfocus();
+        // FocusManager.instance.primaryFocus.unfocus();
       },
       child: MultiProvider(
         providers: [
