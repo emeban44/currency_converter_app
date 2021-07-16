@@ -18,12 +18,13 @@ class _SearchBoxState extends State<SearchBox> {
         if (_isSearching == false)
           setState(() {
             _isSearching = true;
+            _showCancelSearchIcon = true;
           });
       },
       child: Container(
         height: 50,
         width: double.infinity,
-        margin: const EdgeInsets.symmetric(horizontal: 10),
+        margin: const EdgeInsets.only(left: 10, right: 10, bottom: 3),
         decoration: BoxDecoration(
             border:
                 Border(bottom: BorderSide(width: 1, color: Colors.black38))),
@@ -68,7 +69,6 @@ class _SearchBoxState extends State<SearchBox> {
                             color: Colors.black54,
                           ),
                           onPressed: () {
-                            print('00');
                             _controller.clear();
                             FocusManager.instance.primaryFocus.unfocus();
                             setState(() {

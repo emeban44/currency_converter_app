@@ -3,25 +3,30 @@ import 'package:currency_converter_app/providers/currencies.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class SelectedCurrencies extends StatelessWidget {
+class SelectedCurrenciesSliverList extends StatelessWidget {
+  final Function(Currency currency) rebuildState;
+  SelectedCurrenciesSliverList(this.rebuildState);
   @override
   Widget build(BuildContext context) {
-    return Consumer<Currencies>(
-      builder: (ctx, currencies, _) {
-        List<Currency> selected = currencies.getSelected;
-        if (selected.isEmpty)
-          return Center(
-            child: Text('None selected'),
-          );
-        return Container(
-          height: selected.length.toDouble() * 55,
-          child: ListView.builder(
-            shrinkWrap: true,
-            physics: NeverScrollableScrollPhysics(),
-            itemBuilder: (ctx, i) {
-              final imagePathVariable = selected[i].base.toLowerCase();
-              return Container(
-                child: ListTile(
+    return Container(
+      child: Consumer<Currencies>(
+        builder: (context, currencies, child) {
+          List<Currency> selected = currencies.getSelected;
+          if (selected.isEmpty)
+            return SliverToBoxAdapter(
+              child: SizedBox(
+                height: 40,
+                child: Center(
+                  child: Text('None selected yet.'),
+                ),
+              ),
+            );
+          return SliverList(
+            delegate: SliverChildBuilderDelegate(
+              (ctx, i) {
+                final imagePathVariable = selected[i].base.toLowerCase();
+                return ListTile(
+                  key: ValueKey(selected[i].base),
                   leading: Container(
                     decoration: BoxDecoration(
                         border: Border.all(width: 1, color: Colors.indigo),
@@ -60,15 +65,19 @@ class SelectedCurrencies extends StatelessWidget {
                   ),
                   trailing: IconButton(
                     onPressed: () {},
-                    icon: Icon(Icons.remove_circle, color: Colors.red),
+                    icon: Icon(
+                      Icons.remove_circle,
+                      color: Colors.red,
+                      size: 27,
+                    ),
                   ),
-                ),
-              );
-            },
-            itemCount: selected.length,
-          ),
-        );
-      },
+                );
+              },
+              childCount: currencies.getSelected.length,
+            ),
+          );
+        },
+      ),
     );
   }
 }
