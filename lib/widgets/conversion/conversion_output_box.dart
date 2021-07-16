@@ -6,8 +6,11 @@ class ConversionOutputBox extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Consumer<Currencies>(builder: (ctx, currencies, _) {
+      final double screenHeight = MediaQuery.of(context).size.height;
       return Container(
-        height: 106, //MediaQuery.of(context).size.height * 0.12,
+        height: screenHeight > 800
+            ? 106
+            : 100, //MediaQuery.of(context).size.height * 0.12,
         width: double.infinity,
         margin: const EdgeInsets.only(top: 15, left: 20, right: 20),
         decoration: BoxDecoration(

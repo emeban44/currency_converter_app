@@ -21,8 +21,7 @@ class HomeScreen extends StatelessWidget {
                 style: TextStyle(color: Colors.white, fontSize: 16)),
             icon: Icon(Icons.monetization_on, color: Colors.white),
             onPressed: () {
-              Provider.of<Currencies>(context, listen: false)
-                  .fetchAndSetCurrencies();
+              print(MediaQuery.of(context).size.height);
             },
           ),
         ],

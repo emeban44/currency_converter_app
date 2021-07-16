@@ -5,7 +5,9 @@ class AmountText extends StatelessWidget {
   Widget build(BuildContext context) {
     double screenHeight = MediaQuery.of(context).size.height;
     return Container(
-      margin: EdgeInsets.only(top: screenHeight * 0.12, left: 20),
+      margin: screenHeight > 800
+          ? EdgeInsets.only(top: screenHeight * 0.12, left: 20)
+          : EdgeInsets.only(top: screenHeight * 0.10, left: 20),
       height: 30,
       child: Text(
         'Amount',
