@@ -5,6 +5,8 @@ import 'package:http/http.dart' as http;
 
 class Currencies with ChangeNotifier {
   List<Currency> _currencies = [];
+  List<Currency> _selectedCurrencies = [];
+  List<Currency> _unselectedCurrencies = [];
   Map<String, String> _symbols = {};
   String _apiKey = '4946fc8acfd60b0b2040cbbcd6288b36';
   Currency _fromCurrency;
@@ -15,6 +17,14 @@ class Currencies with ChangeNotifier {
     return [..._currencies];
   }
 
+  List<Currency> get getSelected {
+    return [..._selectedCurrencies];
+  }
+
+  List<Currency> get getUnselected {
+    return [..._unselectedCurrencies];
+  }
+
   Map<String, String> get getSymbols {
     return _symbols;
   }
@@ -22,6 +32,12 @@ class Currencies with ChangeNotifier {
   double get getAmount {
     if (this._amount == null) return 0;
     return this._amount;
+  }
+
+  void selectCurrency(Currency toSelect) {
+    _selectedCurrencies.add(toSelect);
+    _currencies.remove(toSelect);
+    notifyListeners();
   }
 
   void setAmount(double amountToSet) {

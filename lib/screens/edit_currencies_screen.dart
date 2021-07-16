@@ -11,6 +11,7 @@ class EditCurrenciesScreen extends StatelessWidget {
         backgroundColor: Colors.indigo.shade400,
       ),
       body: EditCurrenciesBody(),
+      resizeToAvoidBottomInset: false,
     );
   }
 }

@@ -34,16 +34,11 @@ class _SearchBoxState extends State<SearchBox> {
                 child: Stack(children: [
                   if (!_removeSearchIcon)
                     Positioned(
-                      left: 10,
-                      top: 5,
-                      child: Padding(
-                        padding: const EdgeInsets.only(top: 7),
-                        child: Icon(
-                          Icons.search,
-                          color: Colors.black54,
-                        ),
-                      ),
-                    ),
+                        left: 10,
+                        top: 5,
+                        child: Padding(
+                            padding: const EdgeInsets.only(top: 7),
+                            child: Icon(Icons.search, color: Colors.black54))),
                   TextFormField(
                     autofocus: true,
                     autocorrect: false,
