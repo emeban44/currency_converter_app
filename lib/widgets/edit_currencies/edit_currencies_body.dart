@@ -19,27 +19,25 @@ class _EditCurrenciesBodyState extends State<EditCurrenciesBody> {
   final GlobalKey<SliverAnimatedListState> _unselectedListKey =
       GlobalKey<SliverAnimatedListState>();
 
+  bool _isSearching = false;
+
   void selectItem(Currency currencyToSelect) {
-    // final newIndex =
-    //     Provider.of<Currencies>(context, listen: false).getSelected.length - 1;
     final newIndex = 0;
-    // print(_selectedListKey.currentState);
     Provider.of<Currencies>(context, listen: false)
         .selectCurrency(currencyToSelect);
     _selectedListKey.currentState.insertItem(newIndex);
-    //Provider.of<Currencies>(context,listen: false).
   }
 
   void unselectItem(Currency currencyToUnselect) {
     final newIndex = 0;
     Provider.of<Currencies>(context, listen: false)
         .unselectCurrency(currencyToUnselect);
+    _unselectedListKey.currentState.insertItem(newIndex);
   }
 
-  void rebuildState(Currency currencyToUnselect) {
+  void setSearchingState(String searchedText, bool shouldSearch) {
     setState(() {
-      Provider.of<Currencies>(context, listen: false)
-          .unselectCurrency(currencyToUnselect);
+      _isSearching = shouldSearch;
     });
   }
 
@@ -47,26 +45,25 @@ class _EditCurrenciesBodyState extends State<EditCurrenciesBody> {
   Widget build(BuildContext context) {
     return Container(
       child: Column(
-        // mainAxisAlignment: MainAxisAlignment.center,
-        // crossAxisAlignment: CrossAxisAlignment.center,
-        //mainAxisSize: MainAxisSize.max,
         children: [
           Flexible(
-            child: SearchBox(),
+            child: SearchBox(setSearchingState),
           ),
           Flexible(
             flex: 10,
-            child: CustomScrollView(
-              slivers: [
-                SelectedCurrenciesSliverList(unselectItem, _selectedListKey),
-                SliverToBoxAdapter(
-                  child: Divider(
-                    thickness: 2,
+            child: _isSearching
+                ? Center(
+                    child: Text('SEARCHING'),
+                  )
+                : CustomScrollView(
+                    slivers: [
+                      SelectedCurrenciesSliverList(
+                          unselectItem, _selectedListKey),
+                      SliverToBoxAdapter(child: Divider(thickness: 2)),
+                      UnselectedCurrenciesSliverList(
+                          selectItem, _unselectedListKey),
+                    ],
                   ),
-                ),
-                UnselectedCurrenciesSliverList(selectItem, _unselectedListKey),
-              ],
-            ),
           ),
         ],
       ),

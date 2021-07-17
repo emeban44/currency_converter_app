@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 class SearchBox extends StatefulWidget {
+  final Function(String text, bool isSearching) searching;
+  SearchBox(this.searching);
   @override
   _SearchBoxState createState() => _SearchBoxState();
 }
@@ -47,16 +49,26 @@ class _SearchBoxState extends State<SearchBox> {
                     style: TextStyle(fontSize: 20),
                     decoration: InputDecoration(border: InputBorder.none),
                     onChanged: (value) {
-                      if (value.length > 0 && value.length < 2)
-                        setState(() {
-                          _removeSearchIcon = true;
-                          _showCancelSearchIcon = true;
-                        });
-                      if (value.isEmpty)
-                        setState(() {
-                          _removeSearchIcon = false;
-                          _showCancelSearchIcon = false;
-                        });
+                      if (value.length > 1) {
+                        print('Search this ' + value);
+                        widget.searching(value, true);
+                      }
+                      if (value.length > 0 && value.length < 2) {
+                        if (!_removeSearchIcon)
+                          setState(() {
+                            _removeSearchIcon = true;
+                            _showCancelSearchIcon = true;
+                          });
+                        if (_isSearching) widget.searching('/', false);
+                      }
+                      if (value.isEmpty) {
+                        // setState(() {
+                        //   _removeSearchIcon = false;
+                        //   _showCancelSearchIcon = false;
+                        // });
+                        //   if (_isSearching)
+                        widget.searching('/', false);
+                      }
                     },
                   ),
                   if (_showCancelSearchIcon)
@@ -64,11 +76,10 @@ class _SearchBoxState extends State<SearchBox> {
                         right: 0,
                         top: 1,
                         child: IconButton(
-                          icon: Icon(
-                            Icons.highlight_remove_sharp,
-                            color: Colors.black54,
-                          ),
+                          icon: Icon(Icons.highlight_remove_sharp,
+                              color: Colors.black54),
                           onPressed: () {
+                            final length = _controller.text.length;
                             _controller.clear();
                             FocusManager.instance.primaryFocus.unfocus();
                             setState(() {
@@ -76,6 +87,7 @@ class _SearchBoxState extends State<SearchBox> {
                               _isSearching = false;
                               _removeSearchIcon = false;
                             });
+                            if (length > 2) widget.searching('/', false);
                           },
                         )),
                 ]),

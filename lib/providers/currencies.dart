@@ -43,11 +43,8 @@ class Currencies with ChangeNotifier {
   }
 
   void unselectCurrency(Currency toUnselect) {
-    print('USLI SMO');
-    //_currencies.insert(0, toUnselect);
+    _currencies.insert(0, toUnselect);
     _selectedCurrencies.remove(toUnselect);
-    print(_currencies.length);
-    print(_selectedCurrencies.length);
     notifyListeners();
   }
 

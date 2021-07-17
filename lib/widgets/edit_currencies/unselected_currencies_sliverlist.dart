@@ -33,9 +33,9 @@ class _UnselectedCurrenciesSliverListState
               List<Currency> unselectedCurrencies = currencies.getCurrencies;
               final imagePathVariable =
                   unselectedCurrencies[i].base.toLowerCase();
-              return SizeTransition(
+              return ScaleTransition(
                 // sizeFactor: animation,
-                sizeFactor: animation,
+                scale: animation,
                 child: UnselectedListTile(
                   i: i,
                   base: unselectedCurrencies[i].base,
