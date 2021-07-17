@@ -1,5 +1,6 @@
 import 'package:currency_converter_app/models/currency.dart';
 import 'package:currency_converter_app/providers/currencies.dart';
+import 'package:currency_converter_app/widgets/edit_currencies/selected_list_tile.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -27,7 +28,7 @@ class _SelectedCurrenciesSliverListState
         builder: (context, currencies, child) {
           List<Currency> selected = currencies.getSelected;
           // print(widget._globalKey.currentState.mounted);
-
+          //  print(selected);
           return SliverAnimatedList(
               key: widget._globalKey,
               initialItemCount: selected.length,
@@ -48,54 +49,80 @@ class _SelectedCurrenciesSliverListState
                 // print(i);
                 final imagePathVariable = selected[i].base.toLowerCase();
                 return ScaleTransition(
-                    scale: animation,
-                    child: ListTile(
-                      key: ValueKey(selected[i].base),
-                      leading: Container(
-                        decoration: BoxDecoration(
-                            border: Border.all(width: 1, color: Colors.indigo),
-                            borderRadius: BorderRadius.circular(21)),
-                        child: CircleAvatar(
-                          radius: 20,
-                          backgroundImage: AssetImage(
-                              'assets/images/$imagePathVariable.png'),
-                        ),
-                      ),
-                      title: Container(
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          // mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Flexible(
-                              flex: 1,
-                              child: Text(
-                                selected[i].base,
-                                style: TextStyle(
-                                    fontWeight: FontWeight.bold, fontSize: 20),
-                              ),
-                            ),
-                            Flexible(
-                              flex: 2,
-                              child: Container(
-                                padding: const EdgeInsets.only(left: 7.5),
-                                child: Text(
-                                  currencies.getSymbols[selected[i].base],
-                                  style: TextStyle(fontSize: 14),
+                  scale: animation,
+                  key: ValueKey(imagePathVariable),
+                  child: SelectedListTile(
+                    i: i,
+                    base: selected[i].base,
+                    path: imagePathVariable,
+                    symbol: currencies.getSymbols[selected[i].base],
+                    onPress: () {
+                      widget._globalKey.currentState.removeItem(
+                          i,
+                          (context, animation) => SizeTransition(
+                                sizeFactor: animation,
+                                //  key: ValueKey(selected[i].base),
+                                child: SelectedListTile(
+                                  base: selected[i].base,
+                                  i: i,
+                                  path: imagePathVariable,
+                                  symbol:
+                                      currencies.getSymbols[selected[i].base],
                                 ),
-                              ),
-                            )
-                          ],
-                        ),
-                      ),
-                      trailing: IconButton(
-                        onPressed: () {},
-                        icon: Icon(
-                          Icons.remove_circle,
-                          color: Colors.red,
-                          size: 27,
-                        ),
-                      ),
-                    ));
+                              ));
+                      widget.rebuildState(selected[i]);
+                    },
+                  ),
+                  // child: ListTile(
+                  //   key: ValueKey(selected[i].base),
+                  //   leading: Container(
+                  //     decoration: BoxDecoration(
+                  //         border: Border.all(width: 1, color: Colors.indigo),
+                  //         borderRadius: BorderRadius.circular(21)),
+                  //     child: CircleAvatar(
+                  //       radius: 20,
+                  //       backgroundImage:
+                  //           AssetImage('assets/images/$imagePathVariable.png'),
+                  //     ),
+                  //   ),
+                  //   title: Container(
+                  //     child: Row(
+                  //       crossAxisAlignment: CrossAxisAlignment.center,
+                  //       // mainAxisAlignment: MainAxisAlignment.center,
+                  //       children: [
+                  //         Flexible(
+                  //           flex: 1,
+                  //           child: Text(
+                  //             selected[i].base,
+                  //             style: TextStyle(
+                  //                 fontWeight: FontWeight.bold, fontSize: 20),
+                  //           ),
+                  //         ),
+                  //         Flexible(
+                  //           flex: 2,
+                  //           child: Container(
+                  //             padding: const EdgeInsets.only(left: 7.5),
+                  //             child: Text(
+                  //               currencies.getSymbols[selected[i].base],
+                  //               style: TextStyle(fontSize: 14),
+                  //             ),
+                  //           ),
+                  //         )
+                  //       ],
+                  //     ),
+                  //   ),
+                  //   trailing: IconButton(
+                  //     onPressed: () {
+                  //       //   widget.rebuildState(selected[i]);
+                  //     },
+                  //     icon: Icon(
+                  //       Icons.remove_circle,
+                  //       color: Colors.red,
+                  //       size: 27,
+                  //     ),
+                  //   ),
+                  // ),
+                );
               });
         },
       ),

@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 
-class CustomListTile extends StatelessWidget {
+class UnselectedListTile extends StatelessWidget {
   final int i;
   final Function() onPress;
   final String base;
   final String path;
   final String symbol;
-  const CustomListTile(
+  const UnselectedListTile(
       {this.i, this.onPress, this.base, this.path, this.symbol});
   @override
   Widget build(BuildContext context) {
@@ -50,7 +50,9 @@ class CustomListTile extends StatelessWidget {
             ),
           ),
           trailing: IconButton(
-            onPressed: () {},
+            onPressed: () {
+              onPress();
+            },
             icon:
                 Icon(Icons.add_circle_outlined, color: Colors.green, size: 27),
           ),
