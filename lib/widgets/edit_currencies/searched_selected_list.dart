@@ -4,24 +4,21 @@ import 'package:currency_converter_app/widgets/edit_currencies/selected_list_til
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class SelectedCurrenciesSliverList extends StatefulWidget {
+class SearchedSelectedList extends StatefulWidget {
   final Function(Currency currency) rebuildState;
   final GlobalKey<SliverAnimatedListState> _globalKey;
-  SelectedCurrenciesSliverList(this.rebuildState, this._globalKey);
-
+  SearchedSelectedList(this.rebuildState, this._globalKey);
   @override
-  _SelectedCurrenciesSliverListState createState() =>
-      _SelectedCurrenciesSliverListState();
+  _SearchedSelectedListState createState() => _SearchedSelectedListState();
 }
 
-class _SelectedCurrenciesSliverListState
-    extends State<SelectedCurrenciesSliverList> {
+class _SearchedSelectedListState extends State<SearchedSelectedList> {
   @override
   Widget build(BuildContext context) {
     return Container(
       child: Consumer<Currencies>(
         builder: (context, currencies, child) {
-          List<Currency> selected = currencies.getSelected;
+          List<Currency> selected = currencies.getSearchedSelected;
           return SliverAnimatedList(
               key: widget._globalKey,
               initialItemCount: selected.length,

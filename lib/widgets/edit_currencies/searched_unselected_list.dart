@@ -4,28 +4,27 @@ import 'package:currency_converter_app/widgets/edit_currencies/unselected_list_t
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class UnselectedCurrenciesSliverList extends StatefulWidget {
+class SearchedUnselectedList extends StatefulWidget {
   final Function(Currency currency) selectItem;
   final GlobalKey<SliverAnimatedListState> _listKey;
-  UnselectedCurrenciesSliverList(this.selectItem, this._listKey);
-
+  SearchedUnselectedList(this.selectItem, this._listKey);
   @override
-  _UnselectedCurrenciesSliverListState createState() =>
-      _UnselectedCurrenciesSliverListState();
+  _SearchedUnselectedListState createState() => _SearchedUnselectedListState();
 }
 
-class _UnselectedCurrenciesSliverListState
-    extends State<UnselectedCurrenciesSliverList> {
+class _SearchedUnselectedListState extends State<SearchedUnselectedList> {
   @override
   Widget build(BuildContext context) {
     return Container(
       child: Consumer<Currencies>(
         builder: (context, currencies, child) {
+          List<Currency> searchedUnselected = currencies.getSearchedUnselected;
           return SliverAnimatedList(
             key: widget._listKey,
-            initialItemCount: currencies.getCurrencies.length,
+            initialItemCount: searchedUnselected.length,
             itemBuilder: (context, i, animation) {
-              List<Currency> unselectedCurrencies = currencies.getCurrencies;
+              List<Currency> unselectedCurrencies =
+                  currencies.getSearchedUnselected;
               final imagePathVariable =
                   unselectedCurrencies[i].base.toLowerCase();
               return ScaleTransition(

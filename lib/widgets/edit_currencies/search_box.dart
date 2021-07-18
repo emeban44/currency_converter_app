@@ -1,4 +1,6 @@
+import 'package:currency_converter_app/providers/currencies.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class SearchBox extends StatefulWidget {
   final Function(String text, bool isSearching) searching;
@@ -51,6 +53,8 @@ class _SearchBoxState extends State<SearchBox> {
                     onChanged: (value) {
                       if (value.length > 1) {
                         print('Search this ' + value);
+                        Provider.of<Currencies>(context, listen: false)
+                            .search(value);
                         widget.searching(value, true);
                       }
                       if (value.length > 0 && value.length < 2) {
@@ -87,7 +91,7 @@ class _SearchBoxState extends State<SearchBox> {
                               _isSearching = false;
                               _removeSearchIcon = false;
                             });
-                            if (length > 2) widget.searching('/', false);
+                            if (length > 1) widget.searching('/', false);
                           },
                         )),
                 ]),

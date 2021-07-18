@@ -7,6 +7,9 @@ class Currencies with ChangeNotifier {
   List<Currency> _currencies = [];
   List<Currency> _selectedCurrencies = []; //[Currency(base: 'USD')];
   List<Currency> _unselectedCurrencies = [];
+  //List<Currency> _searchedCurrencies = [];
+  List<Currency> _searchedSelectedCurrencies = [];
+  List<Currency> _searchedUnselectedCurrencies = [];
   Map<String, String> _symbols = {};
   String _apiKey = '4946fc8acfd60b0b2040cbbcd6288b36';
   Currency _fromCurrency;
@@ -25,6 +28,14 @@ class Currencies with ChangeNotifier {
     return [..._unselectedCurrencies];
   }
 
+  List<Currency> get getSearchedSelected {
+    return [..._searchedSelectedCurrencies];
+  }
+
+  List<Currency> get getSearchedUnselected {
+    return [..._searchedUnselectedCurrencies];
+  }
+
   Map<String, String> get getSymbols {
     return _symbols;
   }
@@ -34,11 +45,58 @@ class Currencies with ChangeNotifier {
     return this._amount;
   }
 
+  void search(String searchText) {
+    List<Currency> selectedContainedInSearch = [];
+    List<Currency> unselectedContainedInSearch = [];
+    List<Currency> selectedListToReturn = [];
+    List<Currency> unselectedListToReturn = [];
+
+    selectedContainedInSearch = this
+        ._selectedCurrencies
+        .where((c) => (c.base.contains(searchText.toUpperCase()) ||
+            this._symbols[c.base].contains(searchText) ||
+            this._symbols[c.base].contains(searchText)))
+        .toList();
+
+    selectedContainedInSearch.forEach((c) {
+      selectedListToReturn.add(c);
+    });
+
+    unselectedContainedInSearch = this
+        ._currencies
+        .where((c) => (c.base.contains(searchText.toUpperCase()) ||
+            this._symbols[c.base].contains(searchText)))
+        .toList();
+
+    unselectedContainedInSearch.forEach((c) {
+      unselectedListToReturn.add(c);
+    });
+    // if (selectedListToReturn.isEmpty == false)
+    this._searchedSelectedCurrencies = selectedListToReturn;
+    // if (unselectedListToReturn.isEmpty == false)
+    this._searchedUnselectedCurrencies = unselectedListToReturn;
+    notifyListeners();
+  }
+
   void selectCurrency(Currency toSelect) {
     _selectedCurrencies.insert(0, toSelect);
-    // print(_selectedCurrencies.toString() + 'toString metoda');
-    // print(_selectedCurrencies.length.toString() + 'duzina selekted liste');
     _currencies.remove(toSelect);
+    notifyListeners();
+  }
+
+  void selectSearchedCurrency(Currency toSelectFromSearched) {
+    _searchedSelectedCurrencies.insert(0, toSelectFromSearched);
+    _searchedUnselectedCurrencies.remove(toSelectFromSearched);
+    _selectedCurrencies.insert(0, toSelectFromSearched);
+    _currencies.remove(toSelectFromSearched);
+    notifyListeners();
+  }
+
+  void unselectSearchedCurrency(Currency toUnselectFromSearched) {
+    _searchedUnselectedCurrencies.insert(0, toUnselectFromSearched);
+    _searchedSelectedCurrencies.remove(toUnselectFromSearched);
+    _currencies.insert(0, toUnselectFromSearched);
+    _selectedCurrencies.remove(toUnselectFromSearched);
     notifyListeners();
   }
 
