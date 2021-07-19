@@ -41,7 +41,8 @@ class ConversionOutputBox extends StatelessWidget {
                   children: [
                     Text(
                       (currencies.getAmount *
-                                  currencies.getFromCurrency.rates['USD'])
+                                  currencies.getFromCurrency
+                                      .rates[currencies.getToCurrency.base])
                               .toStringAsFixed(2) +
                           ' ',
                       style: TextStyle(fontSize: 45, color: Colors.white),

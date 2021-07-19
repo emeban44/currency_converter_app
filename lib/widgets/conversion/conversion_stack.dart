@@ -2,6 +2,7 @@ import 'package:currency_converter_app/widgets/amount/amount_input_field.dart';
 import 'package:currency_converter_app/widgets/amount/amount_text.dart';
 import 'package:currency_converter_app/widgets/conversion/conversion_output_box.dart';
 import 'package:currency_converter_app/widgets/conversion/conversion_row.dart';
+import 'package:currency_converter_app/widgets/conversion/edit_button.dart';
 import 'package:currency_converter_app/widgets/stack_background.dart';
 import 'package:flutter/material.dart';
 
@@ -16,6 +17,7 @@ class ConversionStack extends StatelessWidget {
       child: Stack(
         children: [
           StackBackground(),
+          // EditButton(),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [

@@ -51,25 +51,29 @@ class _SearchBoxState extends State<SearchBox> {
                     style: TextStyle(fontSize: 20),
                     decoration: InputDecoration(border: InputBorder.none),
                     onChanged: (value) {
-                      if (value.length > 1) {
+                      if (value.length > 0) {
                         print('Search this ' + value);
+                        setState(() {
+                          _removeSearchIcon = true;
+                          _showCancelSearchIcon = true;
+                        });
                         Provider.of<Currencies>(context, listen: false)
                             .search(value);
                         widget.searching(value, true);
                       }
-                      if (value.length > 0 && value.length < 2) {
-                        if (!_removeSearchIcon)
-                          setState(() {
-                            _removeSearchIcon = true;
-                            _showCancelSearchIcon = true;
-                          });
-                        if (_isSearching) widget.searching('/', false);
-                      }
+                      // if (value.length > 0 && value.length < 2) {
+                      //   if (!_removeSearchIcon)
+                      //     setState(() {
+                      //       _removeSearchIcon = true;
+                      //       _showCancelSearchIcon = true;
+                      //     });
+                      //   if (_isSearching) widget.searching('/', false);
+                      // }
                       if (value.isEmpty) {
-                        // setState(() {
-                        //   _removeSearchIcon = false;
-                        //   _showCancelSearchIcon = false;
-                        // });
+                        setState(() {
+                          _removeSearchIcon = false;
+                          _showCancelSearchIcon = false;
+                        });
                         //   if (_isSearching)
                         widget.searching('/', false);
                       }

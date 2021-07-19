@@ -24,7 +24,6 @@ class CalculatorBox extends StatelessWidget {
           } else if (_text == 'x') {
             // String string = _controller.text;
             // double broj = double.parse(string);
-
           }
           _controller.selection = TextSelection.fromPosition(
             TextPosition(
