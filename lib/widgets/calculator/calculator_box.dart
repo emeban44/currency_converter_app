@@ -7,24 +7,70 @@ class CalculatorBox extends StatelessWidget {
   final bool _isDarker;
   final TextEditingController _controller;
   CalculatorBox(this._text, this._isDarker, this._controller);
+
+  void setNumberAfterOperation(String operation, BuildContext ctx) {
+    final provider = Provider.of<Currencies>(ctx, listen: false);
+    provider.addOperation(operation);
+    provider.restartHelper();
+    provider.expandHelper(_text);
+    provider.addCalculatorNumber(double.parse(provider.getHelper));
+    _controller.text += _text;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Flexible(
       child: InkWell(
         onTap: () {
-          if (_text == 'C' && _controller.text.isNotEmpty) {
-            _controller.text =
-                _controller.text.substring(0, _controller.text.length - 1);
-            Provider.of<Currencies>(context, listen: false)
-                .setAmount(double.parse(_controller.text));
-          } else if (_text != 'C') {
-            _controller.text += _text;
-            Provider.of<Currencies>(context, listen: false)
-                .setAmount(double.parse(_controller.text));
-          } else if (_text == 'x') {
-            // String string = _controller.text;
-            // double broj = double.parse(string);
+          final provider = Provider.of<Currencies>(context, listen: false);
+
+          // numbers
+          if (_text != 'C' &&
+              _text != 'x' &&
+              _text != '/' &&
+              _text != '-' &&
+              _text != '+') {
+            if (_text == '.') {
+              if (_controller.text.isEmpty)
+                return;
+              else if (provider.getHelper.contains('.')) return;
+            }
+            if (_controller.text.endsWith('x') && _text != '.') {
+              setNumberAfterOperation('x', context);
+            } else if (_controller.text.endsWith('/') && _text != '.') {
+              setNumberAfterOperation('/', context);
+            } else if (_controller.text.endsWith('-') && _text != '.') {
+              setNumberAfterOperation('-', context);
+            } else if (_controller.text.endsWith('+') && _text != '.') {
+              setNumberAfterOperation('+', context);
+            } else {
+              _controller.text += _text;
+              provider.expandHelper(_text);
+              double numberToAdd = double.parse(provider.getHelper);
+              provider.updateNumbers(numberToAdd);
+            }
           }
+
+          // backspace
+          else if (_text == 'C') {
+          }
+
+          // operations
+          else {
+            if (_controller.text.isEmpty) return;
+            if (_controller.text.endsWith('x')) {
+              return;
+            } else if (_controller.text.endsWith('/')) {
+              return;
+            } else if (_controller.text.endsWith('-')) {
+              return;
+            } else if (_controller.text.endsWith('+')) {
+              return;
+            }
+            _controller.text += _text;
+          }
+
+          provider.setAmount();
           _controller.selection = TextSelection.fromPosition(
             TextPosition(
               offset: _controller.text.length,

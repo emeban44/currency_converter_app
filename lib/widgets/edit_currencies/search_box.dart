@@ -70,12 +70,13 @@ class _SearchBoxState extends State<SearchBox> {
                       //   if (_isSearching) widget.searching('/', false);
                       // }
                       if (value.isEmpty) {
+                        widget.searching('/', false);
                         setState(() {
                           _removeSearchIcon = false;
                           _showCancelSearchIcon = false;
                         });
                         //   if (_isSearching)
-                        widget.searching('/', false);
+
                       }
                     },
                   ),

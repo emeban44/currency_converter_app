@@ -15,6 +15,9 @@ class Currencies with ChangeNotifier {
   Currency _fromCurrency;
   Currency _toCurrency;
   double _amount;
+  String _helperNumber = '';
+  List<double> _numbers = [0];
+  List<String> _operations = [];
 
   List<Currency> get getCurrencies {
     return [..._currencies];
@@ -43,6 +46,48 @@ class Currencies with ChangeNotifier {
   double get getAmount {
     if (this._amount == null) return 0;
     return this._amount;
+  }
+
+  List<double> get getNumbers {
+    return [..._numbers];
+  }
+
+  String get getHelper {
+    return this._helperNumber;
+  }
+
+  List<String> get getOperations {
+    return [...this._operations];
+  }
+
+  void addOperation(String operation) {
+    this._operations.add(operation);
+    notifyListeners();
+  }
+
+  void expandHelper(String number) {
+    this._helperNumber += number;
+    notifyListeners();
+  }
+
+  void restartHelper() {
+    this._helperNumber = '';
+    notifyListeners();
+  }
+
+  void addCalculatorNumber(double number) {
+    this._numbers.add(number);
+    notifyListeners();
+  }
+
+  void updateNumbers(double number) {
+    _numbers.last = number;
+    notifyListeners();
+  }
+
+  void removeLastNumber() {
+    _numbers.removeLast();
+    notifyListeners();
   }
 
   void search(String searchText) {
@@ -106,8 +151,22 @@ class Currencies with ChangeNotifier {
     notifyListeners();
   }
 
-  void setAmount(double amountToSet) {
-    this._amount = amountToSet;
+  void setAmount() {
+    if (_numbers.length == 1) {
+      this._amount = _numbers.first;
+      notifyListeners();
+      return;
+    }
+    double tmpAmount = getNumbers.first;
+
+    for (int i = 0; i < _numbers.length - 1; i++) {
+      if (_operations[i] == 'x') tmpAmount = tmpAmount * _numbers[i + 1];
+      if (_operations[i] == '/') tmpAmount = tmpAmount / _numbers[i + 1];
+      if (_operations[i] == '-') tmpAmount = tmpAmount - _numbers[i + 1];
+      if (_operations[i] == '+') tmpAmount = tmpAmount + _numbers[i + 1];
+    }
+
+    this._amount = tmpAmount;
     notifyListeners();
   }
 

@@ -39,13 +39,15 @@ class ConversionOutputBox extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.end,
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    Text(
-                      (currencies.getAmount *
-                                  currencies.getFromCurrency
-                                      .rates[currencies.getToCurrency.base])
-                              .toStringAsFixed(2) +
-                          ' ',
-                      style: TextStyle(fontSize: 45, color: Colors.white),
+                    Flexible(
+                      child: Text(
+                        (currencies.getAmount *
+                                    currencies.getFromCurrency
+                                        .rates[currencies.getToCurrency.base])
+                                .toStringAsFixed(2) +
+                            ' ',
+                        style: TextStyle(fontSize: 45, color: Colors.white),
+                      ),
                     ),
                     Text(
                       (currencies.getToCurrency.base),
