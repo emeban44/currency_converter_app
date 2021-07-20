@@ -65,8 +65,28 @@ class Currencies with ChangeNotifier {
     notifyListeners();
   }
 
+  void removeLastOperation() {
+    if (_operations.isEmpty) return;
+    this._operations.removeLast();
+    notifyListeners();
+  }
+
   void expandHelper(String number) {
     this._helperNumber += number;
+    notifyListeners();
+  }
+
+  void rewindHelper() {
+    this._helperNumber = this._numbers.last.toString();
+    notifyListeners();
+  }
+
+  void reduceHelper() {
+    if (_helperNumber.length == 1) {
+      rewindHelper();
+      return;
+    }
+    this._helperNumber = _helperNumber.substring(0, _helperNumber.length - 1);
     notifyListeners();
   }
 
@@ -81,6 +101,11 @@ class Currencies with ChangeNotifier {
   }
 
   void updateNumbers(double number) {
+    if (_numbers.isEmpty) {
+      _numbers.add(number);
+      notifyListeners();
+      return;
+    }
     _numbers.last = number;
     notifyListeners();
   }
@@ -151,7 +176,20 @@ class Currencies with ChangeNotifier {
     notifyListeners();
   }
 
+  void restartAmount() {
+    this._amount = 0;
+    this._helperNumber = '';
+    this._numbers = [];
+    this._operations = [];
+    notifyListeners();
+  }
+
   void setAmount() {
+    if (_numbers.isEmpty) {
+      this._amount = 0;
+      notifyListeners();
+      return;
+    }
     if (_numbers.length == 1) {
       this._amount = _numbers.first;
       notifyListeners();
