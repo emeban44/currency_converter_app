@@ -152,9 +152,14 @@ class Currencies with ChangeNotifier {
 
     selectedContainedInSearch = this
         ._selectedCurrencies
-        .where((c) => (c.base.contains(searchText.toUpperCase()) ||
-            this._symbols[c.base].contains(searchText) ||
-            this._symbols[c.base].contains(searchText)))
+        .where((c) =>
+            (c.base.contains(searchText.toUpperCase()) ||
+                this._symbols[c.base].contains(searchText) ||
+                this._symbols[c.base].toLowerCase().contains(searchText)) ||
+            this
+                ._symbols[c.base]
+                .toLowerCase()
+                .contains(searchText.toLowerCase()))
         .toList();
 
     selectedContainedInSearch.forEach((c) {
@@ -163,8 +168,14 @@ class Currencies with ChangeNotifier {
 
     unselectedContainedInSearch = this
         ._currencies
-        .where((c) => (c.base.contains(searchText.toUpperCase()) ||
-            this._symbols[c.base].contains(searchText)))
+        .where((c) =>
+            (c.base.contains(searchText.toUpperCase()) ||
+                this._symbols[c.base].contains(searchText) ||
+                this._symbols[c.base].toLowerCase().contains(searchText)) ||
+            this
+                ._symbols[c.base]
+                .toLowerCase()
+                .contains(searchText.toLowerCase()))
         .toList();
 
     unselectedContainedInSearch.forEach((c) {

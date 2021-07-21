@@ -103,8 +103,7 @@ class CalculatorBox extends StatelessWidget {
 
           provider.setAmount();
           //print(provider.getHelper);
-          print(provider.getHelperHistory);
-          print(provider.getHelper);
+          //print(provider.getHelperHistory);
           _controller.selection = TextSelection.fromPosition(
             TextPosition(
               offset: _controller.text.length,
@@ -130,10 +129,16 @@ class CalculatorBox extends StatelessWidget {
                   : null,
               color: !_isDarker ? Colors.indigo.shade200 : null),
           child: Center(
-              child: Text(_text,
-                  style: TextStyle(
-                      fontSize: 35,
-                      color: _isDarker ? Colors.white : Colors.black))),
+              child: _text == 'C'
+                  ? Icon(Icons.backspace)
+                  : _text == '/'
+                      ? SizedBox(
+                          height: 35,
+                          child: Image.asset('assets/images/divide_icon.png'))
+                      : Text(_text,
+                          style: TextStyle(
+                              fontSize: 35,
+                              color: _isDarker ? Colors.white : Colors.black))),
         ),
       ),
     );

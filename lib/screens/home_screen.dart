@@ -19,12 +19,9 @@ class HomeScreen extends StatelessWidget {
         //title: Text('Update in...'),
         actions: [
           Container(
-            // height: 20,
             margin: const EdgeInsets.only(right: 10),
-            // decoration: BoxDecoration(
-            //     borderRadius: BorderRadius.circular(15),
-            //     border: Border.all(width: 1, color: Colors.indigo)),
-            child: GestureDetector(
+            child: InkWell(
+              splashColor: Colors.grey,
               onTap: () {
                 Navigator.of(context).pushNamed(EditCurrenciesScreen.routeName);
               },
