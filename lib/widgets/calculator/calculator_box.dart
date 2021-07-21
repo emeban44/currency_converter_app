@@ -53,7 +53,7 @@ class CalculatorBox extends StatelessWidget {
 
           // backspace
           else if (_text == 'C') {
-            print(provider.getHelper);
+            // print(provider.getHelper);
             if (_controller.text.isEmpty)
               return;
             else if (_controller.text.length == 1) {
@@ -68,13 +68,14 @@ class CalculatorBox extends StatelessWidget {
                 _controller.text.endsWith('-') ||
                 _controller.text.endsWith('+') ||
                 _controller.text.endsWith('/')) {
+              provider.removeLastHelper();
               _controller.text =
                   _controller.text.substring(0, _controller.text.length - 1);
             } else {
               if (provider.getHelper.length == 1) {
                 provider.removeLastOperation();
                 provider.removeLastNumber();
-                provider.reduceHelper();
+                provider.rewindHelper(_controller.text);
               } else {
                 provider.reduceHelper();
                 provider.updateNumbers(double.parse(provider.getHelper));
@@ -96,10 +97,13 @@ class CalculatorBox extends StatelessWidget {
             } else if (_controller.text.endsWith('+')) {
               return;
             }
+            provider.addHelper(provider.getHelper);
             _controller.text += _text;
           }
 
           provider.setAmount();
+          //print(provider.getHelper);
+          print(provider.getHelperHistory);
           print(provider.getHelper);
           _controller.selection = TextSelection.fromPosition(
             TextPosition(

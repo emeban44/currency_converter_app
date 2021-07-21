@@ -16,7 +16,8 @@ class Currencies with ChangeNotifier {
   Currency _toCurrency;
   double _amount;
   String _helperNumber = '';
-  List<double> _numbers = [0];
+  List<String> _helpersHistory = [];
+  List<double> _numbers = [];
   List<String> _operations = [];
 
   List<Currency> get getCurrencies {
@@ -56,6 +57,10 @@ class Currencies with ChangeNotifier {
     return this._helperNumber;
   }
 
+  List<String> get getHelperHistory {
+    return [...this._helpersHistory];
+  }
+
   List<String> get getOperations {
     return [...this._operations];
   }
@@ -71,21 +76,45 @@ class Currencies with ChangeNotifier {
     notifyListeners();
   }
 
+  void addHelper(String newHelper) {
+    this._helpersHistory.add(newHelper);
+    notifyListeners();
+  }
+
   void expandHelper(String number) {
     this._helperNumber += number;
     notifyListeners();
   }
 
-  void rewindHelper() {
-    this._helperNumber = this._numbers.last.toString();
+  // void setHelper(){
+  //   this._helperNumber =
+  // }
+
+  void removeLastHelper() {
+    this._helpersHistory.removeLast();
     notifyListeners();
   }
 
+  void rewindHelper(String text) {
+    this._helperNumber = _helpersHistory.last;
+    notifyListeners();
+    // if (_operations.isNotEmpty) print(_numbers.last);
+    // if (_numbers.last.toString().endsWith('.0')) {
+    //   this._helperNumber = this._numbers.last.toInt().toString();
+    //   notifyListeners();
+    //   print(_helperNumber);
+    //   return;
+    // }
+    // this._helperNumber = this._numbers.last.toString();
+    // print(this._helperNumber);
+    // notifyListeners();
+  }
+
   void reduceHelper() {
-    if (_helperNumber.length == 1) {
-      rewindHelper();
-      return;
-    }
+    // if (_helperNumber.length == 1) {
+    //   rewindHelper();
+    //   return;
+    // }
     this._helperNumber = _helperNumber.substring(0, _helperNumber.length - 1);
     notifyListeners();
   }
@@ -179,6 +208,7 @@ class Currencies with ChangeNotifier {
   void restartAmount() {
     this._amount = 0;
     this._helperNumber = '';
+    this._helpersHistory = [];
     this._numbers = [];
     this._operations = [];
     notifyListeners();

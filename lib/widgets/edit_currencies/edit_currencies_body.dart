@@ -26,6 +26,8 @@ class _EditCurrenciesBodyState extends State<EditCurrenciesBody> {
       GlobalKey<SliverAnimatedListState>();
 
   bool _isSearching = false;
+  bool _removeSearchIcon = false;
+  bool _showCancelIcon = false;
 
   void selectItem(Currency currencyToSelect) {
     final newIndex = 0;
@@ -55,13 +57,14 @@ class _EditCurrenciesBodyState extends State<EditCurrenciesBody> {
     _unselectedListKey.currentState.insertItem(newIndex);
   }
 
-  void setSearchingState(String searchedText, bool shouldSearch) {
+  void setSearchingState(String searchedText, bool shouldSearch,
+      bool removeSearchIcon, bool showCancelSearchIcon) {
     setState(() {
-      //  print('SETTING BODY STATE');
       _isSearching = shouldSearch;
+      _removeSearchIcon = removeSearchIcon;
+      _showCancelIcon = showCancelSearchIcon;
       _searchedSelectedKey = GlobalKey<SliverAnimatedListState>();
       _searchedUnselectedKey = GlobalKey<SliverAnimatedListState>();
-      //  _selectedListKey =
     });
   }
 
@@ -71,7 +74,8 @@ class _EditCurrenciesBodyState extends State<EditCurrenciesBody> {
       child: Column(
         children: [
           Flexible(
-            child: SearchBox(setSearchingState),
+            child: SearchBox(
+                setSearchingState, _removeSearchIcon, _showCancelIcon),
           ),
           Flexible(
             flex: 10,

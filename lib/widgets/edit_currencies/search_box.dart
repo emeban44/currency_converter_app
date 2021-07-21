@@ -3,16 +3,23 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class SearchBox extends StatefulWidget {
-  final Function(String text, bool isSearching) searching;
-  SearchBox(this.searching);
+  final Function(
+    String text,
+    bool isSearching,
+    bool removeSearch,
+    bool showCancel,
+  ) searching;
+  bool _removeSearchIcon;
+  bool _showCancelSearchIcon;
+  SearchBox(this.searching, this._removeSearchIcon, this._showCancelSearchIcon);
   @override
   _SearchBoxState createState() => _SearchBoxState();
 }
 
 class _SearchBoxState extends State<SearchBox> {
   bool _isSearching = false;
-  bool _removeSearchIcon = false;
-  bool _showCancelSearchIcon = false;
+  // bool _removeSearchIcon = false;
+  // bool _showCancelSearchIcon = false;
   final TextEditingController _controller = TextEditingController();
 
   @override
@@ -22,7 +29,7 @@ class _SearchBoxState extends State<SearchBox> {
         if (_isSearching == false)
           setState(() {
             _isSearching = true;
-            _showCancelSearchIcon = true;
+            widget._showCancelSearchIcon = true;
           });
       },
       child: Container(
@@ -37,7 +44,7 @@ class _SearchBoxState extends State<SearchBox> {
                 padding: const EdgeInsets.only(left: 5),
                 alignment: Alignment.centerLeft,
                 child: Stack(children: [
-                  if (!_removeSearchIcon)
+                  if (!widget._removeSearchIcon)
                     Positioned(
                         left: 10,
                         top: 5,
@@ -47,40 +54,28 @@ class _SearchBoxState extends State<SearchBox> {
                   TextFormField(
                     autofocus: true,
                     autocorrect: false,
+                    key: ValueKey('searchBox'),
                     controller: _controller,
                     style: TextStyle(fontSize: 20),
                     decoration: InputDecoration(border: InputBorder.none),
                     onChanged: (value) {
                       if (value.length > 0) {
-                        print('Search this ' + value);
-                        setState(() {
-                          _removeSearchIcon = true;
-                          _showCancelSearchIcon = true;
-                        });
+                        //  print('Search this ' + value);
                         Provider.of<Currencies>(context, listen: false)
                             .search(value);
-                        widget.searching(value, true);
+                        widget.searching(value, true, true, true);
                       }
-                      // if (value.length > 0 && value.length < 2) {
-                      //   if (!_removeSearchIcon)
-                      //     setState(() {
-                      //       _removeSearchIcon = true;
-                      //       _showCancelSearchIcon = true;
-                      //     });
-                      //   if (_isSearching) widget.searching('/', false);
-                      // }
-                      if (value.isEmpty) {
-                        widget.searching('/', false);
-                        setState(() {
-                          _removeSearchIcon = false;
-                          _showCancelSearchIcon = false;
-                        });
-                        //   if (_isSearching)
 
+                      if (value.isEmpty) {
+                        widget.searching('/', false, false, false);
+                        // setState(() {
+                        //   _removeSearchIcon = false;
+                        //   _showCancelSearchIcon = false;
+                        // });
                       }
                     },
                   ),
-                  if (_showCancelSearchIcon)
+                  if (widget._showCancelSearchIcon)
                     Positioned(
                         right: 0,
                         top: 1,
@@ -92,11 +87,12 @@ class _SearchBoxState extends State<SearchBox> {
                             _controller.clear();
                             FocusManager.instance.primaryFocus.unfocus();
                             setState(() {
-                              _showCancelSearchIcon = false;
+                              widget._showCancelSearchIcon = false;
                               _isSearching = false;
-                              _removeSearchIcon = false;
+                              widget._removeSearchIcon = false;
                             });
-                            if (length > 1) widget.searching('/', false);
+                            if (length > 1)
+                              widget.searching('/', false, false, false);
                           },
                         )),
                 ]),
