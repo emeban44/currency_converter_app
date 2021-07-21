@@ -38,16 +38,13 @@ class _HomeBodyState extends State<HomeBody> {
       setState(() {
         _displayCalculator = current;
         _textEditingController = controller;
-        //  _alreadyToggled = true;
       });
     else if (!current && _displayCalculator) {
       setState(() {
         _displayCalculator = current;
         _textEditingController = controller;
-        //   _alreadyToggled = false;
       });
     }
-    // print(_alreadyToggled);
   }
 
   @override
@@ -55,7 +52,9 @@ class _HomeBodyState extends State<HomeBody> {
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
-        Flexible(child: ConversionStack(_toggleCalculator), fit: FlexFit.loose),
+        Flexible(
+            child: ConversionStack(_toggleCalculator, _displayCalculator),
+            fit: FlexFit.loose),
         if (_displayCalculator)
           Flexible(
             child: CustomCalculator(_toggleCalculator, _textEditingController),
@@ -79,8 +78,6 @@ class _HomeBodyState extends State<HomeBody> {
                   right: 15,
                   child: FloatingActionButton(
                       onPressed: () {
-                        // Navigator.of(context)
-                        //     .pushNamed(EditCurrenciesScreen.routeName);
                         Navigator.of(context)
                             .pushNamed(EditCurrenciesScreen.routeName);
                       },

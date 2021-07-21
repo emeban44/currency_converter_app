@@ -8,7 +8,8 @@ import 'package:flutter/material.dart';
 
 class ConversionStack extends StatelessWidget {
   final Function(bool toggle) _toggleCalc;
-  ConversionStack(this._toggleCalc);
+  final bool _displayCalc;
+  ConversionStack(this._toggleCalc, this._displayCalc);
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -22,7 +23,7 @@ class ConversionStack extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               AmountText(),
-              AmountInputField(_toggleCalc),
+              AmountInputField(_toggleCalc, _displayCalc),
               ConversionRow(),
               ConversionOutputBox(),
             ],
