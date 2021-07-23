@@ -18,6 +18,8 @@ class CurrencyListView extends StatelessWidget {
               itemBuilder: (ctx, i) {
                 final imagePathVariable =
                     currentCurrencies[i].base.toLowerCase();
+                bool isBitcoin = false;
+                if (currencies.getFromCurrency.base == 'BTC') isBitcoin = true;
                 return InkWell(
                   splashColor: Colors.indigo.shade200,
                   onTap: () {
@@ -54,32 +56,40 @@ class CurrencyListView extends StatelessWidget {
                         symbols[currentCurrencies[i].base],
                         style: TextStyle(fontSize: 13),
                       ),
-                      trailing: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Text(
-                            (currentCurrencies[i].rates[
-                                            currencies.getFromCurrency.base] *
-                                        currencies.getAmount)
-                                    .toStringAsFixed(2) +
-                                ' ' +
-                                currentCurrencies[i].base,
-                            style: TextStyle(fontSize: 20),
-                          ),
-                          Text(
-                            '1 ' +
-                                currentCurrencies[i].base +
-                                ' = ' +
-                                currentCurrencies[i]
-                                    .rates[currencies.getFromCurrency.base]
-                                    .toStringAsFixed(2) +
-                                ' ' +
-                                currencies.getFromCurrency.base,
-                            style:
-                                TextStyle(fontSize: 11, color: Colors.black54),
-                          ),
-                        ],
+                      trailing: Container(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Flexible(
+                              child: Text(
+                                (currencies.getFromCurrency.rates[
+                                                currentCurrencies[i].base] *
+                                            currencies.getAmount)
+                                        .toStringAsFixed(2) +
+                                    ' ' +
+                                    currentCurrencies[i].base,
+                                style: isBitcoin
+                                    ? TextStyle(fontSize: 17)
+                                    : TextStyle(fontSize: 20),
+                              ),
+                            ),
+                            Flexible(
+                              child: Text(
+                                '1 ' +
+                                    currentCurrencies[i].base +
+                                    ' = ' +
+                                    currentCurrencies[i]
+                                        .rates[currencies.getFromCurrency.base]
+                                        .toStringAsFixed(2) +
+                                    ' ' +
+                                    currencies.getFromCurrency.base,
+                                style: TextStyle(
+                                    fontSize: 11, color: Colors.black54),
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ),

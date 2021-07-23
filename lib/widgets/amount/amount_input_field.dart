@@ -33,13 +33,13 @@ class _AmountInputFieldState extends State<AmountInputField> {
           ),
         ],
         gradient: LinearGradient(
-          colors: [Colors.blue.shade50, Colors.blue.shade100],
+          colors: [Colors.white, Colors.blue.shade100],
         ),
       ),
       child: Stack(
         children: [
           Padding(
-            padding: const EdgeInsets.only(bottom: 3.0),
+            padding: const EdgeInsets.only(bottom: 2.0),
             child: TextFormField(
               readOnly: true,
               showCursor: true,
