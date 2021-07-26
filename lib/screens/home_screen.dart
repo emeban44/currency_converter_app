@@ -29,7 +29,8 @@ class HomeScreen extends StatelessWidget {
             final provider = Provider.of<Currencies>(context, listen: false);
             final box = Boxes.getCurrencies();
             final selectedBox = Boxes.getSelected();
-            selectedBox.delete('ALL');
+            selectedBox.delete('EUR');
+            //SharedPrefs().setAppUsedBefore(false);
             // selectedBox.delete('USD');
             // selectedBox.delete('EUR');
             // SharedPrefs().setAppUsedBefore(false);

@@ -36,7 +36,7 @@ class _HomeBodyState extends State<HomeBody> {
 
   @override
   void didChangeDependencies() async {
-    if (!SharedPrefs().getAppUsedBefore) {
+    if (SharedPrefs().getAppUsedBefore != true) {
       setState(() {
         _isLoading = true;
       });

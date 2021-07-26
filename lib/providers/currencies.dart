@@ -11,6 +11,7 @@ import 'package:http/http.dart' as http;
 class Currencies with ChangeNotifier {
   List<Currency> _currencies = [];
   List<Currency> _selectedCurrencies = []; //[Currency(base: 'USD')];
+  List<Currency> _selectedHomeScreen = [];
   List<Currency> _unselectedCurrencies = [];
   List<Currency> _searchedSelectedCurrencies = [];
   List<Currency> _searchedUnselectedCurrencies = [];
@@ -30,6 +31,10 @@ class Currencies with ChangeNotifier {
 
   List<Currency> get getSelected {
     return [..._selectedCurrencies];
+  }
+
+  List<Currency> get getHomeSelected {
+    return [..._selectedHomeScreen];
   }
 
   List<Currency> get getUnselected {
@@ -177,13 +182,11 @@ class Currencies with ChangeNotifier {
   void selectCurrency(Currency toSelect) {
     _selectedCurrencies.insert(0, toSelect);
     _currencies.remove(toSelect);
-    print('hello');
+    _selectedHomeScreen.add(toSelect);
     final selectedBox = Boxes.getSelected();
     final unselectedBox = Boxes.getCurrencies();
     selectedBox.put(toSelect.base, toLocal(toSelect));
     unselectedBox.delete(toSelect.base);
-    print(selectedBox.values.length);
-    print(unselectedBox.values.length);
     notifyListeners();
   }
 
@@ -191,6 +194,7 @@ class Currencies with ChangeNotifier {
     _searchedSelectedCurrencies.insert(0, toSelectFromSearched);
     _searchedUnselectedCurrencies.remove(toSelectFromSearched);
     _selectedCurrencies.insert(0, toSelectFromSearched);
+    _selectedHomeScreen.add(toSelectFromSearched);
     _currencies.remove(toSelectFromSearched);
     final selectedBox = Boxes.getSelected();
     final unselectedBox = Boxes.getCurrencies();
@@ -204,6 +208,7 @@ class Currencies with ChangeNotifier {
     _searchedSelectedCurrencies.remove(toUnselectFromSearched);
     _currencies.insert(0, toUnselectFromSearched);
     _selectedCurrencies.remove(toUnselectFromSearched);
+    _selectedHomeScreen.remove(toUnselectFromSearched);
     final selectedBox = Boxes.getSelected();
     final unselectedBox = Boxes.getCurrencies();
     selectedBox.delete(toUnselectFromSearched.base);
@@ -215,6 +220,7 @@ class Currencies with ChangeNotifier {
   void unselectCurrency(Currency toUnselect) {
     _currencies.insert(0, toUnselect);
     _selectedCurrencies.remove(toUnselect);
+    _selectedHomeScreen.remove(toUnselect);
     final selectedBox = Boxes.getSelected();
     final unselectedBox = Boxes.getCurrencies();
     selectedBox.delete(toUnselect.base);
@@ -256,7 +262,17 @@ class Currencies with ChangeNotifier {
   }
 
   void setFromCurrency(Currency currencyToSet) {
+    final index =
+        _selectedHomeScreen.indexWhere((c) => c.base == currencyToSet.base);
+    _selectedHomeScreen.insert(index, this._fromCurrency);
+    _selectedHomeScreen.removeWhere((c) => c.base == currencyToSet.base);
     this._fromCurrency = currencyToSet;
+    final selectedBox = Boxes.getSelected();
+    final previousFrom = selectedBox.get('from');
+    selectedBox.put('from', toLocal(currencyToSet));
+    selectedBox.delete(previousFrom.base);
+    selectedBox.put(previousFrom.base, previousFrom);
+    selectedBox.delete(currencyToSet.base);
     notifyListeners();
   }
 
@@ -268,17 +284,16 @@ class Currencies with ChangeNotifier {
 
   void setToCurrency(Currency currencyToSet) {
     final index =
-        _selectedCurrencies.indexWhere((c) => c.base == currencyToSet.base);
-    _selectedCurrencies.insert(index, this._toCurrency);
-    _selectedCurrencies.removeWhere((c) => c.base == currencyToSet.base);
+        _selectedHomeScreen.indexWhere((c) => c.base == currencyToSet.base);
+    _selectedHomeScreen.insert(index, this._toCurrency);
+    _selectedHomeScreen.removeWhere((c) => c.base == currencyToSet.base);
     this._toCurrency = currencyToSet;
     final selectedBox = Boxes.getSelected();
     final previousTo = selectedBox.get('to');
     selectedBox.put('to', toLocal(currencyToSet));
+    selectedBox.delete(previousTo.base);
     selectedBox.put(previousTo.base, previousTo);
     selectedBox.delete(currencyToSet.base);
-    print(_selectedCurrencies.length);
-    print(selectedBox.values.length);
     notifyListeners();
   }
 
@@ -348,8 +363,8 @@ class Currencies with ChangeNotifier {
       // selectedBox.put('USD', toLocal(from2));
       // selectedBox.put('EUR', toLocal(to2));
 
-      setToCurrency(fromLocal(selectedBox.get('to')));
-      setFromCurrency(fromLocal(selectedBox.get('from')));
+      _toCurrency = (fromLocal(selectedBox.get('to')));
+      _fromCurrency = (fromLocal(selectedBox.get('from')));
 
       boxAll.delete('USD');
       boxAll.delete('EUR');
@@ -364,6 +379,8 @@ class Currencies with ChangeNotifier {
       List<LocalCurrency> selectedStored = selectedBox.values.toList();
       selectedStored.forEach((selectedLocal) {
         _selectedCurrencies.add(fromLocal(selectedLocal));
+        if (selectedLocal.key == 'from' || selectedLocal.key == 'to') return;
+        _selectedHomeScreen.add(fromLocal(selectedLocal));
       });
 
       _symbols = listOfSymbols.symbols;
@@ -384,8 +401,9 @@ class Currencies with ChangeNotifier {
 
     List<LocalCurrency> selected = selectedBox.values.toList();
     selected.forEach((lc) {
-      if (lc.key == 'to' || lc.key == 'from') return;
       _selectedCurrencies.add(fromLocal(lc));
+      if (lc.key == 'to' || lc.key == 'from') return;
+      _selectedHomeScreen.add(fromLocal(lc));
     });
 
     List<LocalCurrency> unselected = unselectedBox.values.toList();

@@ -19,13 +19,13 @@ class CurrencyDialog extends StatelessWidget {
           SingleChildScrollView(
             child: Container(
               width: double.maxFinite,
-              height: provider.getSelected.length.toDouble() * 55,
+              height: provider.getHomeSelected.length.toDouble() * 55,
               child: ListView.builder(
                 physics: NeverScrollableScrollPhysics(),
                 itemBuilder: (ctx, i) {
                   final imagePathVariable =
-                      provider.getSelected[i].base.toLowerCase();
-                  final selected = provider.getSelected;
+                      provider.getHomeSelected[i].base.toLowerCase();
+                  final selected = provider.getHomeSelected;
                   return SimpleDialogOption(
                     padding: const EdgeInsets.all(0),
                     onPressed: title == 'From'
@@ -92,7 +92,7 @@ class CurrencyDialog extends StatelessWidget {
                     ),
                   );
                 },
-                itemCount: provider.getSelected.length,
+                itemCount: provider.getHomeSelected.length,
               ),
             ),
           ),

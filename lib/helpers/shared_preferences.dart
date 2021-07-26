@@ -24,7 +24,7 @@ class SharedPrefs {
   }
 
   bool get getAppUsedBefore {
-    if (_sharedPrefs.getBool('used') == null) return null;
+    if (_sharedPrefs.getBool('used') == null) return false;
     return _sharedPrefs.getBool('used');
   }
 }

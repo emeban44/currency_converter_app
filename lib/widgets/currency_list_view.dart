@@ -9,7 +9,7 @@ class CurrencyListView extends StatelessWidget {
       height: MediaQuery.of(context).size.height * 0.50,
       child: Consumer<Currencies>(
         builder: (ctx, currencies, _) {
-          final currentCurrencies = currencies.getSelected;
+          final currentCurrencies = currencies.getHomeSelected;
           final symbols = currencies.getSymbols;
           return MediaQuery.removePadding(
             context: context,
