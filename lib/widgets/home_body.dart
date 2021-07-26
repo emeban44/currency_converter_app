@@ -1,9 +1,11 @@
+import 'package:currency_converter_app/helpers/shared_preferences.dart';
 import 'package:currency_converter_app/providers/currencies.dart';
 import 'package:currency_converter_app/screens/edit_currencies_screen.dart';
 import 'package:currency_converter_app/widgets/calculator/custom_calculator.dart';
 import 'package:currency_converter_app/widgets/conversion/conversion_stack.dart';
 import 'package:currency_converter_app/widgets/currency_list_view.dart';
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
 import 'package:provider/provider.dart';
 
 class HomeBody extends StatefulWidget {
@@ -22,12 +24,20 @@ class _HomeBodyState extends State<HomeBody> {
     setState(() {
       _isLoading = true;
     });
+    print(SharedPrefs().getAppUsedBefore);
     await Provider.of<Currencies>(context, listen: false)
         .fetchAndSetCurrencies();
     setState(() {
       _isLoading = false;
     });
     super.didChangeDependencies();
+  }
+
+  @override
+  void dispose() {
+    print('disposed');
+    Hive.close();
+    super.dispose();
   }
 
   void _toggleCalculator(bool current, [TextEditingController controller]) {

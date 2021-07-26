@@ -25,7 +25,7 @@ class ConversionOutputBox extends StatelessWidget {
           children: [
             Flexible(
               child: Text(
-                currencies.getAmount.toString() +
+                currencies.getAmount.toStringAsFixed(2) +
                     ' ' +
                     currencies.getFromCurrency.base +
                     ' =',

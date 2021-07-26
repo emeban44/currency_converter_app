@@ -7,7 +7,6 @@ class Currencies with ChangeNotifier {
   List<Currency> _currencies = [];
   List<Currency> _selectedCurrencies = []; //[Currency(base: 'USD')];
   List<Currency> _unselectedCurrencies = [];
-  //List<Currency> _searchedCurrencies = [];
   List<Currency> _searchedSelectedCurrencies = [];
   List<Currency> _searchedUnselectedCurrencies = [];
   Map<String, String> _symbols = {};
@@ -86,10 +85,6 @@ class Currencies with ChangeNotifier {
     notifyListeners();
   }
 
-  // void setHelper(){
-  //   this._helperNumber =
-  // }
-
   void removeLastHelper() {
     this._helpersHistory.removeLast();
     notifyListeners();
@@ -98,23 +93,9 @@ class Currencies with ChangeNotifier {
   void rewindHelper(String text) {
     this._helperNumber = _helpersHistory.last;
     notifyListeners();
-    // if (_operations.isNotEmpty) print(_numbers.last);
-    // if (_numbers.last.toString().endsWith('.0')) {
-    //   this._helperNumber = this._numbers.last.toInt().toString();
-    //   notifyListeners();
-    //   print(_helperNumber);
-    //   return;
-    // }
-    // this._helperNumber = this._numbers.last.toString();
-    // print(this._helperNumber);
-    // notifyListeners();
   }
 
   void reduceHelper() {
-    // if (_helperNumber.length == 1) {
-    //   rewindHelper();
-    //   return;
-    // }
     this._helperNumber = _helperNumber.substring(0, _helperNumber.length - 1);
     notifyListeners();
   }
