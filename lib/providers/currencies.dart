@@ -1,4 +1,9 @@
+import 'dart:convert';
+
+import 'package:currency_converter_app/database/boxes.dart';
+import 'package:currency_converter_app/helpers/shared_preferences.dart';
 import 'package:currency_converter_app/models/currency.dart';
+import 'package:currency_converter_app/models/local_currency.dart';
 import 'package:currency_converter_app/models/symbols.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -172,6 +177,13 @@ class Currencies with ChangeNotifier {
   void selectCurrency(Currency toSelect) {
     _selectedCurrencies.insert(0, toSelect);
     _currencies.remove(toSelect);
+    print('hello');
+    final selectedBox = Boxes.getSelected();
+    final unselectedBox = Boxes.getCurrencies();
+    selectedBox.put(toSelect.base, toLocal(toSelect));
+    unselectedBox.delete(toSelect.base);
+    print(selectedBox.values.length);
+    print(unselectedBox.values.length);
     notifyListeners();
   }
 
@@ -180,6 +192,10 @@ class Currencies with ChangeNotifier {
     _searchedUnselectedCurrencies.remove(toSelectFromSearched);
     _selectedCurrencies.insert(0, toSelectFromSearched);
     _currencies.remove(toSelectFromSearched);
+    final selectedBox = Boxes.getSelected();
+    final unselectedBox = Boxes.getCurrencies();
+    selectedBox.put(toSelectFromSearched.base, toLocal(toSelectFromSearched));
+    unselectedBox.delete(toSelectFromSearched.base);
     notifyListeners();
   }
 
@@ -188,12 +204,21 @@ class Currencies with ChangeNotifier {
     _searchedSelectedCurrencies.remove(toUnselectFromSearched);
     _currencies.insert(0, toUnselectFromSearched);
     _selectedCurrencies.remove(toUnselectFromSearched);
+    final selectedBox = Boxes.getSelected();
+    final unselectedBox = Boxes.getCurrencies();
+    selectedBox.delete(toUnselectFromSearched.base);
+    unselectedBox.put(
+        toUnselectFromSearched.base, toLocal(toUnselectFromSearched));
     notifyListeners();
   }
 
   void unselectCurrency(Currency toUnselect) {
     _currencies.insert(0, toUnselect);
     _selectedCurrencies.remove(toUnselect);
+    final selectedBox = Boxes.getSelected();
+    final unselectedBox = Boxes.getCurrencies();
+    selectedBox.delete(toUnselect.base);
+    unselectedBox.put(toUnselect.base, toLocal(toUnselect));
     notifyListeners();
   }
 
@@ -242,7 +267,18 @@ class Currencies with ChangeNotifier {
   }
 
   void setToCurrency(Currency currencyToSet) {
+    final index =
+        _selectedCurrencies.indexWhere((c) => c.base == currencyToSet.base);
+    _selectedCurrencies.insert(index, this._toCurrency);
+    _selectedCurrencies.removeWhere((c) => c.base == currencyToSet.base);
     this._toCurrency = currencyToSet;
+    final selectedBox = Boxes.getSelected();
+    final previousTo = selectedBox.get('to');
+    selectedBox.put('to', toLocal(currencyToSet));
+    selectedBox.put(previousTo.base, previousTo);
+    selectedBox.delete(currencyToSet.base);
+    print(_selectedCurrencies.length);
+    print(selectedBox.values.length);
     notifyListeners();
   }
 
@@ -289,12 +325,80 @@ class Currencies with ChangeNotifier {
       }
 
       final listOfSymbols = symbolsFromJson(responses2ndHalf.last.body);
+
       _currencies = listToReturn;
+      final boxAll = Boxes.getCurrencies();
+      _currencies.forEach((c) {
+        final lc = LocalCurrency()
+          ..base = c.base
+          ..date = c.date
+          ..rates = c.rates
+          ..success = c.success
+          ..timestamp = c.timestamp;
+
+        boxAll.put(lc.base, lc);
+      });
+      final selectedBox = Boxes.getSelected();
+      Currency from = _currencies.firstWhere((e) => e.base == 'USD');
+      Currency to = _currencies.firstWhere((e) => e.base == 'EUR');
+      Currency from2 = _currencies.firstWhere((e) => e.base == 'USD');
+      Currency to2 = _currencies.firstWhere((e) => e.base == 'EUR');
+      selectedBox.put('from', toLocal(from));
+      selectedBox.put('to', toLocal(to));
+      // selectedBox.put('USD', toLocal(from2));
+      // selectedBox.put('EUR', toLocal(to2));
+
+      setToCurrency(fromLocal(selectedBox.get('to')));
+      setFromCurrency(fromLocal(selectedBox.get('from')));
+
+      boxAll.delete('USD');
+      boxAll.delete('EUR');
+      _currencies.removeWhere((e) => e.base == 'USD');
+      _currencies.removeWhere((e) => e.base == 'EUR');
+
+      List<LocalCurrency> unselectedStored = boxAll.values.toList();
+      unselectedStored.forEach((unselectedLocal) {
+        _unselectedCurrencies.add(fromLocal(unselectedLocal));
+      });
+
+      List<LocalCurrency> selectedStored = selectedBox.values.toList();
+      selectedStored.forEach((selectedLocal) {
+        _selectedCurrencies.add(fromLocal(selectedLocal));
+      });
+
       _symbols = listOfSymbols.symbols;
+      SharedPrefs().setSymbols(_symbols);
+
+      SharedPrefs().setAppUsedBefore(true);
+
       notifyListeners();
     } catch (error) {
       print(error);
     }
+  }
+
+  void loadLocalApplicationState() async {
+    // Future.delayed(Duration(milliseconds: 1));
+    final selectedBox = Boxes.getSelected();
+    final unselectedBox = Boxes.getCurrencies();
+
+    List<LocalCurrency> selected = selectedBox.values.toList();
+    selected.forEach((lc) {
+      if (lc.key == 'to' || lc.key == 'from') return;
+      _selectedCurrencies.add(fromLocal(lc));
+    });
+
+    List<LocalCurrency> unselected = unselectedBox.values.toList();
+    unselected.forEach((lc) {
+      _currencies.add(fromLocal(lc));
+    });
+
+    _toCurrency = fromLocal(selectedBox.get('to'));
+    _fromCurrency = fromLocal(selectedBox.get('from'));
+
+    var s = SharedPrefs().getSymbols;
+    Map<String, String> simboli = jsonDecode(s).cast<String, String>();
+    _symbols = simboli;
   }
 
   static Map<String, double> defaultEuroRates = {

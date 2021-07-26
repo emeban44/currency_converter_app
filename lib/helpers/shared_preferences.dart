@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SharedPrefs {
@@ -10,6 +12,15 @@ class SharedPrefs {
 
   void setAppUsedBefore(bool value) {
     _sharedPrefs.setBool('used', value);
+  }
+
+  void setSymbols(Map<String, String> symbols) {
+    var s = jsonEncode(symbols);
+    _sharedPrefs.setString('symbols', s);
+  }
+
+  String get getSymbols {
+    return _sharedPrefs.getString('symbols');
   }
 
   bool get getAppUsedBefore {

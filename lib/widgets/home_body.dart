@@ -20,16 +20,33 @@ class _HomeBodyState extends State<HomeBody> {
   // bool _alreadyToggled = false;
 
   @override
+  void initState() {
+    // setState(() {
+    //   _isLoading = true;
+    // });
+    // if (SharedPrefs().getAppUsedBefore) {
+    //   Provider.of<Currencies>(context, listen: false)
+    //       .loadLocalApplicationState();
+    // }
+    // setState(() {
+    //   _isLoading = false;
+    // });
+    super.initState();
+  }
+
+  @override
   void didChangeDependencies() async {
-    setState(() {
-      _isLoading = true;
-    });
-    print(SharedPrefs().getAppUsedBefore);
-    await Provider.of<Currencies>(context, listen: false)
-        .fetchAndSetCurrencies();
-    setState(() {
-      _isLoading = false;
-    });
+    if (!SharedPrefs().getAppUsedBefore) {
+      setState(() {
+        _isLoading = true;
+      });
+      print(SharedPrefs().getAppUsedBefore);
+      await Provider.of<Currencies>(context, listen: false)
+          .fetchAndSetCurrencies();
+      setState(() {
+        _isLoading = false;
+      });
+    } else {}
     super.didChangeDependencies();
   }
 

@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:currency_converter_app/database/boxes.dart';
+import 'package:currency_converter_app/helpers/shared_preferences.dart';
 import 'package:currency_converter_app/models/currency.dart';
 import 'package:currency_converter_app/models/local_currency.dart';
 import 'package:currency_converter_app/providers/currencies.dart';
@@ -12,6 +13,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class HomeScreen extends StatelessWidget {
+  static final routeName = '/home';
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -26,18 +28,22 @@ class HomeScreen extends StatelessWidget {
           onPressed: () {
             final provider = Provider.of<Currencies>(context, listen: false);
             final box = Boxes.getCurrencies();
-            // final lc = LocalCurrency()
-            //   ..base = c.base
-            //   ..success = c.success
-            //   ..date = c.date
-            //   ..rates = c.rates
-            //   ..timestamp = c.timestamp;
-            //box.add(lc);
-            final lc = box.values.first;
-            final c = Currency(base: lc.base, rates: lc.rates, date: lc.date);
-            //provider.setFromCurrency(c);
+            final selectedBox = Boxes.getSelected();
+            selectedBox.delete('ALL');
+            // selectedBox.delete('USD');
+            // selectedBox.delete('EUR');
+            // SharedPrefs().setAppUsedBefore(false);
+            // print(SharedPrefs().getAppUsedBefore);
+            // print(box.length);
+            // print(selectedBox.values);
+            // //provider.setFromCurrency(c);
             // box.deleteAll([0, 1]);
-            print(box.isEmpty);
+            /* SharedPrefs().setSymbols(provider.getSymbols);
+            var s = SharedPrefs().getSymbols;
+            Map<String, String> simboli = jsonDecode(s).cast<String, String>();
+            print(simboli['USD']); */
+
+            //print(box.isEmpty);
             // var ss = jsonEncode(c.rates);
             // // print(ss);
             // var s = jsonDecode(ss);

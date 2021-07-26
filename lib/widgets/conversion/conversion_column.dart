@@ -32,7 +32,7 @@ class ConversionColumn extends StatelessWidget {
             },
             child: Container(
                 height: 50,
-                width: 140,
+                width: MediaQuery.of(context).size.width > 405 ? 150 : 140,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10),
                   border: Border.all(color: Colors.black, width: 1),
@@ -51,6 +51,7 @@ class ConversionColumn extends StatelessWidget {
                       ? currencies.getFromCurrency
                       : currencies.getToCurrency;
                   final imagePathVariable = currency.base.toLowerCase();
+                  //print(MediaQuery.of(context).size.width);
                   final provider =
                       Provider.of<Currencies>(context, listen: false);
                   return Container(

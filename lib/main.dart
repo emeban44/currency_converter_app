@@ -3,6 +3,7 @@ import 'package:currency_converter_app/models/local_currency.dart';
 import 'package:currency_converter_app/providers/currencies.dart';
 import 'package:currency_converter_app/screens/edit_currencies_screen.dart';
 import 'package:currency_converter_app/screens/home_screen.dart';
+import 'package:currency_converter_app/screens/splash_screen.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:flutter/material.dart';
@@ -16,6 +17,7 @@ void main() async {
   Hive.registerAdapter(LocalCurrencyAdapter());
   await Hive.openBox<LocalCurrency>('currencies');
   await Hive.openBox<LocalCurrency>('selectedCurrencies');
+  await Hive.openBox<LocalCurrency>('unselectedCurrencies');
   runApp(MyApp());
 }
 
@@ -39,9 +41,10 @@ class MyApp extends StatelessWidget {
           theme: ThemeData(
             primarySwatch: Colors.blueGrey,
           ),
-          home: HomeScreen(),
+          home: SplashScreen(),
           routes: {
             EditCurrenciesScreen.routeName: (ctx) => EditCurrenciesScreen(),
+            HomeScreen.routeName: (ctx) => HomeScreen(),
             // SliverAnimatedListTest.routeName: (ctx) => SliverAnimatedListTest(),
           },
         ),

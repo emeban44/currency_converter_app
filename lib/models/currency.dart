@@ -4,9 +4,31 @@
 
 import 'dart:convert';
 
+import 'local_currency.dart';
+
 Currency currencyFromJson(String str) => Currency.fromJson(json.decode(str));
 
 String currencyToJson(Currency data) => json.encode(data.toJson());
+
+LocalCurrency toLocal(Currency c) {
+  final lc = LocalCurrency()
+    ..base = c.base
+    ..date = c.date
+    ..rates = c.rates
+    ..success = c.success
+    ..timestamp = c.timestamp;
+  return lc;
+}
+
+Currency fromLocal(LocalCurrency lc) {
+  final c = Currency(
+      base: lc.base,
+      date: lc.date,
+      rates: lc.rates,
+      success: lc.success,
+      timestamp: lc.timestamp);
+  return c;
+}
 
 class Currency {
   Currency({

@@ -16,6 +16,7 @@ class CurrencyListView extends StatelessWidget {
             removeTop: true,
             child: ListView.builder(
               itemBuilder: (ctx, i) {
+                //print(symbols);
                 final imagePathVariable =
                     currentCurrencies[i].base.toLowerCase();
                 bool isBitcoin = false;
