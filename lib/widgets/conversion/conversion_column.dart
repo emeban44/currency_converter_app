@@ -9,7 +9,7 @@ class ConversionColumn extends StatelessWidget {
   ConversionColumn(this.title);
   @override
   Widget build(BuildContext context) {
-    print(MediaQuery.of(context).size.width);
+    //print(MediaQuery.of(context).size.width);
     return Container(
       child: Column(
         mainAxisSize: MainAxisSize.min,

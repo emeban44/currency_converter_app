@@ -23,7 +23,7 @@ class HomeScreen extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
-        title: TextButton(
+        /* title: TextButton(
           child: Text('CLICK'),
           onPressed: () {
             final provider = Provider.of<Currencies>(context, listen: false);
@@ -50,7 +50,7 @@ class HomeScreen extends StatelessWidget {
             // var s = jsonDecode(ss);
             // print(s as Map<String, double>);
           },
-        ),
+        ),*/
         actions: [
           Container(
             margin: const EdgeInsets.only(right: 10),

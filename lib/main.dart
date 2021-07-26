@@ -41,7 +41,7 @@ class MyApp extends StatelessWidget {
           theme: ThemeData(
             primarySwatch: Colors.blueGrey,
           ),
-          home: SplashScreen(),
+          home: HomeScreen(),
           routes: {
             EditCurrenciesScreen.routeName: (ctx) => EditCurrenciesScreen(),
             HomeScreen.routeName: (ctx) => HomeScreen(),

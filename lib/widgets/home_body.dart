@@ -46,7 +46,10 @@ class _HomeBodyState extends State<HomeBody> {
       setState(() {
         _isLoading = false;
       });
-    } else {}
+    } else {
+      Provider.of<Currencies>(context, listen: false)
+          .loadLocalApplicationState();
+    }
     super.didChangeDependencies();
   }
 

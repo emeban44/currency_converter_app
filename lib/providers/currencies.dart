@@ -207,8 +207,10 @@ class Currencies with ChangeNotifier {
     _searchedUnselectedCurrencies.insert(0, toUnselectFromSearched);
     _searchedSelectedCurrencies.remove(toUnselectFromSearched);
     _currencies.insert(0, toUnselectFromSearched);
-    _selectedCurrencies.remove(toUnselectFromSearched);
-    _selectedHomeScreen.remove(toUnselectFromSearched);
+    _selectedCurrencies
+        .removeWhere((c) => c.base == toUnselectFromSearched.base);
+    _selectedHomeScreen
+        .removeWhere((c) => c.base == toUnselectFromSearched.base);
     final selectedBox = Boxes.getSelected();
     final unselectedBox = Boxes.getCurrencies();
     selectedBox.delete(toUnselectFromSearched.base);
@@ -220,7 +222,7 @@ class Currencies with ChangeNotifier {
   void unselectCurrency(Currency toUnselect) {
     _currencies.insert(0, toUnselect);
     _selectedCurrencies.remove(toUnselect);
-    _selectedHomeScreen.remove(toUnselect);
+    _selectedHomeScreen.removeWhere((c) => c.base == toUnselect.base);
     final selectedBox = Boxes.getSelected();
     final unselectedBox = Boxes.getCurrencies();
     selectedBox.delete(toUnselect.base);
@@ -304,10 +306,15 @@ class Currencies with ChangeNotifier {
   }
 
   void toggleFromTo() {
-    Currency tmp1 = this._fromCurrency;
-    Currency tmp2 = this._toCurrency;
-    this._toCurrency = tmp1;
-    this._fromCurrency = tmp2;
+    Currency fromStored = this._fromCurrency;
+    Currency toStored = this._toCurrency;
+    final selectedBox = Boxes.getSelected();
+    selectedBox.delete('from');
+    selectedBox.delete('to');
+    selectedBox.put('to', toLocal(fromStored));
+    selectedBox.put('from', toLocal(toStored));
+    this._toCurrency = fromStored;
+    this._fromCurrency = toStored;
     notifyListeners();
   }
 

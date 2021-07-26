@@ -1,4 +1,7 @@
+import 'package:currency_converter_app/providers/currencies.dart';
+import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class SelectedListTile extends StatelessWidget {
   final int i;
@@ -50,6 +53,26 @@ class SelectedListTile extends StatelessWidget {
         trailing: IconButton(
           onPressed: () {
             //   widget.rebuildState(selected[i]);
+            final selectionCount =
+                Provider.of<Currencies>(context, listen: false)
+                    .getSelected
+                    .length;
+            if (selectionCount <= 2) {
+              showToast(
+                'There must be at least 2 currencies selected!',
+                borderRadius: BorderRadius.circular(15),
+                textStyle: TextStyle(fontSize: 20, color: Colors.white),
+                context: context,
+                animation: StyledToastAnimation.slideFromRight,
+                reverseAnimation: StyledToastAnimation.fade,
+                position: StyledToastPosition.center,
+                animDuration: Duration(seconds: 1),
+                duration: Duration(seconds: 3),
+                curve: Curves.elasticOut,
+                reverseCurve: Curves.linear,
+              );
+              return;
+            }
             onPress();
           },
           icon: Icon(
