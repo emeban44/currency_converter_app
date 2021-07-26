@@ -23,13 +23,15 @@ class HomeScreen extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
-        /* title: TextButton(
+        /*
+        title: TextButton(
+           
           child: Text('CLICK'),
           onPressed: () {
             final provider = Provider.of<Currencies>(context, listen: false);
             final box = Boxes.getCurrencies();
             final selectedBox = Boxes.getSelected();
-            selectedBox.delete('EUR');
+            //SharedPrefs().setAppUsedBefore(false);
             //SharedPrefs().setAppUsedBefore(false);
             // selectedBox.delete('USD');
             // selectedBox.delete('EUR');

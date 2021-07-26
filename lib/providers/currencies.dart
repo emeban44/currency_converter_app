@@ -204,6 +204,37 @@ class Currencies with ChangeNotifier {
   }
 
   void unselectSearchedCurrency(Currency toUnselectFromSearched) {
+    final selectedBox = Boxes.getSelected();
+    final unselectedBox = Boxes.getCurrencies();
+    if (toUnselectFromSearched.base == _toCurrency.base) {
+      _searchedUnselectedCurrencies.insert(0, toUnselectFromSearched);
+      _searchedSelectedCurrencies.remove(toUnselectFromSearched);
+      _currencies.insert(0, toUnselectFromSearched);
+      selectedBox.delete('to');
+      final elementToReplace = _selectedHomeScreen.last;
+      _selectedHomeScreen.removeLast();
+      selectedBox.put('to', toLocal(elementToReplace));
+      selectedBox.delete(elementToReplace.base);
+      unselectedBox.put(
+          toUnselectFromSearched.base, toLocal(toUnselectFromSearched));
+      this._toCurrency = elementToReplace;
+      notifyListeners();
+      return;
+    } else if (toUnselectFromSearched.base == _fromCurrency.base) {
+      _searchedUnselectedCurrencies.insert(0, toUnselectFromSearched);
+      _searchedSelectedCurrencies.remove(toUnselectFromSearched);
+      _currencies.insert(0, toUnselectFromSearched);
+      selectedBox.delete('from');
+      final elementToReplace = _selectedHomeScreen.last;
+      _selectedHomeScreen.removeLast();
+      selectedBox.put('from', toLocal(elementToReplace));
+      selectedBox.delete(elementToReplace.base);
+      unselectedBox.put(
+          toUnselectFromSearched.base, toLocal(toUnselectFromSearched));
+      this._fromCurrency = elementToReplace;
+      notifyListeners();
+      return;
+    }
     _searchedUnselectedCurrencies.insert(0, toUnselectFromSearched);
     _searchedSelectedCurrencies.remove(toUnselectFromSearched);
     _currencies.insert(0, toUnselectFromSearched);
@@ -211,8 +242,6 @@ class Currencies with ChangeNotifier {
         .removeWhere((c) => c.base == toUnselectFromSearched.base);
     _selectedHomeScreen
         .removeWhere((c) => c.base == toUnselectFromSearched.base);
-    final selectedBox = Boxes.getSelected();
-    final unselectedBox = Boxes.getCurrencies();
     selectedBox.delete(toUnselectFromSearched.base);
     unselectedBox.put(
         toUnselectFromSearched.base, toLocal(toUnselectFromSearched));
@@ -220,11 +249,36 @@ class Currencies with ChangeNotifier {
   }
 
   void unselectCurrency(Currency toUnselect) {
+    final selectedBox = Boxes.getSelected();
+    final unselectedBox = Boxes.getCurrencies();
+    if (toUnselect.base == _toCurrency.base) {
+      _currencies.insert(0, toUnselect);
+      _selectedCurrencies.remove(toUnselect);
+      selectedBox.delete('to');
+      final elementToReplace = _selectedHomeScreen.last;
+      _selectedHomeScreen.removeLast();
+      selectedBox.put('to', toLocal(elementToReplace));
+      selectedBox.delete(elementToReplace.base);
+      unselectedBox.put(toUnselect.base, toLocal(toUnselect));
+      this._toCurrency = elementToReplace;
+      notifyListeners();
+      return;
+    } else if (toUnselect.base == _fromCurrency.base) {
+      _currencies.insert(0, toUnselect);
+      _selectedCurrencies.remove(toUnselect);
+      selectedBox.delete('from');
+      final elementToReplace = _selectedHomeScreen.last;
+      _selectedHomeScreen.removeLast();
+      selectedBox.put('from', toLocal(elementToReplace));
+      selectedBox.delete(elementToReplace.base);
+      unselectedBox.put(toUnselect.base, toLocal(toUnselect));
+      this._fromCurrency = elementToReplace;
+      notifyListeners();
+      return;
+    }
     _currencies.insert(0, toUnselect);
     _selectedCurrencies.remove(toUnselect);
     _selectedHomeScreen.removeWhere((c) => c.base == toUnselect.base);
-    final selectedBox = Boxes.getSelected();
-    final unselectedBox = Boxes.getCurrencies();
     selectedBox.delete(toUnselect.base);
     unselectedBox.put(toUnselect.base, toLocal(toUnselect));
     notifyListeners();
