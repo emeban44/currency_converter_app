@@ -9,7 +9,8 @@ import 'package:flutter/material.dart';
 class ConversionStack extends StatelessWidget {
   final Function(bool toggle) _toggleCalc;
   final bool _displayCalc;
-  ConversionStack(this._toggleCalc, this._displayCalc);
+  final double appBarHeight;
+  ConversionStack(this._toggleCalc, this._displayCalc, this.appBarHeight);
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -18,7 +19,6 @@ class ConversionStack extends StatelessWidget {
       child: Stack(
         children: [
           StackBackground(),
-          // EditButton(),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -28,6 +28,7 @@ class ConversionStack extends StatelessWidget {
               ConversionOutputBox(),
             ],
           ),
+          //EditButton(appBarHeight),
         ],
       ),
     );

@@ -9,6 +9,8 @@ import 'package:hive/hive.dart';
 import 'package:provider/provider.dart';
 
 class HomeBody extends StatefulWidget {
+  final double appBarHeight;
+  HomeBody(this.appBarHeight);
   @override
   _HomeBodyState createState() => _HomeBodyState();
 }
@@ -83,7 +85,8 @@ class _HomeBodyState extends State<HomeBody> {
       mainAxisSize: MainAxisSize.min,
       children: [
         Flexible(
-            child: ConversionStack(_toggleCalculator, _displayCalculator),
+            child: ConversionStack(
+                _toggleCalculator, _displayCalculator, widget.appBarHeight),
             fit: FlexFit.loose),
         if (_displayCalculator)
           Flexible(
@@ -112,7 +115,7 @@ class _HomeBodyState extends State<HomeBody> {
                             .pushNamed(EditCurrenciesScreen.routeName);
                       },
                       child: Icon(Icons.add),
-                      backgroundColor: Colors.indigo),
+                      backgroundColor: Color(0xff4f5b8d)),
                 )
               ],
             ),

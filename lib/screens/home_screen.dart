@@ -16,14 +16,52 @@ class HomeScreen extends StatelessWidget {
   static final routeName = '/home';
   @override
   Widget build(BuildContext context) {
+    final appBar = AppBar(
+      backgroundColor: Colors.transparent,
+      elevation: 0,
+      actions: [
+        Padding(
+          padding: const EdgeInsets.all(12.0),
+          child: GestureDetector(
+            onTap: () {
+              Navigator.of(context).pushNamed(EditCurrenciesScreen.routeName);
+            },
+            child: Container(
+              //height: 20,
+              //margin: const EdgeInsets.only(right: 10),
+              padding: const EdgeInsets.symmetric(horizontal: 7.5),
+              decoration: BoxDecoration(
+                  color: Colors.transparent,
+                  borderRadius: BorderRadius.circular(15),
+                  border: Border.all(width: 1, color: Colors.white)),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    'Edit',
+                    style: TextStyle(color: Colors.white, fontSize: 15),
+                  ),
+                  Icon(
+                    Icons.list,
+                    color: Colors.white,
+                    size: 30,
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+      ],
+      //leading: Icon(Icons.ac_unit),
+    );
+    double height = appBar.preferredSize.height;
     return Scaffold(
-      body: HomeBody(),
+      body: HomeBody(height),
       extendBodyBehindAppBar: true,
       drawer: MyDrawer(),
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-        /*
+      appBar: appBar,
+      /*
         title: TextButton(
            
           child: Text('CLICK'),
@@ -53,7 +91,7 @@ class HomeScreen extends StatelessWidget {
             // print(s as Map<String, double>);
           },
         ),*/
-        actions: [
+      /*actions: [
           Container(
             margin: const EdgeInsets.only(right: 10),
             child: InkWell(
@@ -76,8 +114,8 @@ class HomeScreen extends StatelessWidget {
               ),
             ),
           ),
-        ],
-      ),
+        ],*/
+
       resizeToAvoidBottomInset: false,
     );
   }

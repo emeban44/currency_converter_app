@@ -24,6 +24,11 @@ class ConversionColumn extends StatelessWidget {
           Flexible(
               child: InkWell(
             onTap: () {
+              if (Provider.of<Currencies>(context, listen: false)
+                  .getHomeSelected
+                  .isEmpty) {
+                return;
+              }
               showDialog(
                   context: context,
                   builder: (ctx) {
@@ -48,7 +53,7 @@ class ConversionColumn extends StatelessWidget {
                         offset: Offset(0.5, 0.5)),
                   ],
                   gradient: LinearGradient(
-                    colors: [Colors.white, Colors.blue.shade100],
+                    colors: [Colors.white, Colors.blue.shade50],
                   ),
                 ),
                 child: Consumer<Currencies>(builder: (ctx, currencies, _) {

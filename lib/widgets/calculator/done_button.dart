@@ -14,7 +14,7 @@ class DoneButton extends StatelessWidget {
           width: double.infinity,
           alignment: Alignment.topCenter,
           decoration: BoxDecoration(
-            gradient: LinearGradient(
+            /*gradient: LinearGradient(
               colors: [
                 Colors.indigo.shade300,
                 Colors.indigo.shade300,
@@ -24,7 +24,8 @@ class DoneButton extends StatelessWidget {
               ],
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
-            ),
+            ),*/
+            color: Color.fromRGBO(62, 71, 112, 1),
           ),
           child: Padding(
             padding: const EdgeInsets.only(top: 5.0),

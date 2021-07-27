@@ -17,7 +17,7 @@ class ConversionOutputBox extends StatelessWidget {
         width: double.infinity,
         margin: const EdgeInsets.only(top: 15, left: 20, right: 20),
         decoration: BoxDecoration(
-          color: Colors.black38,
+          color: Colors.black26,
           borderRadius: BorderRadius.circular(5),
         ),
         child: Center(
@@ -32,7 +32,7 @@ class ConversionOutputBox extends StatelessWidget {
                     ' ' +
                     currencies.getFromCurrency.base +
                     ' =',
-                style: TextStyle(fontSize: 35, color: Colors.white),
+                style: TextStyle(fontSize: 32, color: Colors.white),
               ),
             ),
             Flexible(
@@ -49,12 +49,20 @@ class ConversionOutputBox extends StatelessWidget {
                                         .rates[currencies.getToCurrency.base])
                                 .toStringAsFixed(2) +
                             ' ',
-                        style: TextStyle(fontSize: 45, color: Colors.white),
+                        style: TextStyle(
+                            fontSize: 45,
+                            color: Colors.white,
+                            fontWeight: FontWeight.w600),
                       ),
                     ),
-                    Text(
-                      (currencies.getToCurrency.base),
-                      style: TextStyle(fontSize: 35, color: Colors.white),
+                    Flexible(
+                      child: Container(
+                        padding: const EdgeInsets.only(bottom: 5),
+                        child: Text(
+                          (currencies.getToCurrency.base),
+                          style: TextStyle(fontSize: 30, color: Colors.white),
+                        ),
+                      ),
                     ),
                   ],
                 ),

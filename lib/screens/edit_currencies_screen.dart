@@ -93,7 +93,7 @@ class EditCurrenciesScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text('Edit Currencies'),
-        backgroundColor: Colors.indigo.shade400,
+        backgroundColor: Color(0xff4f5b8d),
       ),
       body: EditCurrenciesBody(),
       resizeToAvoidBottomInset: false,

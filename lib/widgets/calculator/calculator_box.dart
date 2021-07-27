@@ -114,7 +114,7 @@ class CalculatorBox extends StatelessWidget {
           width: double.infinity,
           height: 85,
           decoration: BoxDecoration(
-              gradient: _isDarker
+            /*gradient: _isDarker
                   ? LinearGradient(
                       colors: [
                         Colors.indigo.shade300,
@@ -126,11 +126,16 @@ class CalculatorBox extends StatelessWidget {
                       begin: Alignment.centerLeft,
                       end: Alignment.centerRight,
                     )
-                  : null,
-              color: !_isDarker ? Colors.indigo.shade200 : null),
+                  : null, */
+            color:
+                !_isDarker ? Color(0xff4f5b8d) : Color.fromRGBO(62, 71, 112, 1),
+          ),
           child: Center(
               child: _text == 'C'
-                  ? Icon(Icons.backspace)
+                  ? Icon(
+                      Icons.backspace,
+                      color: Colors.white,
+                    )
                   : _text == '/'
                       ? SizedBox(
                           height: 35,
@@ -138,7 +143,7 @@ class CalculatorBox extends StatelessWidget {
                       : Text(_text,
                           style: TextStyle(
                               fontSize: 35,
-                              color: _isDarker ? Colors.white : Colors.black))),
+                              color: _isDarker ? Colors.white : Colors.white))),
         ),
       ),
     );

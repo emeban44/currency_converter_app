@@ -33,7 +33,7 @@ class _AmountInputFieldState extends State<AmountInputField> {
           ),
         ],
         gradient: LinearGradient(
-          colors: [Colors.white, Colors.blue.shade100],
+          colors: [Colors.white, Colors.blue.shade50],
         ),
       ),
       child: Stack(
