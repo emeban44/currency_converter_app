@@ -19,6 +19,7 @@ class CalculatorBox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final screenHeight = MediaQuery.of(context).size.height;
     return Flexible(
       child: InkWell(
         onTap: () {
@@ -112,7 +113,11 @@ class CalculatorBox extends StatelessWidget {
         },
         child: Container(
           width: double.infinity,
-          height: 85,
+          height: screenHeight > 910
+              ? 95
+              : screenHeight > 890
+                  ? 90
+                  : 85,
           decoration: BoxDecoration(
             /*gradient: _isDarker
                   ? LinearGradient(

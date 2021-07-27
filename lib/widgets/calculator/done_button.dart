@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 
 class DoneButton extends StatelessWidget {
   final Function(bool toggle) _toggleCalc;
@@ -6,6 +7,7 @@ class DoneButton extends StatelessWidget {
   DoneButton(this._toggleCalc, this._controller);
   @override
   Widget build(BuildContext context) {
+    final screenHeight = MediaQuery.of(context).size.height;
     return Flexible(
       child: InkWell(
         onTap: () => _toggleCalc(false),
@@ -14,24 +16,11 @@ class DoneButton extends StatelessWidget {
           width: double.infinity,
           alignment: Alignment.topCenter,
           decoration: BoxDecoration(
-            /*gradient: LinearGradient(
-              colors: [
-                Colors.indigo.shade300,
-                Colors.indigo.shade300,
-                // Colors.indigo.shade300,
-                //  Colors.indigo.shade300,
-                Colors.blueGrey.shade600,
-              ],
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-            ),*/
             color: Color.fromRGBO(62, 71, 112, 1),
           ),
-          child: Padding(
-            padding: const EdgeInsets.only(top: 5.0),
-            child: Text('DONE',
-                style: TextStyle(fontSize: 30, color: Colors.white)),
-          ),
+          child: Text('DONE',
+              style: TextStyle(
+                  fontSize: screenHeight * 0.03, color: Colors.white)),
         ),
       ),
     );
