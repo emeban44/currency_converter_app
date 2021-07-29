@@ -1,6 +1,8 @@
 import 'package:currency_converter_app/helpers/shared_preferences.dart';
 import 'package:currency_converter_app/models/local_currency.dart';
 import 'package:currency_converter_app/providers/currencies.dart';
+import 'package:currency_converter_app/providers/historical.dart';
+import 'package:currency_converter_app/screens/chart_screen.dart';
 import 'package:currency_converter_app/screens/edit_currencies_screen.dart';
 import 'package:currency_converter_app/screens/home_screen.dart';
 import 'package:currency_converter_app/screens/splash_screen.dart';
@@ -34,6 +36,9 @@ class MyApp extends StatelessWidget {
           ChangeNotifierProvider(
             create: (ctx) => Currencies(),
           ),
+          ChangeNotifierProvider(
+            create: (ctx) => HistoricalRates(),
+          ),
         ],
         child: MaterialApp(
           title: 'Currency Converter',
@@ -45,6 +50,7 @@ class MyApp extends StatelessWidget {
           routes: {
             EditCurrenciesScreen.routeName: (ctx) => EditCurrenciesScreen(),
             HomeScreen.routeName: (ctx) => HomeScreen(),
+            ChartScreen.routeName: (ctx) => ChartScreen(),
             // SliverAnimatedListTest.routeName: (ctx) => SliverAnimatedListTest(),
           },
         ),

@@ -36,6 +36,7 @@ dependencies:
   hive_flutter: ^1.1.0
   shared_preferences: ^2.0.6
   flutter_styled_toast: ^2.0.0
+  fl_chart: ^0.36.3
 
 flutter_icons:
   android: "launcher_icon"

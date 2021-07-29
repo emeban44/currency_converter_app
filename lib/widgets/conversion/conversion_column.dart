@@ -1,5 +1,6 @@
 import 'package:currency_converter_app/models/currency.dart';
 import 'package:currency_converter_app/providers/currencies.dart';
+import 'package:currency_converter_app/screens/chart_screen.dart';
 import 'package:currency_converter_app/widgets/conversion/currencies_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -92,11 +93,21 @@ class ConversionColumn extends StatelessWidget {
                           ),
                         ),
                         Positioned(
-                          right: 2,
-                          top: 6,
+                          right: -10,
+                          top: -6,
                           child: Container(
                               margin: const EdgeInsets.only(left: 10),
-                              child: Icon(Icons.insert_chart_outlined_sharp)),
+                              child: IconButton(
+                                icon: Icon(Icons.insert_chart_outlined_sharp),
+                                onPressed: () {
+                                  Navigator.of(context).pushNamed(
+                                      ChartScreen.routeName,
+                                      arguments: [
+                                        provider.getToCurrency.base,
+                                        provider.getFromCurrency.base
+                                      ]);
+                                },
+                              )),
                         )
                       ]));
                 })),
