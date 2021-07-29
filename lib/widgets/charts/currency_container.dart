@@ -7,7 +7,7 @@ class CurrencyContainer extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       height: 50,
-      width: 120,
+      width: 125,
       padding: const EdgeInsets.only(right: 10),
       decoration: BoxDecoration(
           border: Border.all(width: 1, color: Colors.white),

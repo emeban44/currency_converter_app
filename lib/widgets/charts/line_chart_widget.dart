@@ -38,7 +38,7 @@ class LineChartWidget extends StatelessWidget {
 
   int getY(double x) {
     int xx = x.toInt();
-    final List<double> pastWeekReversed = pastWeekData.toList();
+    final List<double> pastWeekReversed = pastWeekData.reversed.toList();
     //print(xx);
     int toReturn = int.parse(mjerenja.keys.firstWhere((e) {
       if (mjerenja[e] == pastWeekReversed[xx]) {
@@ -78,7 +78,7 @@ class LineChartWidget extends StatelessWidget {
             },
             getDrawingHorizontalLine: (value) {
               return FlLine(
-                color: Colors.black45,
+                color: Colors.black26,
                 strokeWidth: 1,
               );
             },
@@ -87,9 +87,9 @@ class LineChartWidget extends StatelessWidget {
           borderData: FlBorderData(
             show: true,
             border: Border(
-              top: BorderSide(color: Colors.black38),
-              bottom: BorderSide(color: Colors.black38),
-              right: BorderSide(color: Colors.black26),
+              top: BorderSide(color: Colors.black26),
+              bottom: BorderSide(color: Colors.black26),
+              right: BorderSide(color: Colors.black12),
               left: BorderSide(color: Colors.black12),
             ),
           ),
