@@ -93,21 +93,20 @@ class ConversionColumn extends StatelessWidget {
                           ),
                         ),
                         Positioned(
-                          right: -10,
-                          top: -6,
-                          child: Container(
-                              margin: const EdgeInsets.only(left: 10),
-                              child: IconButton(
-                                icon: Icon(Icons.insert_chart_outlined_sharp),
-                                onPressed: () {
-                                  Navigator.of(context).pushNamed(
-                                      ChartScreen.routeName,
-                                      arguments: [
-                                        provider.getToCurrency.base,
-                                        provider.getFromCurrency.base
-                                      ]);
-                                },
-                              )),
+                          right: 1,
+                          top: 6,
+                          child: GestureDetector(
+                            onTap: () {
+                              Navigator.of(context)
+                                  .pushNamed(ChartScreen.routeName, arguments: [
+                                provider.getToCurrency.base,
+                                provider.getFromCurrency.base
+                              ]);
+                            },
+                            child: Container(
+                                margin: const EdgeInsets.only(left: 10),
+                                child: Icon(Icons.insert_chart_outlined)),
+                          ),
                         )
                       ]));
                 })),

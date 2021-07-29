@@ -19,17 +19,18 @@ class LineChartWidget extends StatelessWidget {
 
   void calculateEverything() {
     print('usli');
-    print(timeseries.rates.keys.last);
-    for (int i = 1; i < 8; i++) {
+    // print(timeseries.rates.keys.last);
+    for (int i = 0; i < 7; i++) {
       final day = today.subtract(Duration(days: i)).toString();
       pastWeekDates.add(day.substring(0, 10));
-      print(timeseries.rates[pastWeekDates[i - 1]]);
-      pastWeekData.add(timeseries.rates[pastWeekDates[i - 1]][symbol]);
-      pastWeekUnsortedData.add(timeseries.rates[pastWeekDates[i - 1]][symbol]);
+      //print(timeseries.rates[pastWeekDates[i]]);
+      pastWeekData.add(timeseries.rates[pastWeekDates[i]][symbol]);
+      pastWeekUnsortedData.add(timeseries.rates[pastWeekDates[i]][symbol]);
       mjerenja[i.toString()] = pastWeekUnsortedData.last;
     }
 
-    print(mjerenja);
+    //print(mjerenja);
+    //print(pastWeekDates);
     pastWeekData.sort();
     //print(pastWeekData);
     //print(pastWeekData);
@@ -37,36 +38,37 @@ class LineChartWidget extends StatelessWidget {
 
   int getY(double x) {
     int xx = x.toInt();
-    final List<double> pastWeekReversed = pastWeekData.reversed.toList();
+    final List<double> pastWeekReversed = pastWeekData.toList();
     //print(xx);
     int toReturn = int.parse(mjerenja.keys.firstWhere((e) {
       if (mjerenja[e] == pastWeekReversed[xx]) {
-        print(mjerenja[e]);
-        print(pastWeekReversed[xx]);
+        //print(mjerenja[e]);
+        //print(pastWeekReversed[xx]);
       }
       return mjerenja[e] == pastWeekReversed[xx];
     }));
     //print(pastWeekData[xx]);
-    print(toReturn);
+    //print(toReturn);
     return toReturn;
   }
 
   @override
   Widget build(BuildContext context) {
-    print(timeseries);
+    //print(timeseries);
     calculateEverything();
     return Container(
       //color: Colors.grey,
-      height: 500,
-      margin: EdgeInsets.only(left: 20, right: 30, top: 50),
+      height: 300,
+      margin: EdgeInsets.only(left: 20, right: 35, top: 15),
       child: LineChart(
         LineChartData(
           minX: 0,
           maxX: 6,
           minY: 0,
-          maxY: pastWeekDates.length.toDouble(),
+          maxY: pastWeekDates.length.toDouble() - 1,
           gridData: FlGridData(
             show: true,
+            horizontalInterval: 1,
             //drawVerticalLine: true,
             getDrawingVerticalLine: (value) {
               return FlLine(
@@ -76,23 +78,34 @@ class LineChartWidget extends StatelessWidget {
             },
             getDrawingHorizontalLine: (value) {
               return FlLine(
-                color: Colors.indigo,
+                color: Colors.black45,
                 strokeWidth: 1,
               );
             },
           ),
-          titlesData: LineTitles.getTitleData(pastWeekData),
+          titlesData: LineTitles.getTitleData(pastWeekData, pastWeekDates),
           borderData: FlBorderData(
             show: true,
-            border: Border.all(color: Colors.green, width: 1),
+            border: Border(
+              top: BorderSide(color: Colors.black38),
+              bottom: BorderSide(color: Colors.black38),
+              right: BorderSide(color: Colors.black26),
+              left: BorderSide(color: Colors.black12),
+            ),
           ),
           lineBarsData: [
             LineChartBarData(
               isCurved: true,
+              dotData: FlDotData(
+                show: false,
+              ),
               barWidth: 5,
               colors: [
                 Colors.blue.shade300,
+                Colors.blue.shade400,
                 Colors.blue.shade600,
+                Colors.blue.shade700,
+                Colors.blue.shade800,
               ],
               spots: [
                 FlSpot(0, getY(0).toDouble()),

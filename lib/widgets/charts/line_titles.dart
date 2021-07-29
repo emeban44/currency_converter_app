@@ -3,8 +3,9 @@ import 'package:flutter/material.dart';
 
 class LineTitles {
   List<double> pastWeekData;
-  LineTitles(this.pastWeekData);
-  static getTitleData(pastWeekData) => FlTitlesData(
+  List<String> pastWeekDates;
+  LineTitles(this.pastWeekData, this.pastWeekDates);
+  static getTitleData(pastWeekData, pastWeekDates) => FlTitlesData(
         show: true,
         leftTitles: SideTitles(
             showTitles: true,
@@ -12,21 +13,23 @@ class LineTitles {
               return TextStyle(fontSize: 8, color: Colors.black);
             },
             getTitles: (value) {
-              if (value == 0) return '0';
+              //if (value == 0) return '0';
               //print(pastWeekData[value.toInt() - 1].toStringAsFixed(3));
-              return pastWeekData[value.toInt() - 1].toStringAsFixed(3);
+              return pastWeekData[value.toInt()].toStringAsFixed(3);
 
               //return '';
             }),
-        bottomTitles: SideTitles(
-          showTitles: false,
+        topTitles: SideTitles(
+          showTitles: true,
           getTitles: (value) {
-            if (value == 2) return 'TUE';
-            if (value == 1) return 'MON';
+            if (value == 6) return pastWeekDates[0];
+            if (value == 0) return pastWeekDates[6];
+            if (value == 3) return pastWeekDates[3];
             return '';
           },
-          margin: 10,
+          margin: 20,
         ),
+        bottomTitles: SideTitles(showTitles: false),
       );
 
   static getStyles() => TextStyle(
