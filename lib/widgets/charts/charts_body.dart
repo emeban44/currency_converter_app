@@ -1,6 +1,7 @@
 import 'package:currency_converter_app/models/timeseries.dart';
 import 'package:currency_converter_app/providers/historical.dart';
 import 'package:currency_converter_app/widgets/charts/currency_container.dart';
+import 'package:currency_converter_app/widgets/charts/monthly_chart.dart';
 import 'package:currency_converter_app/widgets/charts/swap_icon.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -23,6 +24,9 @@ class _ChartsBodyState extends State<ChartsBody> {
   bool _shouldToggle = false;
   Timeseries first;
   Timeseries second;
+
+  List<bool> _selection = [true, false, false, false];
+
   @override
   void didChangeDependencies() async {
     setState(() {
@@ -37,6 +41,16 @@ class _ChartsBodyState extends State<ChartsBody> {
       _isLoading = false;
     });
     super.didChangeDependencies();
+  }
+
+  void _switchInterval(int selectedIndex) {
+    setState(() {
+      _selection[0] = false;
+      _selection[1] = false;
+      _selection[2] = false;
+      _selection[3] = false;
+      _selection[selectedIndex] = true;
+    });
   }
 
   void toggleTimeseries() {
@@ -78,22 +92,27 @@ class _ChartsBodyState extends State<ChartsBody> {
                   ),
                 ),
               ),
-              TimeTableRow(),
+              TimeTableRow(_selection, _switchInterval),
               if (!_isLoading && !_shouldToggle)
-                RateInformation(first, widget.symbol),
+                RateInformation(first, widget.symbol, _selection),
               if (!_isLoading && _shouldToggle)
-                RateInformation(second, widget.base),
+                RateInformation(second, widget.base, _selection),
               if (_isLoading)
                 Padding(
                     padding: const EdgeInsets.all(50.0),
                     child: CircularProgressIndicator()),
-              if (!_isLoading && !_shouldToggle)
+              if (!_isLoading && !_shouldToggle && _selection[0])
                 LineChartWidget(first, second.base),
-              if (!_isLoading && _shouldToggle)
+              if (!_isLoading && _shouldToggle && _selection[0])
                 LineChartWidget(second, first.base),
+              if (!_isLoading && !_shouldToggle && _selection[1])
+                MonthlyChart(first, second.base, '1M'),
+              if (!_isLoading && _shouldToggle && _selection[1])
+                MonthlyChart(second, first.base, '1M'),
               if (!_isLoading && !_shouldToggle)
-                RateStats(first, widget.symbol),
-              if (!_isLoading && _shouldToggle) RateStats(second, first.base),
+                RateStats(first, widget.symbol, _selection),
+              if (!_isLoading && _shouldToggle)
+                RateStats(second, first.base, _selection),
             ],
           ),
         ),

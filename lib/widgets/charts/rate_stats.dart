@@ -5,7 +5,8 @@ import 'package:flutter/material.dart';
 class RateStats extends StatelessWidget {
   final Timeseries timeseries;
   final String symbol;
-  RateStats(this.timeseries, this.symbol);
+  final List<bool> interval;
+  RateStats(this.timeseries, this.symbol, this.interval);
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -21,9 +22,9 @@ class RateStats extends StatelessWidget {
               style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
             ),
           ),
-          StatsBar('High', timeseries, symbol),
-          StatsBar('Low', timeseries, symbol),
-          StatsBar('Average', timeseries, symbol),
+          StatsBar('High', timeseries, symbol, interval),
+          StatsBar('Low', timeseries, symbol, interval),
+          StatsBar('Average', timeseries, symbol, interval),
         ],
       ),
     );

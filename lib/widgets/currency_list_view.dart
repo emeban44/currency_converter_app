@@ -60,7 +60,7 @@ class CurrencyListView extends StatelessWidget {
                       trailing: Container(
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.end,
                           children: [
                             Flexible(
                               child: Text(
@@ -76,17 +76,20 @@ class CurrencyListView extends StatelessWidget {
                               ),
                             ),
                             Flexible(
-                              child: Text(
-                                '1 ' +
-                                    currentCurrencies[i].base +
-                                    ' = ' +
-                                    currentCurrencies[i]
-                                        .rates[currencies.getFromCurrency.base]
-                                        .toStringAsFixed(2) +
-                                    ' ' +
-                                    currencies.getFromCurrency.base,
-                                style: TextStyle(
-                                    fontSize: 11, color: Colors.black54),
+                              child: FittedBox(
+                                child: Text(
+                                  '1 ' +
+                                      currentCurrencies[i].base +
+                                      ' = ' +
+                                      currentCurrencies[i]
+                                          .rates[
+                                              currencies.getFromCurrency.base]
+                                          .toStringAsFixed(2) +
+                                      ' ' +
+                                      currencies.getFromCurrency.base,
+                                  style: TextStyle(
+                                      fontSize: 11, color: Colors.black54),
+                                ),
                               ),
                             ),
                           ],

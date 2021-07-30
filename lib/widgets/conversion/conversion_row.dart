@@ -6,6 +6,7 @@ import 'package:provider/provider.dart';
 class ConversionRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
     return Container(
       margin: const EdgeInsets.only(top: 20, right: 20, left: 20),
       child: Row(
@@ -20,7 +21,7 @@ class ConversionRow extends StatelessWidget {
                 child: IconButton(
                   icon: Icon(
                     Icons.swap_horiz_sharp,
-                    size: 50,
+                    size: screenWidth < 390 ? 45 : 50,
                     color: Colors.indigo.shade100,
                   ),
                   onPressed: () {

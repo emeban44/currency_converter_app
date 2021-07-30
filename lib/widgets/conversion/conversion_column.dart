@@ -42,7 +42,7 @@ class ConversionColumn extends StatelessWidget {
                 width: MediaQuery.of(context).size.width > 405
                     ? 150
                     : MediaQuery.of(context).size.width < 380
-                        ? 130
+                        ? 135
                         : 140,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10),
@@ -94,18 +94,21 @@ class ConversionColumn extends StatelessWidget {
                         ),
                         Positioned(
                           right: 1,
-                          top: 6,
+                          top: 4.5,
                           child: GestureDetector(
                             onTap: () {
                               Navigator.of(context)
                                   .pushNamed(ChartScreen.routeName, arguments: [
+                                provider.getFromCurrency.base,
                                 provider.getToCurrency.base,
-                                provider.getFromCurrency.base
                               ]);
                             },
                             child: Container(
                                 margin: const EdgeInsets.only(left: 10),
-                                child: Icon(Icons.insert_chart_outlined)),
+                                child: Icon(
+                                  Icons.insert_chart_outlined,
+                                  size: 28,
+                                )),
                           ),
                         )
                       ]));

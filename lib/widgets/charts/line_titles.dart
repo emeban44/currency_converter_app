@@ -32,6 +32,33 @@ class LineTitles {
         bottomTitles: SideTitles(showTitles: false),
       );
 
+  static getMonthlyTitleData(pastWeekData, pastWeekDates) => FlTitlesData(
+        show: true,
+        leftTitles: SideTitles(
+            showTitles: true,
+            getTextStyles: (value) {
+              return TextStyle(fontSize: 8, color: Colors.black);
+            },
+            getTitles: (value) {
+              //if (value == 0) return '0';
+              //print(pastWeekData[value.toInt() - 1].toStringAsFixed(3));
+              return pastWeekData[value.toInt()].toStringAsFixed(3);
+
+              //return '';
+            }),
+        topTitles: SideTitles(
+          showTitles: true,
+          getTitles: (value) {
+            if (value == 30) return pastWeekDates[0];
+            if (value == 0) return pastWeekDates[30];
+            if (value == 15) return pastWeekDates[15];
+            return '';
+          },
+          margin: 20,
+        ),
+        bottomTitles: SideTitles(showTitles: false),
+      );
+
   static getStyles() => TextStyle(
         fontSize: 5,
       );

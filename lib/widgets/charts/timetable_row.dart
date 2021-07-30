@@ -2,23 +2,26 @@ import 'package:currency_converter_app/widgets/charts/time_unit.dart';
 import 'package:flutter/material.dart';
 
 class TimeTableRow extends StatefulWidget {
+  final List<bool> _selection;
+  final Function(int i) _changeSelection;
+  TimeTableRow(this._selection, this._changeSelection);
   @override
   _TimeTableRowState createState() => _TimeTableRowState();
 }
 
 class _TimeTableRowState extends State<TimeTableRow> {
-  List<bool> _selection = [true, false, false, false];
+  //List<bool> _selection = [true, false, false, false];
 
-  void _changeSelection(int selectedIndex) {
-    if (_selection[selectedIndex] == true) return;
-    setState(() {
-      _selection[0] = false;
-      _selection[1] = false;
-      _selection[2] = false;
-      _selection[3] = false;
-      _selection[selectedIndex] = true;
-    });
-  }
+  // void _changeSelection(int selectedIndex) {
+  //   if (_selection[selectedIndex] == true) return;
+  //   setState(() {
+  //     _selection[0] = false;
+  //     _selection[1] = false;
+  //     _selection[2] = false;
+  //     _selection[3] = false;
+  //     _selection[selectedIndex] = true;
+  //   });
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -29,17 +32,17 @@ class _TimeTableRowState extends State<TimeTableRow> {
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
           GestureDetector(
-              onTap: () => _changeSelection(0),
-              child: TimeUnit('1W', _selection[0])),
+              onTap: () => widget._changeSelection(0),
+              child: TimeUnit('1W', widget._selection[0])),
           GestureDetector(
-              onTap: () => _changeSelection(1),
-              child: TimeUnit('1M', _selection[1])),
+              onTap: () => widget._changeSelection(1),
+              child: TimeUnit('1M', widget._selection[1])),
           GestureDetector(
-              onTap: () => _changeSelection(2),
-              child: TimeUnit('3M', _selection[2])),
+              onTap: () => widget._changeSelection(2),
+              child: TimeUnit('3M', widget._selection[2])),
           GestureDetector(
-              onTap: () => _changeSelection(3),
-              child: TimeUnit('1Y', _selection[3])),
+              onTap: () => widget._changeSelection(3),
+              child: TimeUnit('1Y', widget._selection[3])),
         ],
       ),
     );

@@ -4,33 +4,37 @@ import 'package:flutter/material.dart';
 class RateInformation extends StatelessWidget {
   final Timeseries timeseries;
   final String symbol;
-  RateInformation(this.timeseries, this.symbol);
+  final List<bool> interval;
+  RateInformation(this.timeseries, this.symbol, this.interval);
 
   final today = DateTime.now().toString().substring(0, 10);
-  final yesterday =
-      DateTime.now().subtract(Duration(days: 1)).toString().substring(0, 10);
+  final sevenDaysAgo =
+      DateTime.now().subtract(Duration(days: 7)).toString().substring(0, 10);
+  final oneMonthAgo =
+      DateTime.now().subtract(Duration(days: 30)).toString().substring(0, 10);
 
   double difference;
   double percentage;
 
-  bool calculateChangePercentage() {
+  void calculateChangePercentage() {
     final rateToday = timeseries.rates[today][symbol];
-    final rateYesterday = timeseries.rates[yesterday][symbol];
-    difference = rateToday - rateYesterday;
-    //print(difference);
-    final absoluteDifference = difference.abs();
-    //print(absoluteDifference);
-    percentage = absoluteDifference / rateYesterday * 100;
-    //print(percentage);
-    if (rateToday > rateYesterday)
-      return true;
-    else
-      return false;
+    if (interval[0]) {
+      final rateSevenDaysAgo = timeseries.rates[sevenDaysAgo][symbol];
+      difference = rateToday - rateSevenDaysAgo;
+      final absoluteDifference = difference.abs();
+      percentage = absoluteDifference / rateSevenDaysAgo * 100;
+    } else if (interval[1] || interval[2] || interval[3]) {
+      final rateOneMonthAgo = timeseries.rates[oneMonthAgo][symbol];
+      difference = rateToday - rateOneMonthAgo;
+      final absoluteDifference = difference.abs();
+      percentage = absoluteDifference / rateOneMonthAgo * 100;
+    }
+    print(difference);
   }
 
   @override
   Widget build(BuildContext context) {
-    final status = calculateChangePercentage();
+    calculateChangePercentage();
     return Container(
       margin: const EdgeInsets.only(top: 15, left: 25),
       child: Column(
