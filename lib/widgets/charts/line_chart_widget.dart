@@ -29,7 +29,7 @@ class LineChartWidget extends StatelessWidget {
       mjerenja[i.toString()] = pastWeekUnsortedData.last;
     }
 
-    //print(mjerenja);
+    print(mjerenja);
     //print(pastWeekDates);
     pastWeekData.sort();
     //print(pastWeekData);
@@ -39,16 +39,14 @@ class LineChartWidget extends StatelessWidget {
   int getY(double x) {
     int xx = x.toInt();
     final List<double> pastWeekReversed = pastWeekData.reversed.toList();
+    print(pastWeekReversed);
+    // print(pastWeekDates[0]);
+    // print(timeseries.rates[pastWeekDates[0]][symbol]);
     //print(xx);
     int toReturn = int.parse(mjerenja.keys.firstWhere((e) {
-      if (mjerenja[e] == pastWeekReversed[xx]) {
-        //print(mjerenja[e]);
-        //print(pastWeekReversed[xx]);
-      }
       return mjerenja[e] == pastWeekReversed[xx];
     }));
-    //print(pastWeekData[xx]);
-    //print(toReturn);
+
     return toReturn;
   }
 

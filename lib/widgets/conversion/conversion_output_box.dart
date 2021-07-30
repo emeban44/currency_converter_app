@@ -26,7 +26,7 @@ class ConversionOutputBox extends StatelessWidget {
           showToast(
             'Copied to clipboard',
             borderRadius: BorderRadius.circular(15),
-            textStyle: TextStyle(fontSize: 25, color: Colors.white),
+            textStyle: TextStyle(fontSize: 20, color: Colors.white),
             context: context,
             animation: StyledToastAnimation.scale,
             reverseAnimation: StyledToastAnimation.fade,
@@ -104,7 +104,7 @@ class ConversionOutputBox extends StatelessWidget {
                                         ? 7.5
                                         : screenHeight < 820 &&
                                                 screenHeight > 800
-                                            ? 5
+                                            ? 6.5
                                             : screenHeight < 800
                                                 ? 6
                                                 : screenHeight * 0.001),

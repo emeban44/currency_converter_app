@@ -20,9 +20,9 @@ class StatsBar extends StatelessWidget {
       //pastWeekUnsortedData.add(timeseries.rates[pastWeekDates[i]][symbol]);
       // mjerenja[i.toString()] = pastWeekUnsortedData.last;
     }
-    print(pastWeekDates);
+    //print(pastWeekDates);
     pastWeekData.sort();
-    print(pastWeekData);
+    //print(pastWeekData);
   }
 
   double averageRate() {
