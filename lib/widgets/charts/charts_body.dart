@@ -3,6 +3,7 @@ import 'package:currency_converter_app/providers/historical.dart';
 import 'package:currency_converter_app/widgets/charts/currency_container.dart';
 import 'package:currency_converter_app/widgets/charts/monthly_chart.dart';
 import 'package:currency_converter_app/widgets/charts/swap_icon.dart';
+import 'package:currency_converter_app/widgets/charts/three_months_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -61,7 +62,7 @@ class _ChartsBodyState extends State<ChartsBody> {
 
   @override
   Widget build(BuildContext context) {
-    print(MediaQuery.of(context).size.width);
+    //print(MediaQuery.of(context).size.width);
     return SafeArea(
       child: SingleChildScrollView(
         physics: ClampingScrollPhysics(),
@@ -109,6 +110,10 @@ class _ChartsBodyState extends State<ChartsBody> {
                 MonthlyChart(first, second.base, '1M'),
               if (!_isLoading && _shouldToggle && _selection[1])
                 MonthlyChart(second, first.base, '1M'),
+              if (!_isLoading && !_shouldToggle && _selection[2])
+                ThreeMonthsChart(first, second.base, '3M'),
+              if (!_isLoading && _shouldToggle && _selection[2])
+                ThreeMonthsChart(second, first.base, '3M'),
               if (!_isLoading && !_shouldToggle)
                 RateStats(first, widget.symbol, _selection),
               if (!_isLoading && _shouldToggle)

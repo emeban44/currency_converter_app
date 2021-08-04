@@ -16,7 +16,9 @@ class RateStats extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Padding(
-            padding: const EdgeInsets.only(left: 15.0),
+            padding: const EdgeInsets.only(
+              left: 15.0,
+            ),
             child: Text(
               'Stats',
               style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
@@ -24,7 +26,10 @@ class RateStats extends StatelessWidget {
           ),
           StatsBar('High', timeseries, symbol, interval),
           StatsBar('Low', timeseries, symbol, interval),
-          StatsBar('Average', timeseries, symbol, interval),
+          Padding(
+            padding: const EdgeInsets.only(bottom: 10),
+            child: StatsBar('Average', timeseries, symbol, interval),
+          ),
         ],
       ),
     );

@@ -34,7 +34,17 @@ class CalculatorBox extends StatelessWidget {
             if (_text == '.') {
               if (_controller.text.isEmpty)
                 return;
-              else if (provider.getHelper.contains('.')) return;
+              else if (provider.getHelper.contains('.'))
+                return;
+              else if (_controller.text.endsWith('x')) {
+                return;
+              } else if (_controller.text.endsWith('/')) {
+                return;
+              } else if (_controller.text.endsWith('-')) {
+                return;
+              } else if (_controller.text.endsWith('+')) {
+                return;
+              }
             }
             if (_controller.text.endsWith('x') && _text != '.') {
               setNumberAfterOperation('x', context);

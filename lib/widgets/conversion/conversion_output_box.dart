@@ -9,7 +9,7 @@ class ConversionOutputBox extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer<Currencies>(builder: (ctx, currencies, _) {
       final double screenHeight = MediaQuery.of(context).size.height;
-      print(screenHeight);
+      //print(screenHeight);
       return GestureDetector(
         onTap: () {
           Clipboard.setData(ClipboardData(

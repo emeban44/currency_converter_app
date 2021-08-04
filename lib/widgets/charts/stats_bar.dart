@@ -13,6 +13,8 @@ class StatsBar extends StatelessWidget {
   final List<double> pastWeekData = [];
   final List<String> pastMonthDates = [];
   final List<double> pastMonthData = [];
+  final List<String> past3MonthsDates = [];
+  final List<double> past3MonthsData = [];
 
   void highLowAverageCalculation() {
     for (int i = 0; i < 7; i++) {
@@ -25,8 +27,14 @@ class StatsBar extends StatelessWidget {
       pastMonthDates.add(day.substring(0, 10));
       pastMonthData.add(timeseries.rates[pastMonthDates[i]][symbol]);
     }
+    for (int i = 0; i < 90; i++) {
+      final day = today.subtract(Duration(days: i)).toString();
+      past3MonthsDates.add(day.substring(0, 10));
+      past3MonthsData.add(timeseries.rates[past3MonthsDates[i]][symbol]);
+    }
     pastWeekData.sort();
     pastMonthData.sort();
+    past3MonthsData.sort();
   }
 
   double averageRate() {
@@ -41,6 +49,11 @@ class StatsBar extends StatelessWidget {
         sum += e;
       });
       return sum / pastMonthData.length;
+    } else if (interval[2]) {
+      past3MonthsData.forEach((e) {
+        sum += e;
+      });
+      return sum / past3MonthsData.length;
     }
     return 0.0;
   }
@@ -50,7 +63,7 @@ class StatsBar extends StatelessWidget {
     highLowAverageCalculation();
     return Container(
       height: 45,
-      margin: const EdgeInsets.only(left: 15, right: 15, top: 10),
+      margin: const EdgeInsets.only(left: 15, right: 15, top: 10, bottom: 0),
       decoration: BoxDecoration(
         border: Border(
           bottom: BorderSide(color: Colors.black26),
@@ -90,6 +103,21 @@ class StatsBar extends StatelessWidget {
               style: TextStyle(color: Colors.red.shade900, fontSize: 16),
             ),
           if (text == 'Average' && interval[1])
+            Text(
+              averageRate().toStringAsFixed(4),
+              style: TextStyle(color: Colors.black, fontSize: 16),
+            ),
+          if (text == 'High' && interval[2])
+            Text(
+              pastMonthData.last.toStringAsFixed(4),
+              style: TextStyle(color: Colors.blue.shade900, fontSize: 16),
+            ),
+          if (text == 'Low' && interval[2])
+            Text(
+              pastMonthData.first.toStringAsFixed(4),
+              style: TextStyle(color: Colors.red.shade900, fontSize: 16),
+            ),
+          if (text == 'Average' && interval[2])
             Text(
               averageRate().toStringAsFixed(4),
               style: TextStyle(color: Colors.black, fontSize: 16),

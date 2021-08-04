@@ -10,19 +10,6 @@ class TimeTableRow extends StatefulWidget {
 }
 
 class _TimeTableRowState extends State<TimeTableRow> {
-  //List<bool> _selection = [true, false, false, false];
-
-  // void _changeSelection(int selectedIndex) {
-  //   if (_selection[selectedIndex] == true) return;
-  //   setState(() {
-  //     _selection[0] = false;
-  //     _selection[1] = false;
-  //     _selection[2] = false;
-  //     _selection[3] = false;
-  //     _selection[selectedIndex] = true;
-  //   });
-  // }
-
   @override
   Widget build(BuildContext context) {
     return Container(

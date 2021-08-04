@@ -22,21 +22,6 @@ class _HomeBodyState extends State<HomeBody> {
   // bool _alreadyToggled = false;
 
   @override
-  void initState() {
-    // setState(() {
-    //   _isLoading = true;
-    // });
-    // if (SharedPrefs().getAppUsedBefore) {
-    //   Provider.of<Currencies>(context, listen: false)
-    //       .loadLocalApplicationState();
-    // }
-    // setState(() {
-    //   _isLoading = false;
-    // });
-    super.initState();
-  }
-
-  @override
   void didChangeDependencies() async {
     if (SharedPrefs().getAppUsedBefore != true) {
       setState(() {

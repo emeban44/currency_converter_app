@@ -1,10 +1,12 @@
 import 'package:currency_converter_app/providers/currencies.dart';
+import 'package:currency_converter_app/screens/chart_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class CurrencyListView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final provider = Provider.of<Currencies>(context, listen: false);
     return Container(
       height: MediaQuery.of(context).size.height * 0.50,
       child: Consumer<Currencies>(
@@ -15,6 +17,7 @@ class CurrencyListView extends StatelessWidget {
             context: context,
             removeTop: true,
             child: ListView.builder(
+              physics: ClampingScrollPhysics(),
               itemBuilder: (ctx, i) {
                 //print(symbols);
                 final imagePathVariable =
@@ -58,38 +61,69 @@ class CurrencyListView extends StatelessWidget {
                         style: TextStyle(fontSize: 13),
                       ),
                       trailing: Container(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.end,
+                        width: 150,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
                           children: [
                             Flexible(
-                              child: Text(
-                                (currencies.getFromCurrency.rates[
-                                                currentCurrencies[i].base] *
-                                            currencies.getAmount)
-                                        .toStringAsFixed(2) +
-                                    ' ' +
-                                    currentCurrencies[i].base,
-                                style: isBitcoin
-                                    ? TextStyle(fontSize: 17)
-                                    : TextStyle(fontSize: 20),
+                              flex: 2,
+                              child: Container(
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.end,
+                                  children: [
+                                    Flexible(
+                                      child: FittedBox(
+                                        child: Text(
+                                          (currencies.getFromCurrency.rates[
+                                                          currentCurrencies[i]
+                                                              .base] *
+                                                      currencies.getAmount)
+                                                  .toStringAsFixed(2) +
+                                              ' ' +
+                                              currentCurrencies[i].base,
+                                          style: isBitcoin
+                                              ? TextStyle(fontSize: 17)
+                                              : TextStyle(fontSize: 20),
+                                          //overflow: TextOverflow.ellipsis,
+                                          //maxLines: 1,
+                                        ),
+                                      ),
+                                    ),
+                                    Flexible(
+                                      child: FittedBox(
+                                        child: Text(
+                                          '1 ' +
+                                              currentCurrencies[i].base +
+                                              ' = ' +
+                                              currentCurrencies[i]
+                                                  .rates[currencies
+                                                      .getFromCurrency.base]
+                                                  .toStringAsFixed(2) +
+                                              ' ' +
+                                              currencies.getFromCurrency.base,
+                                          style: TextStyle(
+                                              fontSize: 11,
+                                              color: Colors.black54),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
                               ),
                             ),
                             Flexible(
-                              child: FittedBox(
-                                child: Text(
-                                  '1 ' +
-                                      currentCurrencies[i].base +
-                                      ' = ' +
-                                      currentCurrencies[i]
-                                          .rates[
-                                              currencies.getFromCurrency.base]
-                                          .toStringAsFixed(2) +
-                                      ' ' +
-                                      currencies.getFromCurrency.base,
-                                  style: TextStyle(
-                                      fontSize: 11, color: Colors.black54),
-                                ),
+                              child: GestureDetector(
+                                onTap: () {
+                                  Navigator.of(context).pushNamed(
+                                      ChartScreen.routeName,
+                                      arguments: [
+                                        provider.getFromCurrency.base,
+                                        currentCurrencies[i].base,
+                                      ]);
+                                },
+                                child: Icon(Icons.insert_chart_outlined_rounded,
+                                    size: 30, color: Colors.black87),
                               ),
                             ),
                           ],
