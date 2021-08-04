@@ -14,6 +14,8 @@ class RateInformation extends StatelessWidget {
       DateTime.now().subtract(Duration(days: 30)).toString().substring(0, 10);
   final threeMonthsAgo =
       DateTime.now().subtract(Duration(days: 90)).toString().substring(0, 10);
+  final oneYearAgo =
+      DateTime.now().subtract(Duration(days: 365)).toString().substring(0, 10);
 
   double difference;
   double percentage;
@@ -25,7 +27,7 @@ class RateInformation extends StatelessWidget {
       difference = rateToday - rateSevenDaysAgo;
       final absoluteDifference = difference.abs();
       percentage = absoluteDifference / rateSevenDaysAgo * 100;
-    } else if (interval[1] || interval[3]) {
+    } else if (interval[1]) {
       final rateOneMonthAgo = timeseries.rates[oneMonthAgo][symbol];
       difference = rateToday - rateOneMonthAgo;
       final absoluteDifference = difference.abs();
@@ -35,6 +37,11 @@ class RateInformation extends StatelessWidget {
       difference = rateToday - rateThreeMonthsAgo;
       final absoluteDifference = difference.abs();
       percentage = absoluteDifference / rateThreeMonthsAgo * 100;
+    } else if (interval[3]) {
+      final rateOneYearAgo = timeseries.rates[oneYearAgo][symbol];
+      difference = rateToday - rateOneYearAgo;
+      final absoluteDifference = difference.abs();
+      percentage = absoluteDifference / rateOneYearAgo * 100;
     }
     //print(difference);
   }

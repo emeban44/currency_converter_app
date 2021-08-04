@@ -93,7 +93,7 @@ class ThreeMonthsChart extends StatelessWidget {
             LineChartBarData(
               isCurved: true,
               dotData: FlDotData(show: false),
-              barWidth: 5,
+              barWidth: 2,
               colors: [
                 Colors.blue.shade300,
                 Colors.blue.shade400,

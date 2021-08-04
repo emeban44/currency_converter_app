@@ -4,6 +4,7 @@ import 'package:currency_converter_app/widgets/charts/currency_container.dart';
 import 'package:currency_converter_app/widgets/charts/monthly_chart.dart';
 import 'package:currency_converter_app/widgets/charts/swap_icon.dart';
 import 'package:currency_converter_app/widgets/charts/three_months_chart.dart';
+import 'package:currency_converter_app/widgets/charts/yearly_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -114,6 +115,10 @@ class _ChartsBodyState extends State<ChartsBody> {
                 ThreeMonthsChart(first, second.base, '3M'),
               if (!_isLoading && _shouldToggle && _selection[2])
                 ThreeMonthsChart(second, first.base, '3M'),
+              if (!_isLoading && !_shouldToggle && _selection[3])
+                YearlyChart(first, second.base, '1Y'),
+              if (!_isLoading && _shouldToggle && _selection[3])
+                YearlyChart(second, first.base, '1Y'),
               if (!_isLoading && !_shouldToggle)
                 RateStats(first, widget.symbol, _selection),
               if (!_isLoading && _shouldToggle)
