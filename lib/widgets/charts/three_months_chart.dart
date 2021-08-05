@@ -78,8 +78,8 @@ class ThreeMonthsChart extends StatelessWidget {
               );
             },
           ),
-          titlesData:
-              LineTitles.get3MonthsTitleData(past3MonthsData, past3MonthsDates),
+          titlesData: LineTitles.get3MonthsTitleData(
+              past3MonthsData, past3MonthsDates, timeseries.base),
           borderData: FlBorderData(
             show: true,
             border: Border(

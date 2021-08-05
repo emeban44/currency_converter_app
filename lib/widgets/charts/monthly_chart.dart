@@ -77,8 +77,8 @@ class MonthlyChart extends StatelessWidget {
               );
             },
           ),
-          titlesData:
-              LineTitles.getMonthlyTitleData(pastMonthData, pastMonthDates),
+          titlesData: LineTitles.getMonthlyTitleData(
+              pastMonthData, pastMonthDates, timeseries.base),
           borderData: FlBorderData(
             show: true,
             border: Border(

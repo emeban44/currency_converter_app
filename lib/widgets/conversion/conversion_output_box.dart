@@ -5,6 +5,62 @@ import 'package:flutter/services.dart';
 import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 
 class ConversionOutputBox extends StatelessWidget {
+  String produceOutput(String currentOutput) {
+    //print(currentOutput);
+    int indexOfDot = currentOutput.indexOf('.');
+    //print(indexOfDot);
+    String producedOutput = '';
+    String beforeDot = currentOutput.substring(0, indexOfDot);
+    String afterDot = currentOutput.substring(indexOfDot, currentOutput.length);
+    if (beforeDot.length < 4) return currentOutput;
+    if (beforeDot.length == 5) {
+      producedOutput = currentOutput.substring(0, 2) +
+          ' ' +
+          currentOutput.substring(2, 5) +
+          afterDot;
+    }
+    if (beforeDot.length == 4) {
+      producedOutput = currentOutput.substring(0, 1) +
+          ' ' +
+          currentOutput.substring(1, 4) +
+          afterDot;
+    }
+    if (beforeDot.length == 6) {
+      producedOutput = currentOutput.substring(0, 3) +
+          ' ' +
+          currentOutput.substring(3, 6) +
+          afterDot;
+    }
+    if (beforeDot.length == 7) {
+      producedOutput = currentOutput.substring(0, 1) +
+          ' ' +
+          currentOutput.substring(1, 4) +
+          ' ' +
+          currentOutput.substring(4, 7) +
+          afterDot;
+    }
+    if (beforeDot.length == 8) {
+      producedOutput = currentOutput.substring(0, 2) +
+          ' ' +
+          currentOutput.substring(2, 5) +
+          ' ' +
+          currentOutput.substring(5, 8) +
+          afterDot;
+    }
+    if (beforeDot.length == 9) {
+      producedOutput = currentOutput.substring(0, 3) +
+          ' ' +
+          currentOutput.substring(3, 6) +
+          ' ' +
+          currentOutput.substring(6, 9) +
+          afterDot;
+    }
+    if (beforeDot.length > 9) {
+      return currentOutput;
+    }
+    return producedOutput;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Consumer<Currencies>(builder: (ctx, currencies, _) {
@@ -60,7 +116,7 @@ class ConversionOutputBox extends StatelessWidget {
               Flexible(
                 child: FittedBox(
                   child: Text(
-                    currencies.getAmount.toStringAsFixed(2) +
+                    produceOutput(currencies.getAmount.toStringAsFixed(2)) +
                         ' ' +
                         currencies.getFromCurrency.base +
                         ' =',
@@ -80,10 +136,10 @@ class ConversionOutputBox extends StatelessWidget {
                       children: [
                         Flexible(
                           child: Text(
-                            (currencies.getAmount *
+                            produceOutput((currencies.getAmount *
                                         currencies.getFromCurrency.rates[
                                             currencies.getToCurrency.base])
-                                    .toStringAsFixed(2) +
+                                    .toStringAsFixed(2)) +
                                 ' ',
                             style: TextStyle(
                                 fontSize: screenHeight > 910

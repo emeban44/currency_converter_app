@@ -78,11 +78,14 @@ class CurrencyDialog extends StatelessWidget {
                                   ),
                                 ),
                               ),
-                              Expanded(
+                              Flexible(
                                 child: Container(
+                                  //width: 300,
                                   child: Text(
                                       provider.getSymbols[selected[i].base],
-                                      style: TextStyle(fontSize: 11)),
+                                      style: TextStyle(
+                                        fontSize: 11,
+                                      )),
                                 ),
                               ),
                             ],

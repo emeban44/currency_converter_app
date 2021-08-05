@@ -77,8 +77,8 @@ class YearlyChart extends StatelessWidget {
               );
             },
           ),
-          titlesData:
-              LineTitles.getYearlyTitleData(pastYearData, pastYearDates),
+          titlesData: LineTitles.getYearlyTitleData(
+              pastYearData, pastYearDates, timeseries.base),
           borderData: FlBorderData(
             show: true,
             border: Border(

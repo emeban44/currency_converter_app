@@ -32,7 +32,8 @@ class LineTitles {
         bottomTitles: SideTitles(showTitles: false),
       );
 
-  static getMonthlyTitleData(pastWeekData, pastWeekDates) => FlTitlesData(
+  static getMonthlyTitleData(pastWeekData, pastWeekDates, String base) =>
+      FlTitlesData(
         show: true,
         leftTitles: SideTitles(
             showTitles: true,
@@ -57,6 +58,8 @@ class LineTitles {
               if (value == 27) return null;
               if (value == 29) return null;
               //print(pastWeekData[value.toInt() - 1].toStringAsFixed(3));
+              if (base == 'BTC')
+                return pastWeekData[value.toInt()].toStringAsFixed(0);
               return pastWeekData[value.toInt()].toStringAsFixed(3);
 
               //return '';
@@ -74,17 +77,20 @@ class LineTitles {
         bottomTitles: SideTitles(showTitles: false),
       );
 
-  static get3MonthsTitleData(pastWeekData, pastWeekDates) => FlTitlesData(
+  static get3MonthsTitleData(pastWeekData, pastWeekDates, String base) =>
+      FlTitlesData(
         show: true,
         leftTitles: SideTitles(
             showTitles: true,
             getTextStyles: (value) {
+              if (base == 'BTC')
+                return TextStyle(fontSize: 8, color: Colors.black);
               return TextStyle(fontSize: 8, color: Colors.black);
             },
             getTitles: (value) {
               //if (value == 0) return '0';
-              if (value == 1) return null;
-              if (value == 3) return null;
+              //if (value == 2) return null;
+              //if (value == 3) return null;
               if (value == 5) return null;
               if (value == 7) return null;
               if (value == 9) return null;
@@ -98,7 +104,38 @@ class LineTitles {
               if (value == 25) return null;
               if (value == 27) return null;
               if (value == 29) return null;
+              if (value == 31) return null;
+              if (value == 33) return null;
+              if (value == 35) return null;
+              if (value == 37) return null;
+              if (value == 39) return null;
+              if (value == 41) return null;
+              if (value == 43) return null;
+              if (value == 45) return null;
+              if (value == 47) return null;
+              if (value == 49) return null;
+              if (value == 51) return null;
+              if (value == 53) return null;
+              if (value == 55) return null;
+              if (value == 57) return null;
+              if (value == 59) return null;
+              if (value == 61) return null;
+              if (value == 63) return null;
+              if (value == 65) return null;
+              if (value == 67) return null;
+              if (value == 69) return null;
+              if (value == 71) return null;
+              if (value == 73) return null;
+              if (value == 75) return null;
+              if (value == 77) return null;
+              if (value == 79) return null;
+              if (value == 81) return null;
+              if (value == 83) return null;
+              if (value == 85) return null;
+              if (value == 87) return null;
               //print(pastWeekData[value.toInt() - 1].toStringAsFixed(3));
+              if (base == 'BTC')
+                return pastWeekData[value.toInt()].toStringAsFixed(0);
               return pastWeekData[value.toInt()].toStringAsFixed(3);
 
               //return '';
@@ -116,7 +153,8 @@ class LineTitles {
         bottomTitles: SideTitles(showTitles: false),
       );
 
-  static getYearlyTitleData(pastWeekData, pastWeekDates) => FlTitlesData(
+  static getYearlyTitleData(pastWeekData, pastWeekDates, String base) =>
+      FlTitlesData(
         show: true,
         leftTitles: SideTitles(
             showTitles: true,
@@ -308,6 +346,8 @@ class LineTitles {
               if (value == 361) return null;
               if (value == 363) return null;
               //print(pastWeekData[value.toInt() - 1].toStringAsFixed(3));
+              if (base == 'BTC')
+                return pastWeekData[value.toInt()].toStringAsFixed(0);
               return pastWeekData[value.toInt()].toStringAsFixed(3);
 
               //return '';

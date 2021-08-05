@@ -44,6 +44,7 @@ class StatsBar extends StatelessWidget {
     pastMonthData.sort();
     past3MonthsData.sort();
     pastYearData.sort();
+    print(pastYearData.last);
   }
 
   double averageRate() {

@@ -20,6 +20,7 @@ class CurrencyListView extends StatelessWidget {
               physics: ClampingScrollPhysics(),
               itemBuilder: (ctx, i) {
                 //print(symbols);
+                if (i == currentCurrencies.length) return SizedBox(height: 50);
                 final imagePathVariable =
                     currentCurrencies[i].base.toLowerCase();
                 bool isBitcoin = false;
@@ -61,7 +62,7 @@ class CurrencyListView extends StatelessWidget {
                         style: TextStyle(fontSize: 13),
                       ),
                       trailing: Container(
-                        width: 150,
+                        width: 155,
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: [
@@ -71,6 +72,7 @@ class CurrencyListView extends StatelessWidget {
                                 child: Column(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   crossAxisAlignment: CrossAxisAlignment.end,
+                                  //mainAxisSize: MainAxisSize.max,
                                   children: [
                                     Flexible(
                                       child: FittedBox(
@@ -85,8 +87,8 @@ class CurrencyListView extends StatelessWidget {
                                           style: isBitcoin
                                               ? TextStyle(fontSize: 17)
                                               : TextStyle(fontSize: 20),
-                                          //overflow: TextOverflow.ellipsis,
-                                          //maxLines: 1,
+                                          // overflow: TextOverflow.ellipsis,
+                                          // maxLines: 1,
                                         ),
                                       ),
                                     ),
@@ -123,7 +125,7 @@ class CurrencyListView extends StatelessWidget {
                                       ]);
                                 },
                                 child: Icon(Icons.insert_chart_outlined_rounded,
-                                    size: 30, color: Colors.black87),
+                                    size: 31, color: Colors.black87),
                               ),
                             ),
                           ],
@@ -133,7 +135,7 @@ class CurrencyListView extends StatelessWidget {
                   ),
                 );
               },
-              itemCount: currentCurrencies.length,
+              itemCount: currentCurrencies.length + 1,
             ),
           );
         },

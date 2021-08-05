@@ -36,8 +36,8 @@ class LineChartWidget extends StatelessWidget {
     //print(pastWeekData);
   }
 
-  int getY(double x) {
-    int xx = x.toInt();
+  int getY(int x) {
+    int xx = x;
     final List<double> pastWeekReversed = pastWeekData.reversed.toList();
     //print(pastWeekReversed);
     // print(pastWeekDates[0]);
