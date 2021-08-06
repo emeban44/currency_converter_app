@@ -9,6 +9,7 @@ import 'package:currency_converter_app/screens/edit_currencies_screen.dart';
 import 'package:currency_converter_app/widgets/conversion/conversion_stack.dart';
 import 'package:currency_converter_app/widgets/drawer.dart';
 import 'package:currency_converter_app/widgets/home_body.dart';
+import 'package:currency_converter_app/widgets/update_timer.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -19,6 +20,7 @@ class HomeScreen extends StatelessWidget {
     final appBar = AppBar(
       backgroundColor: Colors.transparent,
       elevation: 0,
+      title: UpdateTimer(),
       actions: [
         Padding(
           padding: const EdgeInsets.all(12.0),

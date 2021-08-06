@@ -7,8 +7,10 @@ class CurrencyListView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final provider = Provider.of<Currencies>(context, listen: false);
+    final height = MediaQuery.of(context).size.height;
+    final width = MediaQuery.of(context).size.width;
     return Container(
-      height: MediaQuery.of(context).size.height * 0.50,
+      height: height * 0.50,
       child: Consumer<Currencies>(
         builder: (ctx, currencies, _) {
           final currentCurrencies = currencies.getHomeSelected;
@@ -57,12 +59,22 @@ class CurrencyListView extends StatelessWidget {
                         style: TextStyle(
                             fontSize: 19, fontWeight: FontWeight.bold),
                       ),
-                      subtitle: Text(
-                        symbols[currentCurrencies[i].base],
-                        style: TextStyle(fontSize: 13),
+                      subtitle: Container(
+                        child: Text(
+                          symbols[currentCurrencies[i].base],
+                          style: TextStyle(fontSize: 12),
+                        ),
                       ),
                       trailing: Container(
-                        width: 155,
+                        width: width > 450
+                            ? 160
+                            : width < 370
+                                ? 140
+                                : width < 385
+                                    ? 150
+                                    : width < 400
+                                        ? 150
+                                        : 155,
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: [

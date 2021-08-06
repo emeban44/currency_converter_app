@@ -81,7 +81,8 @@ class LineChartWidget extends StatelessWidget {
               );
             },
           ),
-          titlesData: LineTitles.getTitleData(pastWeekData, pastWeekDates),
+          titlesData: LineTitles.getTitleData(
+              pastWeekData, pastWeekDates, timeseries.base),
           borderData: FlBorderData(
             show: true,
             border: Border(

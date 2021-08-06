@@ -5,16 +5,28 @@ class LineTitles {
   List<double> pastWeekData;
   List<String> pastWeekDates;
   LineTitles(this.pastWeekData, this.pastWeekDates);
-  static getTitleData(pastWeekData, pastWeekDates) => FlTitlesData(
+  static getTitleData(pastWeekData, pastWeekDates, String base) => FlTitlesData(
         show: true,
         leftTitles: SideTitles(
             showTitles: true,
             getTextStyles: (value) {
+              final fullLeftNumber = pastWeekData[value.toInt()];
+              final String tmpString = fullLeftNumber.toString();
+              final indexOfDot = tmpString.indexOf('.');
+              final beforeDot =
+                  fullLeftNumber.toString().substring(0, indexOfDot);
+              if (beforeDot.length > 6)
+                return TextStyle(fontSize: 6, color: Colors.black);
+              else if (beforeDot.length > 2)
+                return TextStyle(fontSize: 6.5, color: Colors.black);
+
               return TextStyle(fontSize: 8, color: Colors.black);
             },
             getTitles: (value) {
               //if (value == 0) return '0';
               //print(pastWeekData[value.toInt() - 1].toStringAsFixed(3));
+              if (base == 'BTC')
+                return pastWeekData[value.toInt()].toStringAsFixed(0);
               return pastWeekData[value.toInt()].toStringAsFixed(3);
 
               //return '';
@@ -38,6 +50,16 @@ class LineTitles {
         leftTitles: SideTitles(
             showTitles: true,
             getTextStyles: (value) {
+              final fullLeftNumber = pastWeekData[value.toInt()];
+              final String tmpString = fullLeftNumber.toString();
+              final indexOfDot = tmpString.indexOf('.');
+              final beforeDot =
+                  fullLeftNumber.toString().substring(0, indexOfDot);
+              if (beforeDot.length > 6)
+                return TextStyle(fontSize: 6, color: Colors.black);
+              else if (beforeDot.length > 2)
+                return TextStyle(fontSize: 6.5, color: Colors.black);
+
               return TextStyle(fontSize: 8, color: Colors.black);
             },
             getTitles: (value) {
@@ -83,8 +105,16 @@ class LineTitles {
         leftTitles: SideTitles(
             showTitles: true,
             getTextStyles: (value) {
-              if (base == 'BTC')
-                return TextStyle(fontSize: 8, color: Colors.black);
+              final fullLeftNumber = pastWeekData[value.toInt()];
+              final String tmpString = fullLeftNumber.toString();
+              final indexOfDot = tmpString.indexOf('.');
+              final beforeDot =
+                  fullLeftNumber.toString().substring(0, indexOfDot);
+              if (beforeDot.length > 6)
+                return TextStyle(fontSize: 6, color: Colors.black);
+              else if (beforeDot.length > 2)
+                return TextStyle(fontSize: 6.5, color: Colors.black);
+
               return TextStyle(fontSize: 8, color: Colors.black);
             },
             getTitles: (value) {
@@ -159,6 +189,16 @@ class LineTitles {
         leftTitles: SideTitles(
             showTitles: true,
             getTextStyles: (value) {
+              final fullLeftNumber = pastWeekData[value.toInt()];
+              final String tmpString = fullLeftNumber.toString();
+              final indexOfDot = tmpString.indexOf('.');
+              final beforeDot =
+                  fullLeftNumber.toString().substring(0, indexOfDot);
+              if (beforeDot.length > 6)
+                return TextStyle(fontSize: 6, color: Colors.black);
+              else if (beforeDot.length > 2)
+                return TextStyle(fontSize: 6.5, color: Colors.black);
+
               return TextStyle(fontSize: 8, color: Colors.black);
             },
             getTitles: (value) {
