@@ -417,8 +417,8 @@ class Currencies with ChangeNotifier {
       final selectedBox = Boxes.getSelected();
       Currency from = _currencies.firstWhere((e) => e.base == 'USD');
       Currency to = _currencies.firstWhere((e) => e.base == 'EUR');
-      Currency from2 = _currencies.firstWhere((e) => e.base == 'USD');
-      Currency to2 = _currencies.firstWhere((e) => e.base == 'EUR');
+      // Currency from2 = _currencies.firstWhere((e) => e.base == 'USD');
+      // Currency to2 = _currencies.firstWhere((e) => e.base == 'EUR');
       selectedBox.put('from', toLocal(from));
       selectedBox.put('to', toLocal(to));
       // selectedBox.put('USD', toLocal(from2));
@@ -449,6 +449,87 @@ class Currencies with ChangeNotifier {
 
       SharedPrefs().setAppUsedBefore(true);
 
+      notifyListeners();
+    } catch (error) {
+      print(error);
+    }
+  }
+
+  Future<void> updateLocalData() async {
+    final List<String> bases = Symbols.abbreviations;
+    final symbolsURL = 'http://data.fixer.io/api/symbols?access_key=$_apiKey';
+    final List urls = [];
+    try {
+      List<Currency> listToReturn = [];
+      for (int i = 0; i < bases.length; i++) {
+        String base = bases[i];
+        urls.add(Uri.parse(
+            'http://data.fixer.io/api/latest?access_key=$_apiKey&base=$base'));
+      }
+      List responses =
+          await Future.wait([for (int i = 0; i < 70; i++) http.get(urls[i])]);
+
+      List responses2ndHalf = await Future.wait(
+        [
+          for (int i = 70; i < bases.length; i++) http.get(urls[i]),
+          http.get(Uri.parse(symbolsURL))
+        ],
+      );
+
+      for (int i = 0; i < responses.length; i++) {
+        listToReturn.add(currencyFromJson(responses[i].body));
+      }
+      for (int i = 0; i < responses2ndHalf.length - 1; i++) {
+        listToReturn.add(currencyFromJson(responses2ndHalf[i].body));
+      }
+
+      final listOfSymbols = symbolsFromJson(responses2ndHalf.last.body);
+
+      //_currencies = listToReturn;
+
+      final selectedBox = Boxes.getSelected();
+      final unselectedBox = Boxes.getCurrencies();
+
+      listToReturn.forEach((c) {
+        final lc = LocalCurrency()
+          ..base = c.base
+          ..date = c.date
+          ..rates = c.rates
+          ..success = c.success
+          ..timestamp = c.timestamp;
+
+        //boxAll.put(lc.base, lc);
+
+        if (selectedBox.containsKey(lc.base)) {
+          selectedBox.put(lc.base, lc);
+          _selectedCurrencies.removeWhere((e) => e.base == lc.base);
+          _selectedCurrencies.add(fromLocal(lc));
+          _selectedHomeScreen.removeWhere((e) => e.base == lc.base);
+          _selectedHomeScreen.add(fromLocal(lc));
+          //print(lc.base + ' 1');
+        } else if (unselectedBox.containsKey(lc.base)) {
+          unselectedBox.put(lc.base, lc);
+          _currencies.removeWhere((e) => e.base == lc.base);
+          _currencies.add(fromLocal(lc));
+          //print(lc.base + ' 2');
+        } else if (selectedBox.get('from').base == lc.base) {
+          selectedBox.put('from', lc);
+          _fromCurrency = fromLocal(selectedBox.get('from'));
+          //print(_fromCurrency.rates['EUR']);
+          _selectedCurrencies.removeWhere((e) => e.base == lc.base);
+          _selectedCurrencies.add(fromLocal(lc));
+          //print(lc.base + ' 3');
+        } else if (selectedBox.get('to').base == lc.base) {
+          selectedBox.put('to', lc);
+          _toCurrency = fromLocal(selectedBox.get('to'));
+          //print(_toCurrency.rates['BTC']);
+          _selectedCurrencies.removeWhere((e) => e.base == lc.base);
+          _selectedCurrencies.add(fromLocal(lc));
+          //print(lc.base + ' 4');
+        }
+      });
+      _symbols = listOfSymbols.symbols;
+      SharedPrefs().setSymbols(_symbols);
       notifyListeners();
     } catch (error) {
       print(error);
