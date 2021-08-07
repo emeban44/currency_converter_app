@@ -26,7 +26,7 @@ class CurrencyListView extends StatelessWidget {
                 final imagePathVariable =
                     currentCurrencies[i].base.toLowerCase();
                 bool isBitcoin = false;
-                if (currencies.getFromCurrency.base == 'BTC') isBitcoin = true;
+                //if (currencies.getFromCurrency.base == 'BTC') isBitcoin = true;
                 return InkWell(
                   splashColor: Colors.indigo.shade200,
                   onTap: () {

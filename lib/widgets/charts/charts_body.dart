@@ -6,6 +6,7 @@ import 'package:currency_converter_app/widgets/charts/swap_icon.dart';
 import 'package:currency_converter_app/widgets/charts/three_months_chart.dart';
 import 'package:currency_converter_app/widgets/charts/yearly_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:provider/provider.dart';
 
 import 'line_chart_widget.dart';
@@ -23,6 +24,7 @@ class ChartsBody extends StatefulWidget {
 
 class _ChartsBodyState extends State<ChartsBody> {
   bool _isLoading = false;
+  bool _hasInternet = true;
   bool _shouldToggle = false;
   Timeseries first;
   Timeseries second;
@@ -34,14 +36,22 @@ class _ChartsBodyState extends State<ChartsBody> {
     setState(() {
       _isLoading = true;
     });
-    await Provider.of<HistoricalRates>(context, listen: false)
-        .fetchAndSetTimeseries(widget.base, widget.symbol);
-    final provider = Provider.of<HistoricalRates>(context, listen: false);
-    first = provider.getFirstTimeseries;
-    second = provider.getSecondTimeseries;
-    setState(() {
-      _isLoading = false;
-    });
+    _hasInternet = await InternetConnectionChecker().hasConnection;
+    if (_hasInternet) {
+      await Provider.of<HistoricalRates>(context, listen: false)
+          .fetchAndSetTimeseries(widget.base, widget.symbol);
+      final provider = Provider.of<HistoricalRates>(context, listen: false);
+      first = provider.getFirstTimeseries;
+      second = provider.getSecondTimeseries;
+      setState(() {
+        _isLoading = false;
+      });
+    } else {
+      setState(() {
+        _isLoading = false;
+        _hasInternet = false;
+      });
+    }
     super.didChangeDependencies();
   }
 
@@ -95,34 +105,52 @@ class _ChartsBodyState extends State<ChartsBody> {
                 ),
               ),
               TimeTableRow(_selection, _switchInterval),
-              if (!_isLoading && !_shouldToggle)
+              if (!_isLoading && !_shouldToggle && _hasInternet)
                 RateInformation(first, widget.symbol, _selection),
-              if (!_isLoading && _shouldToggle)
+              if (!_isLoading && _shouldToggle && _hasInternet)
                 RateInformation(second, widget.base, _selection),
               if (_isLoading)
                 Padding(
                     padding: const EdgeInsets.all(50.0),
                     child: CircularProgressIndicator()),
-              if (!_isLoading && !_shouldToggle && _selection[0])
+              if (!_isLoading &&
+                  !_shouldToggle &&
+                  _selection[0] &&
+                  _hasInternet)
                 LineChartWidget(first, second.base),
-              if (!_isLoading && _shouldToggle && _selection[0])
+              if (!_isLoading && _shouldToggle && _selection[0] && _hasInternet)
                 LineChartWidget(second, first.base),
-              if (!_isLoading && !_shouldToggle && _selection[1])
+              if (!_isLoading &&
+                  !_shouldToggle &&
+                  _selection[1] &&
+                  _hasInternet)
                 MonthlyChart(first, second.base, '1M'),
-              if (!_isLoading && _shouldToggle && _selection[1])
+              if (!_isLoading && _shouldToggle && _selection[1] && _hasInternet)
                 MonthlyChart(second, first.base, '1M'),
-              if (!_isLoading && !_shouldToggle && _selection[2])
+              if (!_isLoading &&
+                  !_shouldToggle &&
+                  _selection[2] &&
+                  _hasInternet)
                 ThreeMonthsChart(first, second.base, '3M'),
-              if (!_isLoading && _shouldToggle && _selection[2])
+              if (!_isLoading && _shouldToggle && _selection[2] && _hasInternet)
                 ThreeMonthsChart(second, first.base, '3M'),
-              if (!_isLoading && !_shouldToggle && _selection[3])
+              if (!_isLoading &&
+                  !_shouldToggle &&
+                  _selection[3] &&
+                  _hasInternet)
                 YearlyChart(first, second.base, '1Y'),
-              if (!_isLoading && _shouldToggle && _selection[3])
+              if (!_isLoading && _shouldToggle && _selection[3] && _hasInternet)
                 YearlyChart(second, first.base, '1Y'),
-              if (!_isLoading && !_shouldToggle)
+              if (!_isLoading && !_shouldToggle && _hasInternet)
                 RateStats(first, widget.symbol, _selection),
-              if (!_isLoading && _shouldToggle)
+              if (!_isLoading && _shouldToggle && _hasInternet)
                 RateStats(second, first.base, _selection),
+              if (!_hasInternet)
+                Container(
+                  margin: const EdgeInsets.symmetric(
+                      horizontal: 100, vertical: 200),
+                  child: Text('No internet connection'),
+                )
             ],
           ),
         ),

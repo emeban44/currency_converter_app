@@ -2,7 +2,9 @@ import 'dart:async';
 
 import 'package:currency_converter_app/providers/currencies.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'package:provider/provider.dart';
+import 'package:internet_connection_checker/internet_connection_checker.dart';
 
 class UpdateTimer extends StatefulWidget {
   @override
@@ -17,14 +19,33 @@ class _UpdateTimerState extends State<UpdateTimer> {
   void startTimer() async {
     timer = Timer.periodic(Duration(seconds: 1), (timer) async {
       if (minutes == Duration(minutes: 0)) {
-        minutes = minutes = Duration(minutes: 10);
-        print('UPDATE SHOULD HAPPEN NOW!!!!');
-        print(ModalRoute.of(context).settings.name);
-        showUpdateDialog();
-        await Provider.of<Currencies>(context, listen: false).updateLocalData();
-        //Navigator.of(context).popUntil(ModalRoute.withName('/'));
-        Navigator.of(context).pop();
-        //minutes = Duration(minutes: 10);
+        final _deviceConnected =
+            await InternetConnectionChecker().hasConnection;
+        if (_deviceConnected) {
+          minutes = minutes = Duration(minutes: 10);
+          showUpdateDialog();
+          await Provider.of<Currencies>(context, listen: false)
+              .updateLocalData();
+          //Navigator.of(context).popUntil(ModalRoute.withName('/'));
+          Navigator.of(context).pop();
+        } else {
+          print('Device has no internet connection');
+          showToast(
+            'Update failed, no internet connection.',
+            borderRadius: BorderRadius.circular(15),
+            textStyle: TextStyle(fontSize: 15, color: Colors.white),
+            context: context,
+            animation: StyledToastAnimation.fade,
+            reverseAnimation: StyledToastAnimation.fade,
+            position: StyledToastPosition.bottom,
+            animDuration: Duration(seconds: 1),
+            duration: Duration(seconds: 3),
+            curve: Curves.elasticOut,
+            reverseCurve: Curves.linear,
+            backgroundColor: Colors.red.withOpacity(0.7),
+          );
+          minutes = minutes = Duration(minutes: 10);
+        }
       }
       setState(() {
         minutes = minutes - Duration(seconds: 1);
