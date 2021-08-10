@@ -15,6 +15,16 @@ class _AmountInputFieldState extends State<AmountInputField> {
   final _controller = TextEditingController();
   bool _alreadyToggled = false;
 
+  void setStartingAmount() {
+    _controller.text = '1';
+  }
+
+  @override
+  void initState() {
+    //setStartingAmount();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     FocusNode _node;
@@ -38,11 +48,12 @@ class _AmountInputFieldState extends State<AmountInputField> {
       ),
       child: Stack(
         children: [
-          Padding(
-            padding: const EdgeInsets.only(bottom: 2.0),
+          Container(
+            padding: const EdgeInsets.only(top: 20.0),
             child: TextFormField(
               readOnly: true,
               showCursor: true,
+              //initialValue: '1.00',
               controller: _controller,
               focusNode: _node,
               onTap: () {
@@ -55,6 +66,8 @@ class _AmountInputFieldState extends State<AmountInputField> {
               style: TextStyle(fontSize: 26),
               decoration: InputDecoration(
                 border: InputBorder.none,
+                hintText: '1.00',
+                hintStyle: TextStyle(fontSize: 26),
               ),
             ),
           ),

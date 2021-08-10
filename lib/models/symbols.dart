@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+// Model that stores data fetched from the API
+
 Symbols symbolsFromJson(String str) => Symbols.fromJson(json.decode(str));
 
 String symbolsToJson(Symbols data) => json.encode(data.toJson());

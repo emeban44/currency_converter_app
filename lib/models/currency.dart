@@ -1,6 +1,4 @@
-// To parse this JSON data, do
-//
-//     final currency = currencyFromJson(jsonString);
+// Model that stores data fetched from the API
 
 import 'dart:convert';
 

@@ -9,11 +9,16 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 class Currencies with ChangeNotifier {
+  //in this list all the UNSELECTED currencies are stored!
   List<Currency> _currencies = [];
-  List<Currency> _selectedCurrencies = []; //[Currency(base: 'USD')];
+  // in this list are all selected currencies including FROM and TO currency
+  List<Currency> _selectedCurrencies = [];
+  // in this list are all selected currencies excluding FROM and TO currency
   List<Currency> _selectedHomeScreen = [];
   List<Currency> _unselectedCurrencies = [];
+  // this list gets filled everytime user searches something
   List<Currency> _searchedSelectedCurrencies = [];
+  // this list gets filled everytime user searches something
   List<Currency> _searchedUnselectedCurrencies = [];
   Map<String, String> _symbols = {};
   String _apiKey = '4946fc8acfd60b0b2040cbbcd6288b36';
@@ -54,7 +59,9 @@ class Currencies with ChangeNotifier {
   }
 
   double get getAmount {
-    if (this._amount == null) return 0;
+    if (this._amount == null) {
+      return 1;
+    }
     return this._amount;
   }
 
@@ -285,7 +292,7 @@ class Currencies with ChangeNotifier {
   }
 
   void restartAmount() {
-    this._amount = 0;
+    this._amount = 1;
     this._helperNumber = '';
     this._helpersHistory = [];
     this._numbers = [];
@@ -295,7 +302,7 @@ class Currencies with ChangeNotifier {
 
   void setAmount() {
     if (_numbers.isEmpty) {
-      this._amount = 0;
+      this._amount = 1;
       notifyListeners();
       return;
     }
@@ -417,20 +424,24 @@ class Currencies with ChangeNotifier {
       final selectedBox = Boxes.getSelected();
       Currency from = _currencies.firstWhere((e) => e.base == 'USD');
       Currency to = _currencies.firstWhere((e) => e.base == 'EUR');
-      // Currency from2 = _currencies.firstWhere((e) => e.base == 'USD');
-      // Currency to2 = _currencies.firstWhere((e) => e.base == 'EUR');
+      Currency gbp = _currencies.firstWhere((e) => e.base == 'GBP');
+      Currency pln = _currencies.firstWhere((e) => e.base == 'PLN');
       selectedBox.put('from', toLocal(from));
       selectedBox.put('to', toLocal(to));
+      selectedBox.put('GBP', toLocal(gbp));
+      selectedBox.put('PLN', toLocal(pln));
       // selectedBox.put('USD', toLocal(from2));
       // selectedBox.put('EUR', toLocal(to2));
 
       _toCurrency = (fromLocal(selectedBox.get('to')));
       _fromCurrency = (fromLocal(selectedBox.get('from')));
 
-      boxAll.delete('USD');
-      boxAll.delete('EUR');
+      // boxAll.delete('USD');
+      // boxAll.delete('EUR');
       _currencies.removeWhere((e) => e.base == 'USD');
       _currencies.removeWhere((e) => e.base == 'EUR');
+      _currencies.removeWhere((e) => e.base == 'GBP');
+      _currencies.removeWhere((e) => e.base == 'PLN');
 
       List<LocalCurrency> unselectedStored = boxAll.values.toList();
       unselectedStored.forEach((unselectedLocal) {
